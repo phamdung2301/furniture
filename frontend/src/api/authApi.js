@@ -5,7 +5,7 @@
  *   POST /auth/otp/send     { phone }                      -> { sent, expiresIn, resendAfter }
  *   POST /auth/otp/verify   { phone, code, purpose }        -> { token, user }  (purpose: login | register | verify)
  *   POST /auth/login        { identifier, password }        -> { token, user }
- *   POST /auth/register     { name, email, phone, password }-> { user }         (chưa xác thực -> bắt vào OTP)
+ *   POST /auth/register     { fullName, email, phone, password } -> { user } (chưa xác thực -> bắt vào OTP)
  *   POST /auth/forgot-password { email }                    -> { sent }
  *   User: { fullName, phone, email, phoneVerified, roles: ["ROLE_CUSTOMER"] }
  *   Error code: not_found | invalid | expired | locked | email_exists | phone_used | network

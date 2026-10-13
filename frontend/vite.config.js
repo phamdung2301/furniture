@@ -17,7 +17,7 @@ const proxyPaths = [
   '/payments',
   '/vouchers',
   '/reviews',
-  '/uploads',
+  '/uploads', // ảnh ở chế độ STORAGE_TYPE=local (ảnh shop + ảnh review dev: /uploads/reviews/...); production ảnh review là URL S3 tuyệt đối, không qua proxy
   '/wishlist',
   '/flash-sale',
   '/users',
@@ -29,7 +29,11 @@ const proxyPaths = [
 // Bài học 2026-10-13 (vụ 403 /admin): vài route TRANG của frontend dùng chung
 // prefix với API backend (/admin, /flash-sale). Khi truy cập trực tiếp bằng URL,
 // bookmark hoặc reload, Vite thấy path khớp proxy key và chuyển request sang
-// backend thay vì trả index.html cho React Router -> backend 403.
+// backend thay vì trả index.html cho React Router -> backend 403 (request từ
+// trình duyệt không mang header Authorization nên thiếu ROLE_ADMIN).
+// => bypass: các path dưới đây là TRANG -> luôn serve /index.html, không proxy.
+// Mọi path khác cùng prefix (VD /admin/stats/overview) vẫn proxy sang backend.
+// Thêm trang mới mà dùng chung prefix với API => thêm path vào danh sách này.
 const FRONTEND_PAGES = [
   '/admin',
   '/admin/san-pham',
@@ -46,6 +50,7 @@ const FRONTEND_PAGES = [
 function spaBypass(req) {
   const path = (req.url || '').split('?')[0];
   if (FRONTEND_PAGES.includes(path)) return '/index.html';
+  // return undefined -> proxy sang backend như bình thường
 }
 
 const proxy = {};
