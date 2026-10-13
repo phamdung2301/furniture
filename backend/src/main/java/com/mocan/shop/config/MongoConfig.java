@@ -1,5 +1,6 @@
 package com.mocan.shop.config;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,9 @@ import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
  * không trông chờ vào default im lặng của driver (URI thiếu database → driver tự
  * dùng database "test" mà không báo lỗi).
  *
- * <p>Thứ tự ưu tiên giá trị: biến môi trường thật của OS > file backend/.env
- * (được tự nạp lúc khởi động) > giá trị mặc định bên dưới.</p>
+ * <p>Database được chốt theo thứ tự: database ghi sẵn trong MONGODB_URI (nếu có,
+ * đúng thói quen project insurance của bạn) &gt; biến MONGODB_DATABASE &gt;
+ * mặc định "mocan_shop". Không bao giờ để driver tự rơi vào database "test".</p>
  *
  * <p>Khi các bean này tồn tại, Spring Boot sẽ KHÔNG tự tạo MongoClient /
  * MongoDatabaseFactory / MongoTemplate nữa (ConditionalOnMissingBean), nên các
@@ -38,8 +40,15 @@ public class MongoConfig {
 
   @Bean
   public MongoDatabaseFactory mongoDbFactory(MongoClient mongoClient) {
-    // databaseName tường minh — thắng database trong URI, không bao giờ rơi vào "test".
-    return new SimpleMongoClientDatabaseFactory(mongoClient, databaseName);
+    // Ưu tiên database ghi sẵn trong URI (đúng thói quen project insurance của bạn:
+    // mongodb://localhost:27017/furniture -> dùng "furniture").
+    // Chỉ khi URI không kèm database mới dùng MONGODB_DATABASE — không bao giờ
+    // để driver lặng lẽ rơi vào database "test" (bài học 2026-10-13).
+    String database = new ConnectionString(mongoUri).getDatabase();
+    if (database == null || database.isBlank()) {
+      database = databaseName;
+    }
+    return new SimpleMongoClientDatabaseFactory(mongoClient, database);
   }
 
   @Bean
