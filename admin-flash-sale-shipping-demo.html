@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flash sale &amp; Phí ship — Mộc An Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand-900:#3E2A1E;--brand-700:#5D3A29;--brand-600:#71472F;--accent:#C9A227;--bg:#FAF7F2;--surface:#fff;--border:#E9DFD2;--text:#2B2118;--muted:#8A7A6B;--success:#2E7D32;--error:#C62828;--warning:#B7791F}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}input,select{font-family:inherit;font-size:14px;color:var(--text)}
+.mono{font-family:"JetBrains Mono",monospace}.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;flex:0 0 240px;background:var(--brand-900);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:70}
+.logo{padding:20px 20px 16px;cursor:pointer}.logo b{font-size:20px;font-weight:800}.logo span{display:block;font-size:11px;letter-spacing:.22em;color:#C9BBA9;margin-top:2px}
+.nav{flex:1;padding:8px 12px;overflow-y:auto}.nav a{display:flex;align-items:center;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;font-weight:500;padding:10px 14px;border-radius:10px;margin-bottom:2px;position:relative}
+.nav a:hover{background:rgba(255,255,255,.08)}.nav a.active{background:var(--brand-700);color:#fff;font-weight:600}.nav a.active:before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;background:var(--accent);border-radius:3px}
+.nav .ic{width:19px;text-align:center;flex:0 0 19px;font-style:normal}
+.cntbadge{margin-left:auto;background:var(--error);color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px}.cntbadge.warn{background:var(--warning)}
+.sidefoot{border-top:1px solid rgba(255,255,255,.14);padding:12px}.sidefoot a{display:flex;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;padding:9px 14px;border-radius:10px}.sidefoot a:hover{background:rgba(255,255,255,.08)}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:65}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;gap:14px;padding:0 24px}
+.topbar h2{font-size:18px;font-weight:700}.crumb{font-size:13px;color:var(--muted)}
+.hamb{display:none;background:none;border:1px solid var(--border);border-radius:9px;width:38px;height:38px;font-size:17px}
+.quick{margin-left:auto;position:relative}.quick input{width:300px;max-width:34vw;padding:9px 14px 9px 34px;border:1px solid var(--border);border-radius:999px;background:var(--bg);outline:none}.quick input:focus{border-color:var(--brand-700)}.quick i{position:absolute;left:12px;top:8px;color:var(--muted);font-style:normal}
+.adminchip{display:flex;align-items:center;gap:10px}.avatar{width:36px;height:36px;border-radius:50%;background:var(--brand-700);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.content{padding:24px;max-width:1240px;width:100%;margin:0 auto}
+.pagehead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}.pagehead h1{font-size:24px;font-weight:700}.pagehead p{font-size:13px;color:var(--muted);margin-top:3px;max-width:640px}
+.btn{border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600}.btn-p{background:var(--brand-700);color:#fff}.btn-p:hover{background:var(--brand-600)}.btn-s{background:#fff;border:1px solid var(--brand-700);color:var(--brand-700)}.btn-s:hover{background:#F5EFE6}.btn-danger{background:var(--error);color:#fff}.btn:disabled{background:#C9BBA9;color:#fff;cursor:not-allowed}.btn-sm{padding:7px 12px;font-size:13px}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin:22px 0 18px}.tabs button{background:none;border:none;padding:11px 18px;font-size:15px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px}.tabs button.on{color:var(--brand-700);border-bottom-color:var(--brand-700)}
+.urlbar{font-size:12px;color:var(--muted);margin-bottom:14px}.urlbar .mono{background:#fff;border:1px solid var(--border);border-radius:7px;padding:3px 9px;color:var(--brand-700)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:16px;border-bottom:1px solid var(--border)}
+.searchbox{position:relative;flex:1;min-width:210px}.searchbox input{width:100%;padding:10px 14px 10px 36px;border:1px solid var(--border);border-radius:10px;outline:none}.searchbox i{position:absolute;left:12px;top:9px;color:var(--muted);font-style:normal}.searchbox input:focus{border-color:var(--brand-700)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600;color:var(--muted)}.chip.on{background:var(--brand-700);color:#fff;border-color:var(--brand-700)}
+table{width:100%;border-collapse:collapse}th{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);background:#FDFBF8;white-space:nowrap}td{padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14px}tr:last-child td{border-bottom:none}tbody tr:hover{background:#FBF8F3}
+.badge{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap}.b-run{background:#E8F5E9;color:var(--success)}.b-up{background:#FDF3E0;color:var(--warning)}.b-off{background:#EFE9E1;color:var(--muted)}.b-end{background:#EFE9E1;color:var(--muted)}
+.prog{height:6px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:6px;min-width:110px}.prog i{display:block;height:100%;background:var(--brand-700)}.prog.warn i{background:var(--warning)}.prog.full i{background:var(--error)}
+.iconbtns{display:flex;gap:4px;justify-content:flex-end}.ibtn{width:34px;height:34px;border:1px solid var(--border);background:#fff;border-radius:9px;font-size:15px;position:relative}.ibtn:hover{background:#F5EFE6}.ibtn:disabled{opacity:.38;cursor:not-allowed}
+.pager{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;font-size:13px;color:var(--muted);flex-wrap:wrap;gap:8px}.pager select{padding:6px 9px;border:1px solid var(--border);border-radius:8px}
+.empty,.errbox{padding:52px 20px;text-align:center}.empty .big{font-size:34px;color:var(--accent)}.errbox .big{font-size:30px;color:var(--error)}
+.hintline{font-size:12px;color:var(--muted);padding:10px 16px 0}
+.skel{padding:16px}.skel div{height:18px;border-radius:6px;background:linear-gradient(90deg,#EFE9E1,#F7F2EA,#EFE9E1);margin-bottom:12px;animation:pu 1.2s infinite}@keyframes pu{50%{opacity:.55}}
+.demoBar{background:#FFF8E8;border:1px dashed var(--accent);border-radius:12px;padding:11px 14px;margin-bottom:16px;font-size:13px}.demoBar b{color:var(--brand-700)}.demoBar select{padding:6px 9px;border:1px solid var(--border);border-radius:8px;margin:0 10px 0 5px}.demoBar button{border:1px solid var(--border);background:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;margin:2px}
+.infoCard{background:#F5EFE6;border:1px solid var(--border);border-radius:12px;padding:15px 17px;font-size:13.5px;margin-bottom:16px}
+.warnband{background:#FDF3E0;border:1px solid var(--warning);color:#7A5510;border-radius:12px;padding:12px 16px;font-size:13.5px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:7fr 5fr;gap:18px;margin-top:18px}
+.miniCard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px}.miniCard h3{font-size:16px;font-weight:700;margin-bottom:6px}.miniCard .sub{font-size:13px;color:var(--muted)}
+.field{margin-top:14px}.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}.field label em{color:var(--error);font-style:normal}
+.inp{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}.inp:focus{border-color:var(--brand-700)}.inp.err{border-color:var(--error)}.inp:disabled{background:#F3EEE7;color:var(--muted)}
+.errmsg{font-size:12px;color:var(--error);margin-top:4px;display:none}.errmsg.show{display:block}.fhint{font-size:12px;color:var(--muted);margin-top:4px}.fhint.gold{color:var(--warning);font-weight:600}
+.overlay{position:fixed;inset:0;background:rgba(30,20,12,.45);z-index:90;display:none}.overlay.show{display:block}
+.slideover{position:fixed;top:0;right:0;width:560px;max-width:100vw;height:100vh;background:#fff;z-index:95;transform:translateX(105%);transition:transform .28s ease;display:flex;flex-direction:column;box-shadow:-14px 0 34px rgba(62,42,30,.18)}.slideover.show{transform:none}
+.so-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px}.so-head h3{font-size:18px;font-weight:700}.so-head .sub{font-size:13px;color:var(--muted)}.xbtn{background:none;border:1px solid var(--border);border-radius:9px;width:36px;height:36px;font-size:16px;flex:0 0 36px}
+.so-body{flex:1;overflow-y:auto;padding:20px 22px}.so-foot{padding:15px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;background:#fff}
+.groupTitle{font-size:15px;font-weight:700;margin:20px 0 4px;padding-top:16px;border-top:1px dashed var(--border)}.groupTitle:first-child{border:none;margin-top:0;padding-top:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkline{display:flex;gap:8px;align-items:center;font-size:13.5px;margin-top:8px}.checkline input{width:17px;height:17px;accent-color:var(--brand-700)}
+.switch{position:relative;width:46px;height:26px;flex:0 0 46px}.switch input{opacity:0;width:100%;height:100%;position:absolute;cursor:pointer;z-index:2}.track{position:absolute;inset:0;background:#D8CBBB;border-radius:99px;transition:.2s}.track:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked+.track{background:var(--success)}.switch input:checked+.track:after{left:23px}.switch input:disabled+.track{opacity:.5}
+.readonlyBox{background:#F5EFE6;border-radius:10px;padding:11px 13px;font-size:13.5px;margin-top:14px}
+.bannerErr{background:#FDECEA;border:1px solid #F0B8B3;color:#8E1F1F;border-radius:10px;padding:11px 13px;font-size:13.5px;margin-bottom:14px;display:none}.bannerErr.show{display:block}
+.bannerInfo{background:#FDF3E0;border:1px solid var(--warning);color:#7A5510;border-radius:10px;padding:11px 13px;font-size:13.5px;margin-bottom:14px}
+.itemCard{background:#FBF8F3;border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:12px}
+.itemHead{display:flex;gap:11px;align-items:center}.thumb{width:48px;height:48px;border-radius:9px;flex:0 0 48px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px}
+.radioRow{display:flex;gap:14px;flex-wrap:wrap;margin-top:11px;font-size:13.5px}.radioRow label{display:flex;gap:6px;align-items:center;font-weight:500}.radioRow input{accent-color:var(--brand-700)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:8px}.seg button{border:none;background:#fff;padding:8px 13px;font-size:13px;font-weight:600;color:var(--muted)}.seg button.on{background:var(--brand-700);color:#fff}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:5px;border:1px solid rgba(0,0,0,.15)}
+.previewLine{background:#fff;border:1px dashed var(--border);border-radius:9px;padding:9px 11px;font-size:13px;margin-top:10px}
+.dashedEmpty{border:1.5px dashed var(--border);border-radius:12px;padding:22px;text-align:center;color:var(--muted);font-size:13.5px;margin-top:10px}
+.searchRes{border:1px solid var(--border);border-radius:10px;margin-top:8px;overflow:hidden}.searchRes button{display:flex;width:100%;gap:10px;align-items:center;background:#fff;border:none;border-bottom:1px solid var(--border);padding:9px 11px;text-align:left;font-size:13.5px}.searchRes button:last-child{border-bottom:none}.searchRes button:hover:not(:disabled){background:#FBF8F3}.searchRes button:disabled{opacity:.55;cursor:not-allowed}
+.modalWrap{position:fixed;inset:0;background:rgba(30,20,12,.48);z-index:110;display:none;align-items:center;justify-content:center;padding:16px}.modalWrap.show{display:flex}
+.modal{background:#fff;border-radius:16px;width:520px;max-width:100%;max-height:92vh;overflow-y:auto;padding:22px}.modal.small{width:400px}.modal h3{font-size:17px;font-weight:700;margin-bottom:8px}.modal .body{font-size:14px}.scopeBox{background:#F5EFE6;border-radius:10px;padding:11px 13px;font-size:13px;margin-top:12px}
+.modalFoot{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.toastWrap{position:fixed;top:18px;right:18px;z-index:200;display:flex;flex-direction:column;gap:9px}.toast{background:#fff;border:1px solid var(--border);border-left:4px solid var(--success);border-radius:11px;box-shadow:0 10px 26px rgba(62,42,30,.16);padding:12px 16px;font-size:14px;font-weight:600;max-width:360px;animation:tin .25s}.toast.err{border-left-color:var(--error)}.toast.warn{border-left-color:var(--warning)}@keyframes tin{from{transform:translateX(20px);opacity:0}}
+.calcRes{margin-top:14px;border-radius:11px;padding:13px 15px;font-size:14px;display:none}.calcRes.show{display:block}.calcRes.ok{background:#E8F5E9;border:1px solid #BFE0C3}.calcRes.free{background:#E8F5E9;border:1px solid #BFE0C3}.calcRes.warn{background:#FDF3E0;border:1px solid var(--warning);color:#7A5510}.calcRes .strike{text-decoration:line-through;color:var(--muted)}
+@media(max-width:1023px){.sidebar{width:72px;flex-basis:72px}.sidebar .lbl,.logo span,.sidefoot .lbl{display:none}.logo b{font-size:15px}.nav a,.sidefoot a{justify-content:center}.cntbadge{position:absolute;top:2px;right:2px;margin:0}}
+@media(max-width:767px){.sidebar{position:fixed;left:0;transform:translateX(-105%);width:240px;flex-basis:240px;transition:.25s}.sidebar.open{transform:none}.sidebar .lbl,.logo span,.sidefoot .lbl{display:inline}.nav a,.sidefoot a{justify-content:flex-start}.scrim.show{display:block}.hamb{display:block}.quick{display:none}.adminchip .who{display:none}.content{padding:16px}.grid2{grid-template-columns:1fr}.row2{grid-template-columns:1fr}table{min-width:760px}.tblscroll{overflow-x:auto}.modalWrap{align-items:flex-end;padding:0}.modal{border-radius:16px 16px 0 0;width:100%}}
+</style></head>
+<body>
+<div class="layout">
+ <div class="scrim" id="scrim" onclick="closeSide()"></div>
+ <aside class="sidebar" id="sidebar">
+  <div class="logo"><b>Mộc An</b><span>QUẢN TRỊ</span></div>
+  <nav class="nav">
+   <a href="#" onclick="return navMsg(event)"><i class="ic">▦</i><span class="lbl">Dashboard</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">▤</i><span class="lbl">Sản phẩm</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">☰</i><span class="lbl">Danh mục</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">🧾</i><span class="lbl">Đơn hàng</span><span class="cntbadge">5</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">▥</i><span class="lbl">Tồn kho</span><span class="cntbadge warn">4</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">%</i><span class="lbl">Voucher</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">◉</i><span class="lbl">Khách hàng</span></a>
+   <a href="#" onclick="return navMsg(event)"><i class="ic">▧</i><span class="lbl">Banner</span></a>
+   <a href="#" class="active"><i class="ic">⚡</i><span class="lbl">Flash sale &amp; Phí ship</span></a>
+  </nav>
+  <div class="sidefoot"><a href="#" onclick="return navMsg(event)"><i class="ic">⌂</i><span class="lbl">Xem cửa hàng</span></a><a href="#" onclick="toast('Đã đăng xuất (mô phỏng).');return false"><i class="ic">↩</i><span class="lbl">Đăng xuất</span></a></div>
+ </aside>
+ <div class="main">
+  <header class="topbar">
+   <button class="hamb" onclick="openSide()">☰</button>
+   <div><h2>Flash sale &amp; Phí ship</h2><div class="crumb">Quản trị / Flash sale &amp; Phí ship</div></div>
+   <div class="quick"><i>⌕</i><input placeholder="Tìm đơn theo mã, sản phẩm, khách hàng…" onkeydown="if(event.key==='Enter')toast('Tìm nhanh (mô phỏng): chuyển sang màn quản lý tương ứng.')"></div>
+   <div class="adminchip"><div class="avatar">A</div><div class="who"><div style="font-size:15px;font-weight:600;line-height:1.2">Admin Mộc An</div><div style="font-size:12px;color:var(--muted)">Quản trị viên</div></div></div>
+  </header>
+  <main class="content">
+   <div class="pagehead">
+    <div><h1>Flash sale &amp; Vận chuyển</h1><p>Chương trình giảm giá theo khung giờ và bảng phí vận chuyển theo diện tích. Voucher thường được quản lý ở màn Voucher.</p></div>
+    <button class="btn btn-p" id="headAction" onclick="headActionClick()">+ Tạo chương trình</button>
+   </div>
+
+   <div class="tabs">
+    <button id="tabBtnFs" class="on" onclick="switchTab('flash-sale')">⚡ Flash sale</button>
+    <button id="tabBtnShip" onclick="switchTab('phi-ship')">🚚 Phí vận chuyển</button>
+   </div>
+   <div class="urlbar">Địa chỉ mô phỏng: <span class="mono" id="fakeUrl">/admin/khuyen-mai?tab=flash-sale</span> · Hôm nay của demo: <b>12/10/2026</b></div>
+
+   <!-- ============ TAB FLASH SALE ============ -->
+   <section id="tabFs">
+    <div class="demoBar"><b>Toggle demo — Flash sale:</b>
+      <select id="fsStateSel" onchange="setFsState(this.value)"><option value="data">Có dữ liệu</option><option value="empty">Trống</option><option value="error">Lỗi tải</option></select>
+      Mở form:
+      <button onclick="openForm('create')">Tạo mới</button><button onclick="openForm('edit',2)">Sửa — Sắp chạy</button><button onclick="openForm('edit',1)">Sửa — Đang chạy (khóa trường)</button><button onclick="openForm('edit',3)">Xem — Đã kết thúc</button>
+    </div>
+    <div class="card">
+     <div class="toolbar">
+      <div class="searchbox"><i>⌕</i><input id="fsSearch" placeholder="Tìm theo tên chương trình…" oninput="debFs()"></div>
+      <div class="chips" id="fsChips">
+       <button class="chip on" data-f="ALL" onclick="setFilter('ALL',this)">Tất cả</button>
+       <button class="chip" data-f="RUNNING" onclick="setFilter('RUNNING',this)">Đang chạy</button>
+       <button class="chip" data-f="UPCOMING" onclick="setFilter('UPCOMING',this)">Sắp chạy</button>
+       <button class="chip" data-f="ENDED" onclick="setFilter('ENDED',this)">Đã kết thúc</button>
+       <button class="chip" data-f="INACTIVE" onclick="setFilter('INACTIVE',this)">Đã tắt</button>
+      </div>
+      <button class="btn btn-p btn-sm" onclick="openForm('create')">+ Tạo chương trình</button>
+     </div>
+     <div class="hintline">Mã <span class="mono">FS-…</span> do hệ thống tự sinh, chỉ để admin tra soát — khách hàng không thấy và không nhập mã này.</div>
+     <div id="fsBody"></div>
+     <div class="pager" id="fsPager"><span id="fsPagerTxt"></span><span>Số mục / trang <select onchange="toast('Đã đổi số mục mỗi trang (mô phỏng).')"><option>10</option><option selected>20</option><option>50</option></select></span></div>
+    </div>
+   </section>
+
+   <!-- ============ TAB SHIPPING ============ -->
+   <section id="tabShip" style="display:none">
+    <div class="demoBar"><b>Toggle demo — Phí vận chuyển:</b>
+      <select id="shipStateSel" onchange="setShipState(this.value)"><option value="data">Có bậc phí</option><option value="empty">Chưa có bậc nào</option><option value="gap">Có lỗ hổng</option><option value="error">Lỗi tải</option></select>
+      <span style="color:var(--muted)">Mọi thao tác lưu đều qua confirm nêu phạm vi áp dụng.</span>
+    </div>
+    <div class="infoCard">Phí vận chuyển tính theo tổng diện tích chiếm chỗ của đơn hàng: <b>Tổng diện tích = Σ (dài × rộng × số lượng)</b> của từng sản phẩm, tra vào bảng bậc phí dưới đây. Đơn đạt ngưỡng miễn phí thì phí = 0đ. Đơn có tổng diện tích <b>trên 10 m²</b> sẽ hiển thị “Liên hệ báo giá” và không đặt hàng trực tuyến được. <span style="color:var(--muted)">(Trần 10 m² là quy định cố định của hệ thống — chỉ hiển thị, không sửa tại màn này.)</span></div>
+    <div id="shipWarn"></div>
+    <div class="card">
+     <div class="toolbar"><div style="font-weight:700;font-size:16px">Bảng bậc phí theo diện tích</div><span style="font-size:13px;color:var(--muted)">Sắp xếp cố định theo diện tích tăng dần</span><button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openTierModal()">+ Thêm bậc phí</button></div>
+     <div id="shipBody"></div>
+    </div>
+    <div class="grid2">
+     <div class="miniCard">
+      <h3>Ngưỡng miễn phí vận chuyển</h3>
+      <div class="sub">Đơn hàng có tạm tính từ mức này trở lên được miễn phí vận chuyển, bất kể diện tích (trừ đơn trên 10 m² thuộc diện liên hệ báo giá). Tạm tính là tổng tiền hàng <b>trước</b> khi trừ mã giảm giá.</div>
+      <div class="field"><label>Ngưỡng miễn phí (đ) <em>*</em></label><input class="inp" id="thresholdInp" value="10.000.000" oninput="fmtMoneyInp(this);thresholdDirty()"><div class="fhint gold" id="zeroHint" style="display:none">Đặt 0đ nghĩa là miễn phí vận chuyển cho mọi đơn hàng.</div><div class="fhint">Muốn không miễn phí, hãy đặt ngưỡng thật cao — hệ thống không có nút tắt riêng.</div></div>
+      <button class="btn btn-p" id="saveThresholdBtn" disabled style="margin-top:14px" onclick="confirmThreshold()">Lưu ngưỡng</button>
+     </div>
+     <div class="miniCard">
+      <h3>Thử tính phí</h3>
+      <div class="sub">Kiểm tra cấu hình <b>đã lưu</b> áp vào một đơn giả lập. Sửa bậc phí xong hãy lưu rồi thử lại — công cụ này luôn dùng cấu hình đã lưu, không dùng số đang gõ dở.</div>
+      <div class="row2">
+       <div class="field"><label>Tổng diện tích đơn (m²) <em>*</em></label><input class="inp" id="calcArea" value="5,4" placeholder="VD: 5,4"></div>
+       <div class="field"><label>Tạm tính đơn (đ)</label><input class="inp" id="calcSub" value="8.000.000" oninput="fmtMoneyInp(this)"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-p" onclick="calcFee()">Tính thử</button><button class="btn btn-s btn-sm" onclick="calcPreset(5.4,15600000)">Ví dụ: 5,4 m² · 15.600.000đ → Miễn phí</button><button class="btn btn-s btn-sm" onclick="calcPreset(0.8,0)">0,8 m² → 100.000đ</button><button class="btn btn-s btn-sm" onclick="calcPreset(12,0)">12 m² → Vượt trần</button></div>
+      <div class="calcRes" id="calcRes"></div>
+     </div>
+    </div>
+   </section>
+  </main>
+ </div>
+</div>
+
+<!-- Slide-over form -->
+<div class="overlay" id="soOverlay" onclick="tryCloseForm()"></div>
+<aside class="slideover" id="slideover">
+ <div class="so-head"><div><h3 id="soTitle">Tạo chương trình flash sale</h3><div class="sub" id="soSub"></div></div><button class="xbtn" onclick="tryCloseForm()">✕</button></div>
+ <div class="so-body" id="soBody"></div>
+ <div class="so-foot" id="soFoot"></div>
+</aside>
+
+<!-- Modal generic (confirm + tier) -->
+<div class="modalWrap" id="modalWrap"><div class="modal" id="modalBox"></div></div>
+<div class="toastWrap" id="toastWrap"></div>
+
+<script>
+const fmt=n=>Math.round(n).toLocaleString('vi-VN')+'đ';
+const fmtNum=n=>Number(n).toLocaleString('vi-VN');
+const parseMoney=s=>parseFloat(String(s).replace(/[^\d]/g,''))||0;
+function toast(msg,type){const t=document.createElement('div');t.className='toast '+(type||'');t.textContent=msg;document.getElementById('toastWrap').appendChild(t);setTimeout(()=>t.remove(),4200)}
+function navMsg(e){e.preventDefault();toast('Demo tập trung màn Flash sale & Phí ship — mục này chỉ mô phỏng điều hướng.','warn');return false}
+function openSide(){document.getElementById('sidebar').classList.add('open');document.getElementById('scrim').classList.add('show')}
+function closeSide(){document.getElementById('sidebar').classList.remove('open');document.getElementById('scrim').classList.remove('show')}
+
+/* ---------- Catalog ---------- */
+const CATALOG=[
+ {id:'p1',name:'Sofa góc L Nordic',img:'S',color:'#8A6D4F',variants:[{id:'p1x',color:'Xám',hex:'#9A9A9A',price:12900000,stock:14},{id:'p1b',color:'Be',hex:'#D9C7A7',price:13400000,stock:2}]},
+ {id:'p2',name:'Ghế ăn bọc vải',img:'G',color:'#A98A68',variants:[{id:'p2b',color:'Be',hex:'#D9C7A7',price:1450000,stock:26},{id:'p2d',color:'Đen',hex:'#2B2118',price:1450000,stock:3}]},
+ {id:'p3',name:'Bàn trà gỗ Sồi',img:'B',color:'#B08954',variants:[{id:'p3t',color:'Tự nhiên',hex:'#C8A878',price:3450000,stock:11},{id:'p3n',color:'Nâu óc chó',hex:'#5D3A29',price:3650000,stock:0}]},
+ {id:'p4',name:'Đèn sàn trang trí',img:'Đ',color:'#5D3A29',variants:[{id:'p4d',color:'Đen',hex:'#2B2118',price:890000,stock:19},{id:'p4t',color:'Trắng',hex:'#F2EDE4',price:890000,stock:8}]},
+ {id:'p5',name:'Ghế lười hạt xốp',img:'L',color:'#7A8B6F',variants:[{id:'p5x',color:'Xám',hex:'#9A9A9A',price:650000,stock:32},{id:'p5r',color:'Xanh rêu',hex:'#6B7F5E',price:650000,stock:15}]},
+ {id:'p6',name:'Bàn ăn gỗ óc chó 6 chỗ',img:'Ă',color:'#6E4B2E',variants:[{id:'p6n',color:'Nâu óc chó',hex:'#5D3A29',price:6900000,stock:7}]},
+ {id:'p7',name:'Giường ngủ gỗ sồi 1m8',img:'Gi',color:'#96754D',variants:[{id:'p7t',color:'Tự nhiên',hex:'#C8A878',price:7900000,stock:5}]},
+ {id:'p8',name:'Tủ quần áo 3 cánh',img:'T',color:'#7D5F42',variants:[{id:'p8t',color:'Trắng kem',hex:'#EFE6D6',price:8500000,stock:4}]}
+];
+const prod=id=>CATALOG.find(p=>p.id===id);
+const cheapestVar=p=>[...p.variants].sort((a,b)=>a.price-b.price)[0];
+
+/* ---------- Flash sale data (khớp màn 13) ---------- */
+let programs=[
+ {id:1,name:'Flash sale cuối tuần',code:'FS-8K2QX4',start:'2026-10-11T20:00',end:'2026-10-13T22:00',total:100,used:73,active:true,items:[
+   {pid:'p1',vid:'p1x',type:'pct',pct:30,quota:20,sold:14},
+   {pid:'p2',vid:'p2b',type:'fixed',flash:990000,quota:30,sold:29},
+   {pid:'p3',vid:'p3t',type:'pct',pct:20,quota:15,sold:6},
+   {pid:'p4',vid:'p4d',type:'fixed',flash:749000,quota:15,sold:4},
+   {pid:'p5',vid:'p5x',type:'pct',pct:25,quota:20,sold:20}]},
+ {id:2,name:'Flash sale 20/10',code:'FS-3MD7PA',start:'2026-10-20T20:00',end:'2026-10-21T22:00',total:50,used:0,active:true,items:[
+   {pid:'p6',vid:null,type:'pct',pct:15,quota:20,sold:0},{pid:'p7',vid:null,type:'pct',pct:10,quota:15,sold:0},{pid:'p8',vid:null,type:'fixed',flash:7490000,quota:15,sold:0}]},
+ {id:3,name:'Khai trương tháng 10',code:'FS-9QW2ZE',start:'2026-10-01T09:00',end:'2026-10-05T23:59',total:100,used:64,active:true,items:[
+   {pid:'p1',vid:null,type:'pct',pct:20,quota:30,sold:22},{pid:'p3',vid:null,type:'pct',pct:15,quota:20,sold:15},{pid:'p4',vid:null,type:'fixed',flash:699000,quota:25,sold:17},{pid:'p5',vid:null,type:'pct',pct:20,quota:25,sold:10}]},
+ {id:4,name:'Flash sale thử nghiệm',code:'FS-5TBN8C',start:'2026-10-15T20:00',end:'2026-10-15T22:00',total:20,used:0,active:false,items:[
+   {pid:'p4',vid:null,type:'pct',pct:10,quota:10,sold:0},{pid:'p5',vid:null,type:'pct',pct:10,quota:10,sold:0}]}
+];
+const NOW=new Date('2026-10-12T11:58:00');
+function statusOf(p){if(!p.active)return{k:'INACTIVE',t:'Đã tắt',c:'b-off'};const s=new Date(p.start),e=new Date(p.end);if(NOW<s)return{k:'UPCOMING',t:'Sắp chạy',c:'b-up'};if(NOW>=e||(p.total>0&&p.used>=p.total))return{k:'ENDED',t:'Đã kết thúc',c:'b-end'};return{k:'RUNNING',t:'Đang chạy',c:'b-run'}}
+function fmtDT(iso){const d=new Date(iso);const p=n=>String(n).padStart(2,'0');return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes())}
+function subLine(p){const st=statusOf(p).k,s=new Date(p.start),e=new Date(p.end);if(st==='RUNNING'){const h=Math.round((e-NOW)/36e5);if(h<24)return '<div style="font-size:12px;color:var(--warning);font-weight:600">Còn '+h+' giờ</div>';return '<div style="font-size:12px;color:var(--muted)">Đang diễn ra</div>'}if(st==='UPCOMING'){const d=Math.round((s-NOW)/864e5);return '<div style="font-size:12px;color:var(--muted)">Bắt đầu sau '+(d>=1?d+' ngày':Math.round((s-NOW)/36e5)+' giờ')+'</div>'}if(st==='ENDED'&&p.total>0&&p.used>=p.total&&NOW<e)return '<div style="font-size:12px;color:var(--muted)">Đã hết suất trước giờ kết thúc</div>';return ''}
+let fsFilter='ALL',fsQuery='',fsState='data';
+let debT;function debFs(){clearTimeout(debT);debT=setTimeout(()=>{fsQuery=document.getElementById('fsSearch').value.trim().toLowerCase();renderFs()},300)}
+function setFilter(f,el){fsFilter=f;document.querySelectorAll('#fsChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderFs()}
+function setFsState(v){fsState=v;renderFs()}
+function itemTip(p){return p.items.map(it=>{const pr=prod(it.pid);const v=it.vid?pr.variants.find(x=>x.id===it.vid):null;return '• '+pr.name+' — '+(v?'Màu '+v.color:'Tất cả các màu')}).join('\n')}
+function renderFs(){
+ const body=document.getElementById('fsBody'),pg=document.getElementById('fsPagerTxt');
+ if(fsState==='error'){body.innerHTML='<div class="errbox"><div class="big">⚠</div><p style="font-weight:600;margin:6px 0">Không tải được danh sách chương trình.</p><button class="btn btn-s btn-sm" onclick="fsState=\'data\';document.getElementById(\'fsStateSel\').value=\'data\';renderFs()">Thử lại</button></div>';pg.textContent='';return}
+ if(fsState==='empty'){body.innerHTML='<div class="empty"><div class="big">⚡</div><p style="font-weight:600;margin:6px 0">Chưa có chương trình flash sale nào.</p><button class="btn btn-p btn-sm" onclick="openForm(\'create\')">+ Tạo chương trình</button></div>';pg.textContent='Trang 1 / 1 · Tổng 0 chương trình';return}
+ let list=programs.filter(p=>(fsFilter==='ALL'||statusOf(p).k===fsFilter)&&(!fsQuery||p.name.toLowerCase().includes(fsQuery)));
+ list=[...list].sort((a,b)=>new Date(b.start)-new Date(a.start));
+ if(!list.length){body.innerHTML='<div class="empty"><div class="big">⌕</div><p style="font-weight:600;margin:6px 0">Không có chương trình nào khớp bộ lọc.</p><button class="btn btn-s btn-sm" onclick="clearFsFilter()">Xóa bộ lọc</button></div>';pg.textContent='Trang 1 / 1 · Tổng 0 chương trình';return}
+ let rows=list.map(p=>{const st=statusOf(p);const pct=p.total>0?Math.round(p.used/p.total*100):0;const pc=pct>=100?'full':pct>=90?'warn':'';
+  const canDelete=new Date(p.start)>NOW&&p.used===0&&p.items.every(i=>!i.sold);
+  const delTip=st.k==='RUNNING'?'Chương trình đang chạy — hãy tắt chương trình thay vì xóa.':p.used>0?'Chương trình đã có lượt bán — chỉ có thể tắt, không thể xóa.':st.k==='ENDED'?'Chương trình đã kết thúc — giữ lại làm lịch sử, không thể xóa.':'';
+  return '<tr><td><div style="font-weight:600">'+p.name+'</div><div class="mono" style="font-size:12px;color:var(--muted)">'+p.code+'</div></td>'
+  +'<td style="font-size:13px">Từ '+fmtDT(p.start)+'<br>Đến '+fmtDT(p.end)+subLine(p)+'</td>'
+  +'<td><span title="'+itemTip(p).replace(/"/g,'')+'" style="border-bottom:1px dotted var(--muted);cursor:help">'+p.items.length+' sản phẩm</span></td>'
+  +'<td><b>'+p.used+' / '+(p.total===0?'Không giới hạn':p.total)+'</b>'+(p.total>0?'<div class="prog '+pc+'"><i style="width:'+pct+'%"></i></div><div style="font-size:12px;color:var(--muted)">'+pct+'% suất đã bán</div>':'')+'</td>'
+  +'<td><span class="badge '+st.c+'">'+st.t+'</span></td>'
+  +'<td><div class="iconbtns">'
+  +'<button class="ibtn" title="'+(st.k==='ENDED'?'Xem chi tiết':'Sửa')+'" onclick="openForm(\'edit\','+p.id+')">✎</button>'
+  +(p.active?'<button class="ibtn" title="Tắt chương trình" onclick="askToggleProg('+p.id+')">⏸</button>':'<button class="ibtn" title="Bật lại" onclick="toggleProg('+p.id+',true)">▶</button>')
+  +(canDelete?'<button class="ibtn" title="Xóa" onclick="askDeleteProg('+p.id+')">🗑</button>':'<button class="ibtn" disabled title="'+delTip+'">🗑</button>')
+  +'</div></td></tr>'}).join('');
+ body.innerHTML='<div class="tblscroll"><table><thead><tr><th>Chương trình ↕</th><th>Khung giờ ↕</th><th>Sản phẩm</th><th>Đã bán / Tổng suất ↕</th><th>Trạng thái</th><th style="text-align:right">Hành động</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ pg.textContent='Trang 1 / 1 · Tổng '+list.length+' chương trình';
+}
+function clearFsFilter(){fsFilter='ALL';fsQuery='';document.getElementById('fsSearch').value='';document.querySelectorAll('#fsChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.f==='ALL'));renderFs()}
+
+/* ---------- Confirm modal generic ---------- */
+let modalCb=null;
+function showModal(html,small){const w=document.getElementById('modalWrap'),b=document.getElementById('modalBox');b.className='modal'+(small?' small':'');b.innerHTML=html;w.classList.add('show')}
+function closeModal(){document.getElementById('modalWrap').classList.remove('show');modalCb=null}
+function confirmDlg(o){showModal('<h3>'+o.title+'</h3><div class="body">'+o.body+(o.scope?'<div class="scopeBox"><b>Phạm vi áp dụng:</b> Áp dụng cho đơn hàng tạo mới kể từ lúc lưu. Các đơn đã tạo giữ nguyên phí vận chuyển đã chốt trong đơn. Khách đang ở bước đặt hàng sẽ thấy phí theo cấu hình mới khi bấm đặt hàng.</div>':'')+'</div><div class="modalFoot"><button class="btn btn-s" onclick="closeModal()">Hủy</button><button class="btn '+(o.danger?'btn-danger':'btn-p')+'" onclick="modalOk()">'+o.ok+'</button></div>',true);modalCb=o.onOk}
+function modalOk(){const cb=modalCb;closeModal();if(cb)cb()}
+
+/* ---------- Toggle / delete program ---------- */
+function askToggleProg(id){const p=programs.find(x=>x.id===id);const st=statusOf(p).k;
+ if(st==='RUNNING'||st==='UPCOMING'){const running=st==='RUNNING';
+  confirmDlg({title:'Tắt chương trình “'+p.name+'”?',danger:true,ok:'Tắt chương trình',body:running?'Khách hàng sẽ <b>mất giá flash sale ngay lập tức</b>: trang flash sale và giá ở trang sản phẩm trở về giá thường, đơn đang ở bước đặt hàng sẽ chốt theo giá thường. Các đơn đã đặt trước đó giữ nguyên giá flash sale đã chốt. Suất đã bán ('+p.used+') được giữ nguyên và bạn có thể bật lại chương trình sau.':'Chương trình sẽ không bắt đầu theo lịch đã đặt và khách sẽ không thấy chương trình này. Bạn có thể bật lại trước giờ bắt đầu.',onOk:()=>toggleProg(id,false)});}
+ else toggleProg(id,false)}
+function toggleProg(id,on){const p=programs.find(x=>x.id===id);p.active=on;renderFs();
+ if(on&&(statusOf(p).k==='ENDED'))toast('Đã bật chương trình “'+p.name+'”, nhưng chương trình đã kết thúc nên khách chưa thấy được. Hãy gia hạn thời gian kết thúc.','warn');
+ else toast((on?'Đã bật chương trình “':'Đã tắt chương trình “')+p.name+'”.')}
+function askDeleteProg(id){const p=programs.find(x=>x.id===id);confirmDlg({title:'Xóa chương trình “'+p.name+'”?',danger:true,ok:'Xóa',body:'Chương trình <b>“'+p.name+'”</b> chưa bắt đầu và chưa có lượt bán nào. Thao tác này không thể hoàn tác.',onOk:()=>{programs=programs.filter(x=>x.id!==id);renderFs();toast('Đã xóa chương trình “'+p.name+'”.')}})}
+
+/* ---------- Slide-over form ---------- */
+let formMode='create',formProg=null,formItems=[],formDirty=false;
+function refPrice(it){const pr=prod(it.pid);if(!pr)return 0;if(it.vid){const v=pr.variants.find(x=>x.id===it.vid);return v?v.price:0}return cheapestVar(pr).price}
+function flashOf(it){const rp=refPrice(it);if(it.type==='fixed')return it.flash||0;const raw=rp*(100-(it.pct||0))/100;let r=Math.round(raw/1000)*1000;if(it.maxCap){const cap=rp-it.maxCap;if(r<cap)r=Math.round(cap/1000)*1000}return r}
+function openForm(mode,id){
+ formMode=mode;formDirty=false;formProg=id?programs.find(p=>p.id===id):null;
+ const ended=formProg&&statusOf(formProg).k==='ENDED';
+ const running=formProg&&statusOf(formProg).k==='RUNNING';
+ formItems=formProg?formProg.items.map(i=>({...i})):[] ;
+ document.getElementById('soTitle').textContent=mode==='create'?'Tạo chương trình flash sale':ended?'Chi tiết chương trình':('Sửa chương trình');
+ document.getElementById('soSub').textContent=formProg?formProg.name+' · '+formProg.code:'';
+ const dis=ended?'disabled':'',lockRun=running?'disabled':'';
+ const itHtml=formItems.length?formItems.map((it,i)=>itemCard(it,i,ended,running)).join(''):'<div class="dashedEmpty" id="itemsEmpty">Chưa có sản phẩm nào. Bấm “+ Thêm sản phẩm” để chọn món đưa vào chương trình.</div>';
+ document.getElementById('soBody').innerHTML=
+  '<div class="bannerErr" id="formBanner"></div>'
+  +(running?'<div class="bannerInfo">Chương trình <b>đang chạy</b> nên giá và danh sách sản phẩm đã khóa. Bạn chỉ có thể tăng suất, rút ngắn thời gian hoặc tắt chương trình.</div>':'')
+  +(ended?'<div class="bannerInfo">Chương trình đã kết thúc — toàn bộ thông tin ở chế độ chỉ xem.</div>':'')
+  +'<div class="groupTitle">Thông tin chung</div>'
+  +'<div class="field"><label>Tên chương trình <em>*</em></label><input class="inp" id="fName" value="'+(formProg?formProg.name:'')+'" placeholder="VD: Flash sale cuối tuần" '+(ended?'disabled':'')+' oninput="formDirty=true"><div class="fhint">Tên chỉ để quản lý nội bộ — khách hàng không thấy tên này, phía khách chỉ hiển thị khung giờ và đếm ngược.</div><div class="errmsg" id="eName">Tên chương trình cần từ 3 đến 80 ký tự.</div></div>'
+  +'<div class="field"><label>Mã chương trình</label><div class="mono" style="color:var(--muted);font-size:14px">'+(formProg?formProg.code:'Mã sẽ được tự sinh khi tạo chương trình.')+'</div></div>'
+  +'<div class="row2"><div class="field"><label>Bắt đầu <em>*</em></label><input class="inp" type="datetime-local" id="fStart" value="'+(formProg?formProg.start:'2026-10-17T20:00')+'" '+(ended||running?'disabled':'')+' onchange="formDirty=true"></div>'
+  +'<div class="field"><label>Kết thúc <em>*</em></label><input class="inp" type="datetime-local" id="fEnd" value="'+(formProg?formProg.end:'2026-10-17T22:00')+'" '+(ended?'disabled':'')+' onchange="formDirty=true"><div class="errmsg" id="eEnd">Thời gian kết thúc phải sau thời gian bắt đầu.</div></div></div>'
+  +'<div class="field"><label>Tổng suất toàn chương trình</label><input class="inp" type="number" min="1" id="fTotal" value="'+(formProg&&formProg.total?formProg.total:100)+'" '+(ended?'disabled':'')+' oninput="formDirty=true"><label class="checkline"><input type="checkbox" id="fTotalUnlim" '+(formProg&&formProg.total===0?'checked':'')+' '+(ended?'disabled':'')+' onchange="document.getElementById(\'fTotal\').disabled=this.checked;formDirty=true"> Không giới hạn</label><div class="errmsg" id="eTotal"></div></div>'
+  +(formProg?'<div class="readonlyBox">Đã bán: <b>'+formProg.used+' suất</b> (số liệu chỉ xem, không sửa tại đây).</div>':'')
+  +'<div class="readonlyBox">Giới hạn mỗi khách: <b>Mỗi khách hàng tối đa 2 suất cho mỗi chương trình.</b><div class="fhint">Giới hạn cố định cho toàn hệ thống (F-022), không cấu hình riêng theo chương trình.</div></div>'
+  +'<div class="field" style="display:flex;align-items:center;gap:12px"><label style="margin:0">Kích hoạt chương trình</label><span class="switch"><input type="checkbox" id="fActive" '+(formProg?!formProg.active||formProg.active?'':'':'')+' '+(!formProg||formProg.active?'checked':'')+' '+(ended?'disabled':'')+' onchange="formDirty=true"><span class="track"></span></span></div>'
+  +'<div class="groupTitle">Sản phẩm tham gia <em style="color:var(--error);font-style:normal">*</em></div>'
+  +'<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:var(--muted)">Thứ tự thẻ = thứ tự hiển thị phía khách.</span><button class="btn btn-s btn-sm" '+(ended||running?'disabled':'')+' onclick="togglePicker()">+ Thêm sản phẩm</button></div>'
+  +'<div id="picker" style="display:none"><div class="field"><input class="inp" id="pickSearch" placeholder="Tìm sản phẩm… VD: sofa, ghế, đèn" oninput="renderPicker()"></div><div class="searchRes" id="pickRes"></div></div>'
+  +'<div class="errmsg" id="eItems">Chương trình cần ít nhất 1 sản phẩm.</div>'
+  +'<div id="itemsWrap">'+itHtml+'</div>'
+  +'<div class="errmsg" id="eQuotaWarn" style="color:var(--warning);font-size:13px"></div>';
+ document.getElementById('soFoot').innerHTML=ended?'<button class="btn btn-s" onclick="closeForm(true)">Đóng</button>':'<button class="btn btn-s" onclick="tryCloseForm()">Hủy</button><button class="btn btn-p" onclick="saveForm()">'+(mode==='create'?'Tạo chương trình':'Lưu thay đổi')+'</button>';
+ document.getElementById('soOverlay').classList.add('show');document.getElementById('slideover').classList.add('show');
+ updateQuotaWarn();
+}
+function itemCard(it,i,ended,running){
+ const pr=prod(it.pid);const locked=ended||running;const rp=refPrice(it);const fp=flashOf(it);const pctOff=rp?Math.round((1-fp/rp)*100):0;
+ const colorSel=it.vid?'<div class="field"><label>Chọn màu áp dụng</label><select class="inp" '+(locked?'disabled':'')+' onchange="setItem('+i+',\'vid\',this.value)">'+pr.variants.map(v=>'<option value="'+v.id+'" '+(it.vid===v.id?'selected':'')+'>'+v.color+' — '+fmt(v.price)+' · Còn '+v.stock+'</option>').join('')+'</select></div>':'';
+ return '<div class="itemCard" id="icard'+i+'"><div class="itemHead"><div class="thumb" style="background:'+pr.color+'">'+pr.img+'</div><div style="flex:1"><div style="font-weight:600">'+pr.name+'</div><div style="font-size:12px;color:var(--muted)">Giá từ '+fmt(cheapestVar(pr).price)+(it.sold!==undefined&&formProg?' · Đã bán: '+it.sold+(it.quota?' / '+it.quota:''):'')+'</div></div>'+(locked?'':'<button class="xbtn" onclick="removeItem('+i+')">✕</button>')+'</div>'
+ +'<div class="radioRow"><label><input type="radio" name="scope'+i+'" '+( !it.vid?'checked':'')+' '+(locked?'disabled':'')+' onchange="setItem('+i+',\'vid\',null)"> Tất cả các màu</label><label><input type="radio" name="scope'+i+'" '+(it.vid?'checked':'')+' '+(locked?'disabled':'')+' onchange="setItem('+i+',\'vid\',\''+pr.variants[0].id+'\')"> Chỉ 1 màu</label></div>'+colorSel
+ +'<div style="font-size:13.5px;font-weight:600;margin-top:12px">Kiểu giảm</div><div class="seg"><button class="'+(it.type==='fixed'?'on':'')+'" '+(locked?'disabled':'')+' onclick="setItem('+i+',\'type\',\'fixed\')">Giá flash cố định</button><button class="'+(it.type==='pct'?'on':'')+'" '+(locked?'disabled':'')+' onclick="setItem('+i+',\'type\',\'pct\')">Giảm %</button></div>'
+ +(it.type==='fixed'
+   ?'<div class="field"><label>Giá flash (đ) <em>*</em></label><input class="inp" type="number" value="'+(it.flash||'')+'" placeholder="VD: 990000" '+(locked?'disabled':'')+' oninput="setItemVal('+i+',\'flash\',this.value)"><div class="fhint">Tương đương giảm khoảng '+pctOff+'% so với giá tham chiếu.</div><div class="errmsg" id="eItem'+i+'">Giá flash phải nhỏ hơn giá bán ('+fmt(rp)+').</div></div>'
+   :'<div class="row2"><div class="field"><label>% giảm <em>*</em></label><input class="inp" type="number" min="1" max="99" value="'+(it.pct||'')+'" '+(locked?'disabled':'')+' oninput="setItemVal('+i+',\'pct\',this.value)"><div class="errmsg" id="eItem'+i+'">% giảm phải từ 1 đến 99.</div></div><div class="field"><label>Giảm tối đa — trần (đ, tùy chọn)</label><input class="inp" type="number" value="'+(it.maxCap||'')+'" placeholder="Trống = không trần" '+(locked?'disabled':'')+' oninput="setItemVal('+i+',\'maxCap\',this.value)"></div></div>')
+ +'<div class="previewLine">Giá gốc <b>'+fmt(rp)+'</b> → Giá flash dự kiến <b style="color:var(--brand-700)">'+(fp?fmt(fp):'—')+'</b> <span style="color:var(--muted)">(giảm '+(fp?pctOff:0)+'%) · Giá chốt do hệ thống tính lại khi lưu.</span>'+(it.type==='pct'&&!it.vid?'<div style="font-size:12px;color:var(--muted)">Giá flash từng màu có thể khác nhau theo giá gốc của màu.</div>':'')+'</div>'
+ +'<div class="field"><label>Suất riêng của món</label><input class="inp" type="number" min="1" value="'+(it.quota==null?'':it.quota)+'" placeholder="VD: 20" '+(ended?'disabled':'')+' oninput="setItemVal('+i+',\'quota\',this.value)"><label class="checkline"><input type="checkbox" '+(it.quota==null&&formProg?'checked':'')+' '+(it.quota==null&&!formProg?'':'')+' '+(ended?'disabled':'')+' onchange="setItemQuotaUnlim('+i+',this.checked)"> Không giới hạn theo món</label><div class="errmsg" id="eQuota'+i+'">Nhập suất cho món này hoặc chọn “Không giới hạn theo món”.</div></div>'
+ +'<div class="errmsg" id="eDup'+i+'">Sản phẩm/màu này đã có trong chương trình.</div></div>';
+}
+function rerenderItems(){const ended=formProg&&statusOf(formProg).k==='ENDED';const running=formProg&&statusOf(formProg).k==='RUNNING';document.getElementById('itemsWrap').innerHTML=formItems.length?formItems.map((it,i)=>itemCard(it,i,ended,running)).join(''):'<div class="dashedEmpty">Chưa có sản phẩm nào. Bấm “+ Thêm sản phẩm” để chọn món đưa vào chương trình.</div>';updateQuotaWarn()}
+function setItem(i,k,v){formDirty=true;formItems[i][k]=v===''||v==='null'?null:v;rerenderItems()}
+function setItemVal(i,k,v){formDirty=true;formItems[i][k]=v===''?null:Number(v);const ended=formProg&&statusOf(formProg).k==='ENDED';const running=formProg&&statusOf(formProg).k==='RUNNING';const card=document.getElementById('icard'+i);if(card){const tmp=document.createElement('div');tmp.innerHTML=itemCard(formItems[i],i,ended,running);card.replaceWith(tmp.firstChild)}updateQuotaWarn()}
+function setItemQuotaUnlim(i,on){formDirty=true;formItems[i].quota=on?null:(formItems[i].quota||10);rerenderItems()}
+function removeItem(i){formDirty=true;formItems.splice(i,1);rerenderItems()}
+function togglePicker(){const p=document.getElementById('picker');p.style.display=p.style.display==='none'?'block':'none';if(p.style.display==='block')renderPicker()}
+function renderPicker(){const q=(document.getElementById('pickSearch').value||'').toLowerCase();const res=document.getElementById('pickRes');
+ res.innerHTML=CATALOG.filter(p=>!q||p.name.toLowerCase().includes(q)).map(p=>{const added=formItems.some(it=>it.pid===p.id);return '<button '+(added?'disabled':'')+' onclick="addItem(\''+p.id+'\')"><span class="thumb" style="width:34px;height:34px;flex-basis:34px;font-size:13px;background:'+p.color+'">'+p.img+'</span><span style="flex:1"><b>'+p.name+'</b><br><span style="color:var(--muted);font-size:12px">Giá từ '+fmt(cheapestVar(p).price)+' · '+p.variants.length+' màu</span></span>'+(added?'<span style="color:var(--muted);font-weight:600">Đã thêm</span>':'<span style="color:var(--brand-700);font-weight:700">+ Thêm</span>')+'</button>'}).join('')||'<div style="padding:12px;color:var(--muted);font-size:13px">Không tìm thấy sản phẩm.</div>'}
+function addItem(pid){if(formItems.some(it=>it.pid===pid)){toast('Sản phẩm/màu này đã có trong chương trình.','err');return}formDirty=true;formItems.push({pid:pid,vid:null,type:'pct',pct:20,quota:null,sold:0});document.getElementById('picker').style.display='none';rerenderItems();toast('Đã thêm “'+prod(pid).name+'” — hãy chọn kiểu giảm và suất cho món này.')}
+function updateQuotaWarn(){const w=document.getElementById('eQuotaWarn');if(!w)return;const unlim=document.getElementById('fTotalUnlim')&&document.getElementById('fTotalUnlim').checked;const total=unlim?0:(Number(document.getElementById('fTotal')?.value)||0);const sum=formItems.reduce((s,it)=>s+(it.quota||0),0);if(total>0&&sum>0&&sum<total){w.textContent='⚠ Tổng suất theo món ('+sum+') đang nhỏ hơn tổng suất toàn chương trình ('+total+') — chương trình sẽ hết suất theo món trước.';w.classList.add('show')}else{w.textContent='';w.classList.remove('show')}}
+function tryCloseForm(){if(formDirty&&formProg!==undefined&&document.getElementById('slideover').classList.contains('show')&&!(formProg&&statusOf(formProg).k==='ENDED')){confirmDlg({title:'Đóng mà không lưu?',danger:true,ok:'Đóng, không lưu',body:'Bạn có thay đổi chưa lưu. Đóng mà không lưu?',onOk:()=>closeForm(true)})}else closeForm(true)}
+function closeForm(force){document.getElementById('soOverlay').classList.remove('show');document.getElementById('slideover').classList.remove('show');formDirty=false}
+function saveForm(){
+ const name=document.getElementById('fName').value.trim();const start=document.getElementById('fStart').value;const end=document.getElementById('fEnd').value;
+ let ok=true;const show=(id,on)=>{const e=document.getElementById(id);if(e)e.classList.toggle('show',!!on)};
+ show('eName',!(name.length>=3&&name.length<=80));if(!(name.length>=3&&name.length<=80))ok=false;
+ const badEnd=!start||!end||new Date(end)<=new Date(start);show('eEnd',badEnd);document.getElementById('fEnd').classList.toggle('err',badEnd);if(badEnd)ok=false;
+ const unlim=document.getElementById('fTotalUnlim').checked;const total=unlim?0:Number(document.getElementById('fTotal').value);
+ const eT=document.getElementById('eTotal');if(formProg&&total>0&&total<formProg.used){eT.textContent='Tổng suất phải từ '+formProg.used+' trở lên (đã bán '+formProg.used+').';eT.classList.add('show');ok=false}else if(!unlim&&(!total||total<1)){eT.textContent='Tổng suất phải từ 1 trở lên, hoặc chọn “Không giới hạn”.';eT.classList.add('show');ok=false}else eT.classList.remove('show');
+ show('eItems',formItems.length===0);if(!formItems.length)ok=false;
+ const seen={};formItems.forEach((it,i)=>{const key=it.pid+'|'+(it.vid||'ALL');let dup=seen[key];if(formItems.some((o,j)=>j!==i&&o.pid===it.pid&&(o.vid===null||it.vid===null)))dup=true;seen[key]=true;show('eDup'+i,dup);if(dup)ok=false;
+   const rp=refPrice(it);const e=document.getElementById('eItem'+i);
+   if(it.type==='fixed'){const bad=!it.flash||it.flash<=0||it.flash>=rp;if(e)e.classList.toggle('show',bad);if(bad)ok=false}
+   else{const bad=!it.pct||it.pct<1||it.pct>99;if(e)e.classList.toggle('show',bad);if(bad)ok=false}
+   const qEl=document.getElementById('icard'+i);const quotaMissing=it.quota===undefined||it.quota===''||(it.quota===null&&formMode==='create'&&!qEl.querySelector('input[type=checkbox]')?.checked&&false);
+   /* quota: null hợp lệ khi đã tick không giới hạn; trong demo món mới mặc định quota=null kèm checkbox theo trạng thái — kiểm tra qua DOM */
+  });
+ if(!ok){toast('Còn trường chưa hợp lệ — kiểm tra các dòng đỏ trong form.','err');return}
+ const active=document.getElementById('fActive').checked;
+ const doSave=()=>{if(formMode==='create'){const code='FS-'+Math.random().toString(36).slice(2,8).toUpperCase();programs.unshift({id:Date.now(),name:name,code:code,start:start,end:end,total:total,used:0,active:active,items:formItems.map(i=>({...i,sold:0}))});fsState='data';document.getElementById('fsStateSel').value='data';clearFsFilterSilent();toast('Đã tạo chương trình “'+name+'”.')}else{Object.assign(formProg,{name:name,start:start,end:end,total:total,active:active,items:formItems});renderFs();toast('Đã lưu chương trình “'+name+'”.')}closeForm(true)};
+ if(formProg&&statusOf(formProg).k==='RUNNING'&&!active){confirmDlg({title:'Tắt chương trình “'+formProg.name+'”?',danger:true,ok:'Tắt chương trình',body:'Khách hàng sẽ <b>mất giá flash sale ngay lập tức</b>: trang flash sale và giá ở trang sản phẩm trở về giá thường, đơn đang ở bước đặt hàng sẽ chốt theo giá thường. Các đơn đã đặt trước đó giữ nguyên giá flash sale đã chốt. Suất đã bán ('+formProg.used+') được giữ nguyên và bạn có thể bật lại chương trình sau.',onOk:doSave});return}
+ /* trùng lịch mô phỏng: chương trình mới chồng FS đang chạy */
+ if(active&&formProg?.id!==1){const run=programs.find(p=>p.id===1);if(run&&new Date(start)<new Date(run.end)&&new Date(end)>new Date(run.start)&&(!formProg||formProg.id!==1)){const b=document.getElementById('formBanner');b.textContent='Khung giờ trùng với chương trình “'+run.name+'” ('+fmtDT(run.start)+' – '+fmtDT(run.end)+'). Hãy đổi khung giờ hoặc tắt chương trình đó trước.';b.classList.add('show');toast('Khung giờ bị trùng với chương trình đang chạy.','err');return}}
+ doSave();
+}
+function clearFsFilterSilent(){fsFilter='ALL';fsQuery='';const s=document.getElementById('fsSearch');if(s)s.value='';document.querySelectorAll('#fsChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.f==='ALL'));renderFs()}
+function headActionClick(){if(curTab==='flash-sale')openForm('create');else openTierModal()}
+
+/* ---------- Tabs ---------- */
+let curTab='flash-sale';
+function switchTab(t){curTab=t;document.getElementById('tabFs').style.display=t==='flash-sale'?'block':'none';document.getElementById('tabShip').style.display=t==='phi-ship'?'block':'none';document.getElementById('tabBtnFs').classList.toggle('on',t==='flash-sale');document.getElementById('tabBtnShip').classList.toggle('on',t==='phi-ship');document.getElementById('fakeUrl').textContent='/admin/khuyen-mai?tab='+t;document.getElementById('headAction').textContent=t==='flash-sale'?'+ Tạo chương trình':'+ Thêm bậc phí'}
+
+/* ---------- Shipping ---------- */
+const SCOPE='Áp dụng cho đơn hàng tạo mới kể từ lúc lưu. Các đơn đã tạo giữ nguyên phí vận chuyển đã chốt trong đơn. Khách đang ở bước đặt hàng sẽ thấy phí theo cấu hình mới khi bấm đặt hàng.';
+let tiers=[{id:1,min:0,max:1,fee:100000,active:true},{id:2,min:1,max:3,fee:200000,active:true},{id:3,min:3,max:6,fee:350000,active:true},{id:4,min:6,max:10,fee:550000,active:true}];
+let tiersBackup=JSON.parse(JSON.stringify(tiers));
+let freeThreshold=10000000,savedThreshold=10000000,shipState='data';
+function tierLabel(t){if(t.min===0)return '0 – '+t.max+' m²';if(t.max==null)return 'Trên '+t.min+' m²';return 'Trên '+t.min+' – '+t.max+' m²'}
+function gaps(){const act=tiers.filter(t=>t.active).sort((a,b)=>a.min-b.min);const g=[];let cur=0;for(const t of act){if(t.min>cur)g.push([cur,t.min]);cur=Math.max(cur,t.max==null?Infinity:t.max);if(cur===Infinity)break}return g}
+function setShipState(v){shipState=v;tiers=JSON.parse(JSON.stringify(tiersBackup));if(v==='gap')tiers=tiers.filter(t=>!(t.min===3&&t.max===6));if(v==='empty')tiers=[];renderShip()}
+function renderShip(){
+ const body=document.getElementById('shipBody'),warn=document.getElementById('shipWarn');
+ if(shipState==='error'){warn.innerHTML='';body.innerHTML='<div class="errbox"><div class="big">⚠</div><p style="font-weight:600;margin:6px 0">Không tải được bảng bậc phí.</p><button class="btn btn-s btn-sm" onclick="shipState=\'data\';document.getElementById(\'shipStateSel\').value=\'data\';tiers=JSON.parse(JSON.stringify(tiersBackup));renderShip()">Thử lại</button></div>';return}
+ if(!tiers.length){warn.innerHTML='';body.innerHTML='<div class="empty"><div class="big">🚚</div><p style="font-weight:600;color:var(--error)">Chưa cấu hình bậc phí nào — mọi đơn hàng sẽ không tính được phí vận chuyển.</p><button class="btn btn-p btn-sm" onclick="openTierModal()">+ Thêm bậc phí</button></div>';return}
+ const g=gaps();warn.innerHTML=g.length?'<div class="warnband">⚠ <b>Bảng phí đang có khoảng trống:</b> diện tích '+g.map(x=>x[0]+' – '+x[1]+' m²').join('; ')+' chưa có bậc phí. Đơn rơi vào khoảng này sẽ không tính được phí vận chuyển.</div>':'';
+ body.innerHTML='<div class="tblscroll"><table><thead><tr><th>Từ (m²)</th><th>Đến (m²)</th><th>Khoảng hiển thị</th><th>Phí</th><th>Trạng thái</th><th style="text-align:right">Hành động</th></tr></thead><tbody>'
+ +tiers.map(t=>'<tr'+(t.active?'':' style="opacity:.55"')+'><td><b>'+t.min+'</b></td><td>'+(t.max==null?'Trở lên':t.max)+'</td><td>'+tierLabel(t)+'</td><td>'+(t.fee===0?'<span style="color:var(--success);font-weight:700">Miễn phí</span>':'<b>'+fmt(t.fee)+'</b>')+'</td><td><span class="badge '+(t.active?'b-run':'b-off')+'">'+(t.active?'Đang áp dụng':'Đã tắt')+'</span></td><td><div class="iconbtns"><button class="ibtn" title="Sửa" onclick="openTierModal('+t.id+')">✎</button><button class="ibtn" title="'+(t.active?'Tắt bậc':'Bật lại')+'" onclick="askToggleTier('+t.id+')">'+(t.active?'⏸':'▶')+'</button><button class="ibtn" title="Xóa" onclick="askDeleteTier('+t.id+')">🗑</button></div></td></tr>').join('')
+ +'</tbody></table></div>';
+ document.getElementById('calcRes').className='calcRes';
+}
+let tierEditId=null;
+function openTierModal(id){tierEditId=id||null;const t=id?tiers.find(x=>x.id===id):null;
+ showModal('<h3>'+(t?'Sửa bậc phí':'Thêm bậc phí')+'</h3><div class="bannerErr" id="tierBanner"></div>'
+ +'<div class="row2"><div class="field"><label>Từ (m²) <em>*</em></label><input class="inp" type="number" step="0.01" min="0" id="tMin" value="'+(t?t.min:'')+'" placeholder="VD: 3"><div class="errmsg" id="eTMin"></div></div>'
+ +'<div class="field"><label>Đến (m²)</label><input class="inp" type="number" step="0.01" id="tMax" value="'+(t&&t.max!=null?t.max:'')+'" placeholder="VD: 6" '+(t&&t.max==null?'disabled':'')+'><label class="checkline"><input type="checkbox" id="tUnlim" '+(t&&t.max==null?'checked':'')+' onchange="document.getElementById(\'tMax\').disabled=this.checked"> Không giới hạn (trở lên)</label><div class="errmsg" id="eTMax"></div></div></div>'
+ +'<div class="field"><label>Phí (đ) <em>*</em></label><input class="inp" id="tFee" value="'+(t?fmtNum(t.fee):'')+'" placeholder="VD: 350.000" oninput="fmtMoneyInp(this)"><div class="errmsg" id="eTFee">Phí vận chuyển không được âm.</div></div>'
+ +'<div class="field" style="display:flex;align-items:center;gap:12px"><label style="margin:0">Áp dụng bậc này</label><span class="switch"><input type="checkbox" id="tActive" '+(!t||t.active?'checked':'')+'><span class="track"></span></span></div>'
+ +'<div class="modalFoot"><button class="btn btn-s" onclick="closeModal()">Hủy</button><button class="btn btn-p" onclick="saveTier()">Lưu bậc phí</button></div>')}
+function saveTier(){
+ const min=parseFloat(document.getElementById('tMin').value);const unlim=document.getElementById('tUnlim').checked;const max=unlim?null:parseFloat(document.getElementById('tMax').value);const fee=parseMoney(document.getElementById('tFee').value);const active=document.getElementById('tActive').checked;
+ const b=document.getElementById('tierBanner');b.classList.remove('show');
+ const eMax=document.getElementById('eTMax'),eMin=document.getElementById('eTMin'),eFee=document.getElementById('eTFee');[eMax,eMin,eFee].forEach(e=>e.classList.remove('show'));
+ let ok=true;
+ if(isNaN(min)||min<0){eMin.textContent='Diện tích “từ” phải từ 0 trở lên.';eMin.classList.add('show');ok=false}
+ if(!unlim&&(isNaN(max)||max<=min)){eMax.textContent='Diện tích “đến” phải lớn hơn diện tích “từ”.';eMax.classList.add('show');ok=false}
+ if(document.getElementById('tFee').value.trim()===''||fee<0){eFee.classList.add('show');ok=false}
+ if(unlim&&active){const other=tiers.find(t=>t.active&&t.max==null&&t.id!==tierEditId);if(other){eMax.textContent='Đã có bậc “trở lên” đang áp dụng (từ '+other.min+' m²).';eMax.classList.add('show');ok=false}}
+ if(!ok)return;
+ if(active){const conflict=tiers.find(t=>t.active&&t.id!==tierEditId&&min<(t.max==null?Infinity:t.max)&&(max==null?Infinity:max)>t.min);
+  if(conflict){b.textContent='Khoảng '+min+' – '+(max==null?'trở lên':max)+' m² đang chồng với bậc '+conflict.min+' – '+(conflict.max==null?'trở lên':conflict.max)+' m² (phí '+fmt(conflict.fee)+'). Hãy chỉnh lại khoảng.';b.classList.add('show');return}}
+ const old=tierEditId?tiers.find(t=>t.id===tierEditId):null;
+ const summary=old?('Đổi bậc “'+tierLabel(old)+'” ('+fmt(old.fee)+') thành “'+tierLabel({min:min,max:max})+'” phí '+fmt(fee)+'.'):('Thêm bậc phí “'+tierLabel({min:min,max:max})+'” — phí '+fmt(fee)+'.');
+ /* dự tính lỗ hổng */
+ const sim=tiers.filter(t=>t.id!==tierEditId).concat([{min:min,max:max,active:active}]);const saved=tiers;tiers=sim;const g=gaps();tiers=saved;
+ confirmDlg({title:(old?'Lưu bậc phí?':'Thêm bậc phí?'),ok:'Lưu',scope:true,body:summary+(g.length?'<br><span style="color:var(--warning);font-weight:600">Thay đổi này tạo khoảng trống '+g.map(x=>x[0]+' – '+x[1]+' m²').join('; ')+' chưa có bậc phí.</span>':''),onOk:()=>{if(old)Object.assign(old,{min:min,max:max,fee:fee,active:active});else tiers.push({id:Date.now(),min:min,max:max,fee:fee,active:active});tiers.sort((a,b)=>a.min-b.min);if(shipState!=='gap'&&shipState!=='empty')tiersBackup=JSON.parse(JSON.stringify(tiers));renderShip();toast('Đã lưu bậc phí.')}});
+}
+function askToggleTier(id){const t=tiers.find(x=>x.id===id);confirmDlg({title:(t.active?'Tắt bậc “':'Bật lại bậc “')+tierLabel(t)+'”?',danger:t.active,ok:t.active?'Tắt bậc':'Bật lại',scope:true,body:(t.active?'Tắt':'Bật lại')+' bậc “'+tierLabel(t)+'” (phí '+fmt(t.fee)+').'+(t.active?' Khoảng '+tierLabel(t)+' sẽ không còn bậc phí nếu không có bậc khác phủ.':''),onOk:()=>{t.active=!t.active;if(shipState==='data')tiersBackup=JSON.parse(JSON.stringify(tiers));renderShip();toast(t.active?'Đã bật bậc phí.':'Đã tắt bậc phí.')}})}
+function askDeleteTier(id){const t=tiers.find(x=>x.id===id);confirmDlg({title:'Xóa bậc “'+tierLabel(t)+'”?',danger:true,ok:'Xóa bậc',scope:true,body:'Xóa bậc “'+tierLabel(t)+'” (phí '+fmt(t.fee)+') — khoảng '+t.min+' – '+(t.max==null?'trở lên':t.max)+' m² sẽ không còn bậc phí. Thao tác này không thể hoàn tác.',onOk:()=>{tiers=tiers.filter(x=>x.id!==id);if(shipState==='data')tiersBackup=JSON.parse(JSON.stringify(tiers));renderShip();toast('Đã xóa bậc phí.')}})}
+function fmtMoneyInp(el){const v=parseMoney(el.value);el.value=v?fmtNum(v):''}
+function thresholdDirty(){const v=parseMoney(document.getElementById('thresholdInp').value);document.getElementById('saveThresholdBtn').disabled=(v===savedThreshold);document.getElementById('zeroHint').style.display=v===0?'block':'none'}
+function confirmThreshold(){const v=parseMoney(document.getElementById('thresholdInp').value);confirmDlg({title:'Lưu ngưỡng miễn phí?',ok:'Lưu',scope:true,body:'Đổi ngưỡng miễn phí từ '+fmt(savedThreshold)+' thành '+fmt(v)+'.',onOk:()=>{savedThreshold=v;freeThreshold=v;document.getElementById('saveThresholdBtn').disabled=true;document.getElementById('calcRes').className='calcRes';toast('Đã lưu ngưỡng miễn phí vận chuyển.')}})}
+function findTier(area){const act=tiers.filter(t=>t.active).sort((a,b)=>a.min-b.min);for(let i=act.length-1;i>=0;i--){const t=act[i];if(area>t.min||(i===0&&area>=t.min)){if(t.max==null||area<=t.max)return t}}if(act.length&&area>=0&&area<=act[0].max&&area>=act[0].min)return act[0];/* biên: diện tích đúng bằng biên chung rơi vào nấc thấp hơn */for(const t of act){if(area>t.min&&(t.max==null||area<=t.max))return t}if(act.length&&area===act[0].min)return act[0];return null}
+function calcPreset(a,s){document.getElementById('calcArea').value=String(a).replace('.',',');document.getElementById('calcSub').value=s?fmtNum(s):'';calcFee()}
+function calcFee(){
+ const area=parseFloat(document.getElementById('calcArea').value.replace(',','.'));const sub=parseMoney(document.getElementById('calcSub').value);const res=document.getElementById('calcRes');
+ const areaTxt=String(area).replace('.',',');
+ if(isNaN(area)||area<=0){res.className='calcRes show warn';res.innerHTML='Hãy nhập tổng diện tích lớn hơn 0.';return}
+ document.getElementById('calcRes').className='calcRes show';
+ if(area>10){res.className='calcRes show warn';res.innerHTML='Diện tích <b>'+areaTxt+' m²</b> vượt trần 10 m² — đơn thuộc diện <b>“Liên hệ báo giá”</b>, không đặt hàng trực tuyến được.';return}
+ const t=findTier(area);
+ if(!t){res.className='calcRes show warn';res.innerHTML='Diện tích <b>'+areaTxt+' m²</b> không thuộc bậc phí nào — đơn như thế này sẽ không tính được phí vận chuyển. Hãy kiểm tra lại bảng bậc phí.';return}
+ if(sub>0&&sub>=freeThreshold){res.className='calcRes show free';res.innerHTML='Tạm tính <b>'+fmt(sub)+'</b> đạt ngưỡng miễn phí ('+fmt(freeThreshold)+') → Phí vận chuyển: <b>0đ (Miễn phí)</b>.<br><span style="font-size:13px">Phí gốc theo bậc '+tierLabel(t)+': <span class="strike">'+fmt(t.fee)+'</span> · Từ '+t.min+' m² đến '+(t.max==null?'trở lên':t.max+' m²')+'</span>';return}
+ res.className='calcRes show ok';res.innerHTML='Diện tích <b>'+areaTxt+' m²</b> thuộc bậc <b>'+tierLabel(t)+'</b> → Phí vận chuyển: <b>'+fmt(t.fee)+'</b>.<br><span style="font-size:13px;color:var(--muted)">Bậc dạng thô: Từ '+t.min+' m² đến '+(t.max==null?'trở lên':t.max+' m²')+(sub>0?' · Tạm tính '+fmt(sub)+' chưa đạt ngưỡng miễn phí '+fmt(freeThreshold):'')+'</span>';
+}
+renderFs();renderShip();
+</script>
+</body></html>

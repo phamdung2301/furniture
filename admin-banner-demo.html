@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý banner — Mộc An Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--brand-900:#3E2A1E;--brand-700:#5D3A29;--brand-600:#71472F;--accent:#C9A227;--bg:#FAF7F2;--surface:#fff;--border:#E9DFD2;--text:#2B2118;--muted:#8A7A6B;--success:#2E7D32;--error:#C62828;--warning:#B7791F}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
+.mono{font-family:"JetBrains Mono",monospace}.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;flex:0 0 240px;background:var(--brand-900);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:70}
+.logo{padding:20px 20px 16px;cursor:pointer}.logo b{font-size:20px;font-weight:800}.logo span{display:block;font-size:11px;letter-spacing:.22em;color:#C9BBA9;margin-top:2px}
+.nav{flex:1;padding:8px 12px;overflow-y:auto}.nav a{display:flex;align-items:center;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;font-weight:500;padding:10px 14px;border-radius:10px;margin-bottom:2px;position:relative}
+.nav a:hover{background:rgba(255,255,255,.08)}.nav a.active{background:var(--brand-700);color:#fff;font-weight:600}.nav a.active:before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;background:var(--accent);border-radius:3px}
+.nav .ic{width:19px;text-align:center;flex:0 0 19px}.cntbadge{margin-left:auto;background:var(--error);color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px}.cntbadge.warn{background:var(--warning)}
+.sidefoot{border-top:1px solid rgba(255,255,255,.14);padding:12px}.sidefoot a{display:flex;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;padding:9px 14px;border-radius:10px}.sidefoot a:hover{background:rgba(255,255,255,.08)}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:65}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;gap:14px;padding:0 24px}
+.topbar h2{font-size:18px;font-weight:700;white-space:nowrap}.crumb{font-size:13px;color:var(--muted)}
+.hamb{display:none;background:none;border:1px solid var(--border);border-radius:9px;width:38px;height:38px;font-size:17px}
+.quick{margin-left:auto;position:relative}.quick input{width:300px;max-width:36vw;padding:9px 14px 9px 34px;border:1px solid var(--border);border-radius:999px;background:var(--bg);outline:none}.quick input:focus{border-color:var(--brand-700)}.quick span{position:absolute;left:12px;top:8px;color:var(--muted)}
+.adminbox{display:flex;align-items:center;gap:10px;cursor:pointer;position:relative}.avatar{width:38px;height:38px;border-radius:50%;background:var(--brand-700);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 38px}
+.adminbox .nm{font-size:15px;font-weight:600;line-height:1.2;white-space:nowrap}.adminbox .rl{font-size:12px;color:var(--muted)}
+.addrop{display:none;position:absolute;right:0;top:50px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 14px 34px rgba(62,42,30,.16);padding:6px;min-width:190px;z-index:80}.addrop.open{display:block}.addrop a{display:block;padding:9px 12px;color:var(--text);text-decoration:none;font-size:14px;border-radius:8px}.addrop a:hover{background:#F5EFE6}
+.content{padding:24px}
+.btn{display:inline-flex;align-items:center;gap:7px;border-radius:10px;padding:11px 18px;font-size:15px;font-weight:600;border:1px solid transparent;transition:.15s;text-decoration:none}
+.btn-pri{background:var(--brand-700);color:#fff}.btn-pri:hover{background:var(--brand-600);transform:translateY(-1px)}
+.btn-sec{background:#fff;border-color:var(--brand-700);color:var(--brand-700)}.btn-sec:hover{background:#F5EFE6}
+.btn-txt{background:none;border:none;color:var(--brand-700);font-weight:600;font-size:14px;padding:8px 6px}.btn-txt:hover{text-decoration:underline}
+.btn-danger{background:var(--error);color:#fff}.btn-sm{padding:8px 13px;font-size:14px}.btn:disabled{background:#C9BBA9!important;color:#fff;cursor:not-allowed;transform:none}
+.pagehead{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.pagehead h1{font-size:20px;font-weight:700}.countline{font-size:13px;color:var(--muted);margin-top:2px}
+.headright{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.demo-toggle{display:flex;background:#fff;border:1px solid var(--border);border-radius:999px;padding:3px;align-items:center}
+.demo-toggle em{font-style:normal;font-size:12px;color:var(--muted);padding:0 6px 0 9px}
+.demo-toggle button{border:none;background:none;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}.demo-toggle button.on{background:var(--brand-700);color:#fff}
+.warnstrip{display:none;background:#FDF3E0;border:1px solid var(--warning);border-radius:12px;padding:13px 16px;margin:16px 0 0;font-size:14px;align-items:flex-start;gap:10px}.warnstrip.show{display:flex}.warnstrip b{font-weight:700}
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+/* Banner cards */
+.bcard{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;gap:16px;align-items:flex-start;margin-top:16px;transition:box-shadow .15s,opacity .15s}
+.bcard.dragging{opacity:.55;box-shadow:0 14px 30px rgba(62,42,30,.18)}.bcard.dragover{border-top:3px solid var(--accent)}
+.drag{font-size:20px;color:var(--muted);cursor:grab;padding:6px 2px;user-select:none;flex:0 0 auto}.drag:active{cursor:grabbing}
+.preview{width:300px;flex:0 0 300px;aspect-ratio:21/8;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(120deg,var(--bg),var(--border))}
+.preview img{width:100%;height:100%;object-fit:cover;display:block}
+.preview.off img{opacity:.55;filter:grayscale(.35)}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.45),transparent 75%);display:flex;flex-direction:column;justify-content:center;padding:12px 14px;color:#fff;pointer-events:none}
+.hero-ov h4{font-size:14px;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hero-ov p{font-size:11px;opacity:.9;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-ov span{align-self:flex-start;margin-top:6px;background:var(--brand-700);color:#fff;font-size:11px;font-weight:600;padding:5px 10px;border-radius:7px}
+.binfo{flex:1;min-width:0}
+.btop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ordbadge{background:var(--accent);color:#fff;font-weight:700;font-size:13px;border-radius:999px;padding:2px 10px}
+.btitle{font-size:16px;font-weight:700;cursor:pointer;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.btitle:hover{color:var(--brand-700)}
+.bsub{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.linkrow{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.ctachip{background:var(--brand-700);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:8px}
+.linkurl{font-size:13px;color:var(--brand-700)}
+.openlink{color:var(--brand-700);text-decoration:none;font-size:14px}
+.stbadge{font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px;text-transform:none}
+.st-on{background:#E8F5E9;color:var(--success)}.st-off{background:#EFE9E0;color:var(--muted)}
+.bactions{display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto}
+.actrow{display:flex;gap:6px;align-items:center}
+.iconbtn{width:34px;height:34px;border:1px solid var(--border);background:#fff;border-radius:9px;font-size:15px;color:var(--text)}.iconbtn:hover{border-color:var(--brand-700);color:var(--brand-700)}.iconbtn:disabled{opacity:.35;cursor:not-allowed}
+.txtbtn{border:1px solid var(--border);background:#fff;border-radius:9px;padding:7px 12px;font-size:13px;font-weight:600}.txtbtn:hover{border-color:var(--brand-700);color:var(--brand-700)}.txtbtn.del:hover{border-color:var(--error);color:var(--error)}
+/* toggle switch */
+.sw{position:relative;width:46px;height:26px;flex:0 0 46px}.sw input{opacity:0;width:0;height:0}
+.sw i{position:absolute;inset:0;background:#D8CBBB;border-radius:999px;transition:.18s;cursor:pointer}.sw i:before{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.sw input:checked + i{background:var(--success)}.sw input:checked + i:before{transform:translateX(20px)}
+.swlbl{font-size:12px;color:var(--muted)}
+/* empty / error */
+.statebox{background:#fff;border:1px dashed var(--border);border-radius:16px;padding:52px 24px;text-align:center;margin-top:16px}
+.statebox .big{font-size:42px;margin-bottom:10px}.statebox h3{font-size:17px;font-weight:700;margin-bottom:6px}.statebox p{font-size:14px;color:var(--muted);max-width:520px;margin:0 auto 18px}
+/* slide-over */
+.overlay{position:fixed;inset:0;background:rgba(30,20,12,.45);z-index:90;opacity:0;pointer-events:none;transition:.2s}.overlay.open{opacity:1;pointer-events:auto}
+.slideover{position:fixed;top:0;right:0;width:560px;max-width:100vw;height:100vh;background:#fff;z-index:95;transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-16px 0 40px rgba(62,42,30,.2)}
+.slideover.open{transform:translateX(0)}
+.so-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}.so-head h3{font-size:18px;font-weight:700}.so-head p{font-size:13px;color:var(--muted)}
+.so-close{margin-left:auto;background:none;border:1px solid var(--border);width:36px;height:36px;border-radius:9px;font-size:16px;flex:0 0 36px}
+.so-body{flex:1;overflow-y:auto;padding:20px 22px}
+.so-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;background:#fff}
+.field{margin-bottom:18px}.field label{display:block;font-size:14px;font-weight:600;margin-bottom:7px}.field label b{color:var(--error)}
+.field input[type=text],.field input[type=number],.field select,.field textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}.field input:focus,.field select:focus{border-color:var(--brand-700)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}.counter{float:right;font-size:12px;color:var(--muted);font-weight:400}
+.err-msg{display:none;font-size:12.5px;color:var(--error);margin-top:5px}.field.invalid input{border-color:var(--error)}.field.invalid .err-msg{display:block}
+.imgbox{border-radius:12px;overflow:hidden;position:relative;aspect-ratio:21/8;background:linear-gradient(120deg,var(--bg),var(--border));border:1px solid var(--border)}
+.imgbox img{width:100%;height:100%;object-fit:cover;display:block}
+.imgbox .acts{position:absolute;right:10px;bottom:10px;display:flex;gap:8px}
+.imgempty{border:1.5px dashed var(--border);border-radius:12px;aspect-ratio:21/8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);cursor:pointer;background:var(--bg);font-size:14px;width:100%}
+.picker{display:none;border:1px solid var(--border);border-radius:12px;margin-top:10px;overflow:hidden}.picker.open{display:block}
+.ptabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg)}.ptabs button{flex:1;border:none;background:none;padding:11px;font-size:14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent}.ptabs button.on{color:var(--brand-700);border-bottom-color:var(--brand-700);background:#fff}
+.ppane{padding:14px}.dropzone{border:1.5px dashed var(--border);border-radius:10px;padding:26px;text-align:center;color:var(--muted);font-size:14px;cursor:pointer;background:var(--bg)}.dropzone:hover{border-color:var(--brand-700)}
+.libgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.libgrid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}.libgrid img:hover{border-color:var(--accent)}.libgrid img.sel{border-color:var(--brand-700)}
+.quickchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.qchip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}.qchip:hover,.qchip.on{border-color:var(--brand-700);color:var(--brand-700);background:#F5EFE6}
+.subpanel{display:none;margin-bottom:9px}.subpanel.open{display:block}
+.prodres{border:1px solid var(--border);border-radius:10px;margin-top:6px;overflow:hidden}.prodres button{display:flex;gap:10px;align-items:center;width:100%;background:#fff;border:none;border-bottom:1px solid var(--border);padding:8px 11px;text-align:left;font-size:14px}.prodres button:hover{background:#FBF8F3}.prodres img{width:40px;height:40px;object-fit:cover;border-radius:7px}
+.destprev{font-size:13px;color:var(--muted);margin-top:6px}.destprev span{color:var(--brand-700)}
+.togrow{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px 14px}
+.togrow b{font-size:14px}.togrow p{font-size:12.5px;color:var(--muted)}
+/* WYSIWYG preview */
+.pv-head{display:flex;align-items:center;gap:10px;margin:4px 0 10px}.pv-head b{font-size:14px}
+.pv-switch{margin-left:auto;display:flex;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:3px}.pv-switch button{border:none;background:none;padding:6px 13px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}.pv-switch button.on{background:var(--brand-700);color:#fff}
+.pv-frame{border-radius:14px;overflow:hidden;position:relative;margin:0 auto;transition:.2s;width:100%}
+.pv-frame.desktop{aspect-ratio:21/8}.pv-frame.mobile{aspect-ratio:16/10;max-width:330px}
+.pv-frame img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.pv-frame .hero-ov{padding:16px 18px}.pv-frame.desktop .hero-ov h4{font-size:20px}.pv-frame.mobile .hero-ov h4{font-size:16px}
+.pv-frame .hero-ov p{font-size:13px;white-space:normal}.pv-frame .hero-ov span{font-size:13px;padding:8px 14px;border-radius:9px;margin-top:9px}
+.pv-empty{border:1.5px dashed var(--border);border-radius:14px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;width:100%}
+/* modal confirm */
+.modalwrap{position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;padding:16px}.modalwrap.open{display:flex}
+.modalwrap .bk{position:absolute;inset:0;background:rgba(30,20,12,.5)}
+.modal{position:relative;background:#fff;border-radius:16px;width:400px;max-width:100%;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:10px}.modal p{font-size:14px;color:#4A3B2E}.modal .tip{background:#FDF3E0;border-radius:10px;padding:11px 13px;font-size:13.5px;margin-top:12px}
+.modal .mfoot{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+/* toast */
+.toasts{position:fixed;top:74px;right:20px;z-index:130;display:flex;flex-direction:column;gap:9px}
+.toast{background:#fff;border:1px solid var(--border);border-left:4px solid var(--success);border-radius:12px;padding:12px 16px;font-size:14px;font-weight:500;box-shadow:0 12px 28px rgba(62,42,30,.16);animation:tin .25s ease;max-width:360px}.toast.err{border-left-color:var(--error)}
+@keyframes tin{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@media(max-width:1023px){.quick{display:none}}
+@media(max-width:767px){
+ .sidebar{position:fixed;left:0;top:0;transform:translateX(-105%);transition:.25s;width:260px;flex-basis:260px}.sidebar.open{transform:none}.scrim.show{display:block}
+ .hamb{display:block}.content{padding:16px}.topbar{padding:0 16px}.adminbox .tx{display:none}
+ .bcard{flex-direction:column}.preview{width:100%;flex:none;aspect-ratio:16/10}.bactions{flex-direction:row;width:100%;justify-content:space-between;align-items:center}
+ .slideover{width:100vw}.demo-toggle em{display:none}.headright{margin-left:0}
+}
+</style></head>
+<body>
+<div class="layout">
+ <div class="scrim" id="scrim" onclick="closeSidebar()"></div>
+ <aside class="sidebar" id="sidebar">
+  <div class="logo" onclick="toast('Đang ở khu vực quản trị — Dashboard')"><b>Mộc An</b><span>QUẢN TRỊ</span></div>
+  <nav class="nav">
+   <a href="#" onclick="return navDemo(event)"><span class="ic">▦</span>Dashboard</a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">🪑</span>Sản phẩm</a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">☰</span>Danh mục</a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">🧾</span>Đơn hàng<span class="cntbadge">5</span></a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">📦</span>Tồn kho<span class="cntbadge warn">4</span></a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">🎟</span>Voucher</a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">👥</span>Khách hàng</a>
+   <a href="#" class="active"><span class="ic">🖼</span>Banner</a>
+   <a href="#" onclick="return navDemo(event)"><span class="ic">⚡</span>Flash sale &amp; Phí ship</a>
+  </nav>
+  <div class="sidefoot"><a href="#" onclick="toast('Mở trang chủ cửa hàng (demo)');return false"><span class="ic">🏠</span>Xem cửa hàng</a><a href="#" onclick="toast('Đăng xuất (demo)');return false"><span class="ic">↩</span>Đăng xuất</a></div>
+ </aside>
+ <div class="main">
+  <header class="topbar">
+   <button class="hamb" onclick="openSidebar()" aria-label="Mở menu">☰</button>
+   <div><h2>Quản lý banner</h2><div class="crumb">Quản trị / Banner</div></div>
+   <div class="quick"><span>⌕</span><input placeholder="Tìm đơn theo mã, sản phẩm, khách hàng…" onkeydown="if(event.key==='Enter')toast('Tìm nhanh: chuyển sang màn quản lý tương ứng (demo)')"></div>
+   <div class="adminbox" onclick="document.getElementById('addrop').classList.toggle('open')">
+    <div class="avatar">A</div><div class="tx"><div class="nm">Quản trị viên</div><div class="rl">Quản trị viên</div></div><span style="color:var(--muted)">▾</span>
+    <div class="addrop" id="addrop"><a href="#" onclick="event.preventDefault()">Hồ sơ của tôi</a><a href="#" onclick="event.preventDefault()">Xem cửa hàng</a><a href="#" onclick="event.preventDefault()">Đăng xuất</a></div>
+   </div>
+  </header>
+  <main class="content">
+   <div class="pagehead">
+    <div><h1>Banner trang chủ</h1><div class="countline" id="countLine"></div></div>
+    <div class="headright">
+     <div class="demo-toggle"><em>Demo:</em><button class="on" data-mode="normal" onclick="setMode('normal',this)">Danh sách</button><button data-mode="empty" onclick="setMode('empty',this)">Trống</button><button data-mode="error" onclick="setMode('error',this)">Lỗi tải</button></div>
+     <button class="btn-txt" onclick="toast('Mở trang chủ ở tab mới để đối chiếu khối banner thật (demo)')">Xem trang chủ ↗</button>
+     <button class="btn btn-pri" onclick="openForm(null)">+ Thêm banner</button>
+    </div>
+   </div>
+
+   <div class="warnstrip" id="warnStrip"><span style="font-size:19px">⚠</span><div>Hiện không có banner nào đang bật — trang chủ sẽ <b>không hiển thị khối banner</b> ở đầu trang. Các khối sản phẩm bên dưới vẫn hiển thị bình thường. Bật lại ít nhất 1 banner để trang chủ có hình ảnh mở đầu.</div></div>
+
+   <div id="listWrap"></div>
+   <div id="stateWrap"></div>
+   <p class="note" id="listNote">Thứ tự và trạng thái bật/tắt ở đây áp dụng ngay cho khối banner đầu trang chủ. Kéo-thả hoặc dùng nút ↑ ↓ để đổi thứ tự.</p>
+  </main>
+ </div>
+</div>
+
+<!-- Slide-over form -->
+<div class="overlay" id="overlay" onclick="tryCloseForm()"></div>
+<aside class="slideover" id="slideover" aria-label="Form banner">
+ <div class="so-head"><div><h3 id="soTitle">Thêm banner</h3><p id="soSub">Banner sẽ hiện ở khối đầu trang chủ theo thứ tự đã chọn.</p></div><button class="so-close" onclick="tryCloseForm()">✕</button></div>
+ <div class="so-body">
+  <div class="field" id="fImg">
+   <label>Ảnh banner <b>*</b></label>
+   <div id="imgArea"></div>
+   <div class="picker" id="picker">
+    <div class="ptabs"><button class="on" id="tabUp" onclick="switchTab('up')">Tải ảnh lên</button><button id="tabLib" onclick="switchTab('lib')">Thư viện có sẵn</button></div>
+    <div class="ppane" id="paneUp"><div class="dropzone" id="dropzone">⬆ Kéo-thả ảnh vào đây hoặc <b style="color:var(--brand-700)">bấm để chọn file</b><br><span style="font-size:12.5px">JPG / PNG / WebP · tối đa 5MB mỗi ảnh</span></div><input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden></div>
+    <div class="ppane" id="paneLib" style="display:none"><div class="libgrid" id="libGrid"></div><p class="hint">Bấm vào 1 ảnh để chọn — ảnh được gắn khi bạn bấm “Lưu banner”.</p></div>
+   </div>
+   <p class="hint">Khuyến nghị <b>2100 × 800px</b> (đúng tỉ lệ 21:8), tối thiểu 1680 × 640px. Ảnh hiển thị ở khung 21:8 trên máy tính và 16:10 trên điện thoại, hệ thống tự cắt giữa ảnh — hãy để nội dung quan trọng ở vùng giữa.</p>
+   <div class="err-msg">Vui lòng chọn ảnh cho banner.</div>
+  </div>
+
+  <div class="field" id="fTitle"><label>Tiêu đề <b>*</b><span class="counter" id="cTitle">0/80</span></label><input type="text" id="inTitle" maxlength="80" placeholder="VD: Khai trương — Giảm đến 20% sofa phòng khách" oninput="onFormInput()"><div class="err-msg">Vui lòng nhập tiêu đề banner.</div></div>
+  <div class="field"><label>Mô tả phụ<span class="counter" id="cSub">0/120</span></label><input type="text" id="inSubtitle" maxlength="120" placeholder="VD: Từ 12/10 đến 31/10 · Áp dụng cho 50+ mẫu sofa" oninput="onFormInput()"></div>
+  <div class="field"><label>Chữ trên nút<span class="counter" id="cCta">0/20</span></label><input type="text" id="inCta" maxlength="20" placeholder="Để trống sẽ hiện “Mua ngay”" oninput="onFormInput()"><p class="hint">Chữ hiện trên nút ở banner trang chủ. Để trống, hệ thống dùng mặc định “Mua ngay”.</p></div>
+
+  <div class="field" id="fLink">
+   <label>Link đích <b>*</b></label>
+   <div class="quickchips">
+    <button class="qchip" onclick="quickLink('/',this)">Trang chủ</button>
+    <button class="qchip" onclick="quickLink('/flash-sale',this)">Flash sale</button>
+    <button class="qchip" onclick="toggleSub('cat',this)">Danh mục…</button>
+    <button class="qchip" onclick="toggleSub('prod',this)">Sản phẩm…</button>
+    <button class="qchip" onclick="quickLink('',this,true)">Tự nhập</button>
+   </div>
+   <div class="subpanel" id="subCat"><select id="catSelect" onchange="pickCategory()"><option value="">— Chọn danh mục —</option><option value="/danh-muc/sofa">Sofa</option><option value="/danh-muc/ban-an">Bàn ăn</option><option value="/danh-muc/giuong-ngu">Giường ngủ</option><option value="/danh-muc/tu-quan-ao">Tủ quần áo</option><option value="/danh-muc/ke-tivi">Kệ tivi</option><option value="/danh-muc/ban-lam-viec">Bàn làm việc</option><option value="/danh-muc/ghe">Ghế</option><option value="/danh-muc/den-decor">Đèn &amp; Decor</option></select></div>
+   <div class="subpanel" id="subProd"><input type="text" id="prodSearch" placeholder="Gõ tên sản phẩm… VD: sofa" oninput="renderProdResults()"><div class="prodres" id="prodRes"></div></div>
+   <input type="text" id="inLink" placeholder="/danh-muc/sofa hoặc https://…" oninput="onFormInput()">
+   <div class="destprev">Khách bấm nút trên banner sẽ tới: <span class="mono" id="destPrev">—</span></div>
+   <div class="err-msg">Link đích phải bắt đầu bằng / (trang trong cửa hàng) hoặc là địa chỉ web đầy đủ bắt đầu bằng http.</div>
+  </div>
+
+  <div class="field"><label>Thứ tự hiển thị</label><input type="number" id="inOrder" min="1" step="1"><p class="hint">Số nhỏ hiện trước trên trang chủ. Nhập số của vị trí khác sẽ chèn banner vào đó và đẩy các banner sau xuống 1 bậc. Cũng có thể kéo-thả trực tiếp ở danh sách.</p></div>
+
+  <div class="field"><div class="togrow"><label class="sw" style="margin-top:2px"><input type="checkbox" id="inActive" checked onchange="onFormInput()"><i></i></label><div><b>Đang hiện trên trang chủ</b><p>Tắt = banner không xuất hiện ở trang chủ nhưng vẫn giữ trong danh sách này để bật lại sau.</p></div></div></div>
+
+  <div class="field" style="margin-bottom:4px">
+   <div class="pv-head"><b>Xem trước trên trang chủ</b><div class="pv-switch"><button class="on" id="pvDesk" onclick="setPv('desktop')">Máy tính</button><button id="pvMob" onclick="setPv('mobile')">Điện thoại</button></div></div>
+   <div id="pvArea"></div>
+   <p class="hint">Đây là đúng cách khách nhìn thấy banner ở đầu trang chủ. Nút trong bản xem trước chỉ để nhìn, không chuyển trang.</p>
+  </div>
+ </div>
+ <div class="so-foot"><button class="btn btn-sec" onclick="tryCloseForm()">Hủy</button><button class="btn btn-pri" id="saveBtn" onclick="saveForm()">Lưu banner</button></div>
+</aside>
+
+<!-- Confirm delete -->
+<div class="modalwrap" id="delModal"><div class="bk" onclick="closeDel()"></div><div class="modal">
+ <h3>Xóa banner?</h3><p id="delText"></p>
+ <div class="tip">💡 Nếu chỉ muốn <b>ẩn tạm</b> khỏi trang chủ, hãy Hủy và <b>tắt banner</b> thay vì xóa — tắt rồi vẫn bật lại được ngay, còn xóa là mất hẳn và phải tạo lại từ đầu.</div>
+ <div class="mfoot"><button class="btn btn-sec btn-sm" onclick="closeDel()">Hủy</button><button class="btn btn-danger btn-sm" onclick="confirmDel()">Xóa</button></div>
+</div></div>
+
+<!-- Confirm unsaved -->
+<div class="modalwrap" id="dirtyModal"><div class="bk"></div><div class="modal">
+ <h3>Đóng mà không lưu?</h3><p>Bạn có thay đổi chưa lưu trong form banner. Đóng bây giờ sẽ mất các thay đổi này.</p>
+ <div class="mfoot"><button class="btn btn-sec btn-sm" onclick="document.getElementById('dirtyModal').classList.remove('open')">Tiếp tục sửa</button><button class="btn btn-danger btn-sm" onclick="forceCloseForm()">Đóng, không lưu</button></div>
+</div></div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+const U=(id,w)=>`https://images.unsplash.com/${id}?w=${w||1200}&q=80&auto=format&fit=crop`;
+const IMGS={
+ hero:U('photo-1555041469-a586c61ea9bc'),
+ walnut:U('photo-1505693416388-ac5ce068fe85'),
+ sofa2:U('photo-1586023492125-27b2c045efd7'),
+ bedroom:U('photo-1567016432779-094069958ea5'),
+ living2:U('photo-1616486338812-3dadae4b4ace'),
+ dining:U('photo-1617806118233-18e1de247200'),
+ desk:U('photo-1518455027359-f3f8164ba6bd'),
+ lamp:U('photo-1507473885765-e6ed057f782c'),
+ chair:U('photo-1503602642458-232111445657'),
+ tv:U('photo-1595428774223-ef52624120d2'),
+ bed2:U('photo-1595526114035-0d45ed16cfbf'),
+ interior:U('photo-1618220179428-22790b461013')
+};
+const LIB=[['Phòng khách sofa',IMGS.hero],['Giường gỗ óc chó',IMGS.walnut],['Sofa vải sáng',IMGS.sofa2],['Phòng ngủ ấm',IMGS.bedroom],['Phòng khách hiện đại',IMGS.living2],['Bàn ăn',IMGS.dining],['Góc làm việc',IMGS.desk],['Đèn decor',IMGS.lamp],['Ghế đơn',IMGS.chair],['Kệ tivi',IMGS.tv],['Phòng ngủ 2',IMGS.bed2],['Nội thất tổng thể',IMGS.interior]];
+let banners=[
+ {id:'bn1',imageUrl:IMGS.hero,title:'Khai trương — Giảm đến 20% sofa phòng khách',subtitle:'Từ 12/10 đến 31/10 · Áp dụng cho 50+ mẫu sofa',ctaText:'Mua ngay',linkUrl:'/danh-muc/sofa',active:true},
+ {id:'bn2',imageUrl:IMGS.walnut,title:'Bộ sưu tập Gỗ Óc Chó 2026',subtitle:'Vân gỗ tự nhiên · Bảo hành 5 năm',ctaText:'Khám phá',linkUrl:'/danh-muc/tu-quan-ao',active:true},
+ {id:'bn3',imageUrl:IMGS.sofa2,title:'Flash sale cuối tuần',subtitle:'Giảm sâu giờ vàng 20h – 22h mỗi tối',ctaText:'Săn ngay',linkUrl:'/flash-sale',active:true},
+ {id:'bn4',imageUrl:IMGS.bedroom,title:'Nội thất phòng ngủ — Ưu đãi tháng 10',subtitle:'Trọn bộ giường + tủ đồng bộ gỗ tự nhiên',ctaText:'Xem ngay',linkUrl:'/danh-muc/giuong-ngu',active:false}
+];
+let mode='normal',dragId=null,editingId=null,delId=null,formDirty=false,pvMode='desktop',formImg='';
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function toast(msg,err){const t=document.createElement('div');t.className='toast'+(err?' err':'');t.textContent=(err?'✕ ':'✓ ')+msg;document.getElementById('toasts').appendChild(t);setTimeout(()=>t.remove(),3400)}
+function navDemo(e){e.preventDefault();toast('Demo chỉ dựng màn Banner — các màn admin khác xem ở demo riêng');return false}
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('scrim').classList.add('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('scrim').classList.remove('show')}
+function setMode(m,btn){mode=m;document.querySelectorAll('.demo-toggle button').forEach(b=>b.classList.toggle('on',b===btn));render()}
+function activeCount(){return banners.filter(b=>b.active).length}
+function render(){
+ const wrap=document.getElementById('listWrap'),st=document.getElementById('stateWrap');
+ document.getElementById('countLine').textContent=`${banners.length} banner · ${activeCount()} đang hiện`;
+ document.getElementById('warnStrip').classList.toggle('show',mode==='normal'&&activeCount()===0&&banners.length>0);
+ document.getElementById('listNote').style.display=mode==='normal'&&banners.length?'block':'none';
+ if(mode==='error'){wrap.innerHTML='';st.innerHTML=`<div class="statebox"><div class="big">⚠</div><h3>Không tải được danh sách banner.</h3><p>Kiểm tra kết nối rồi thử tải lại danh sách. Các banner trên trang chủ không bị ảnh hưởng.</p><button class="btn btn-sec" onclick="retryLoad()">Thử lại</button></div>`;return}
+ if(mode==='empty'||banners.length===0){wrap.innerHTML='';st.innerHTML=`<div class="statebox"><div class="big">🖼</div><h3>Chưa có banner nào</h3><p>Trang chủ hiện không hiển thị khối banner ở đầu trang (các khối sản phẩm bên dưới vẫn hiển thị bình thường). Thêm banner đầu tiên để trang chủ có hình ảnh mở đầu ấn tượng.</p><button class="btn btn-pri" onclick="openForm(null)">+ Thêm banner</button></div>`;if(mode==='normal'&&banners.length===0){/* keep */} return}
+ st.innerHTML='';
+ wrap.innerHTML=banners.map((b,i)=>`
+ <article class="bcard" data-id="${b.id}">
+  <div class="drag" draggable="true" title="Kéo để đổi thứ tự" ondragstart="dragStart(event,'${b.id}')" ondragend="dragEnd(event)">⠿</div>
+  <div class="preview ${b.active?'':'off'}" onclick="openForm('${b.id}')" ondragover="dragOver(event,'${b.id}')" ondrop="dropOn(event,'${b.id}')"><img src="${b.imageUrl}" alt="" onerror="this.style.display='none'">
+   <div class="hero-ov"><h4>${esc(b.title)||'Tiêu đề banner'}</h4>${b.subtitle?`<p>${esc(b.subtitle)}</p>`:''}<span>${esc(b.ctaText)||'Mua ngay'}</span></div></div>
+  <div class="binfo">
+   <div class="btop"><span class="ordbadge">#${i+1}</span><span class="stbadge ${b.active?'st-on':'st-off'}">${b.active?'Đang hiện':'Đã tắt'}</span></div>
+   <div class="btitle" style="margin-top:8px" onclick="openForm('${b.id}')">${esc(b.title)}</div>
+   <div class="bsub">${esc(b.subtitle)||'—'}</div>
+   <div class="linkrow"><span class="ctachip">${esc(b.ctaText)||'Mua ngay'}</span><span class="linkurl mono">${esc(b.linkUrl)}</span><a class="openlink" href="#" title="Mở link đích để kiểm tra" onclick="event.preventDefault();toast('Mở ${esc(b.linkUrl)} ở tab mới (demo)')">↗</a></div>
+  </div>
+  <div class="bactions">
+   <div class="actrow"><span class="swlbl">${b.active?'Đang hiện':'Đã tắt'}</span><label class="sw" title="Bật / tắt nhanh"><input type="checkbox" ${b.active?'checked':''} onchange="toggleActive('${b.id}',this.checked)"><i></i></label></div>
+   <div class="actrow">
+    <button class="iconbtn" title="Lên" ${i===0?'disabled':''} onclick="move('${b.id}',-1)">↑</button>
+    <button class="iconbtn" title="Xuống" ${i===banners.length-1?'disabled':''} onclick="move('${b.id}',1)">↓</button>
+    <button class="txtbtn" onclick="openForm('${b.id}')">Sửa</button>
+    <button class="txtbtn del" onclick="askDelete('${b.id}')">Xóa</button>
+   </div>
+  </div>
+ </article>`).join('');
+}
+function retryLoad(){mode='normal';document.querySelectorAll('.demo-toggle button').forEach(b=>b.classList.toggle('on',b.dataset.mode==='normal'));render();toast('Đã tải lại danh sách banner.')}
+function toggleActive(id,on){const b=banners.find(x=>x.id===id);b.active=on;render();if(!on&&activeCount()===0)toast('Đã tắt banner đang hiện cuối cùng — trang chủ sẽ không còn khối banner.',true)}
+function move(id,dir){const i=banners.findIndex(x=>x.id===id),j=i+dir;if(j<0||j>=banners.length)return;[banners[i],banners[j]]=[banners[j],banners[i]];render()}
+function dragStart(e,id){dragId=id;e.dataTransfer.effectAllowed='move';setTimeout(()=>{const c=document.querySelector(`.bcard[data-id="${id}"]`);if(c)c.classList.add('dragging')},0)}
+function dragEnd(e){document.querySelectorAll('.bcard').forEach(c=>c.classList.remove('dragging','dragover'))}
+function dragOver(e,id){e.preventDefault();document.querySelectorAll('.bcard').forEach(c=>c.classList.toggle('dragover',c.dataset.id===id&&id!==dragId))}
+function dropOn(e,id){e.preventDefault();if(!dragId||dragId===id)return;const from=banners.findIndex(x=>x.id===dragId),to=banners.findIndex(x=>x.id===id);const[m]=banners.splice(from,1);banners.splice(to,0,m);dragId=null;render();toast('Đã đổi thứ tự banner — thứ tự đã được chuẩn hoá lại từ #1.')}
+/* Delete */
+function askDelete(id){delId=id;const i=banners.findIndex(x=>x.id===id),b=banners[i];document.getElementById('delText').innerHTML=`Bạn sắp xóa banner <b>${esc(b.title)||('ở thứ tự #'+(i+1))}</b> (thứ tự #${i+1}). Thao tác này không thể hoàn tác.`;document.getElementById('delModal').classList.add('open')}
+function closeDel(){document.getElementById('delModal').classList.remove('open');delId=null}
+function confirmDel(){banners=banners.filter(x=>x.id!==delId);closeDel();render();toast('Đã xóa banner.')}
+/* Form */
+function openForm(id){
+ editingId=id;formDirty=false;pvMode='desktop';setPvBtns();
+ const b=id?banners.find(x=>x.id===id):null;
+ document.getElementById('soTitle').textContent=b?'Sửa banner':'Thêm banner';
+ document.getElementById('soSub').textContent=b?b.title:'Banner sẽ hiện ở khối đầu trang chủ theo thứ tự đã chọn.';
+ formImg=b?b.imageUrl:'';
+ document.getElementById('inTitle').value=b?b.title:'';document.getElementById('inSubtitle').value=b?(b.subtitle||''):'';
+ document.getElementById('inCta').value=b?(b.ctaText||''):'';document.getElementById('inLink').value=b?b.linkUrl:'';
+ document.getElementById('inOrder').value=b?(banners.findIndex(x=>x.id===id)+1):(banners.length+1);
+ document.getElementById('inActive').checked=b?b.active:true;
+ ['fImg','fTitle','fLink'].forEach(f=>document.getElementById(f).classList.remove('invalid'));
+ document.getElementById('picker').classList.remove('open');
+ document.querySelectorAll('.qchip').forEach(c=>c.classList.remove('on'));
+ document.getElementById('subCat').classList.remove('open');document.getElementById('subProd').classList.remove('open');
+ renderImgArea();onFormInput(true);
+ document.getElementById('overlay').classList.add('open');document.getElementById('slideover').classList.add('open');
+}
+function renderImgArea(){
+ const a=document.getElementById('imgArea');
+ a.innerHTML=formImg?`<div class="imgbox"><img src="${formImg}"><div class="acts"><button class="btn btn-sec btn-sm" onclick="togglePicker()">Đổi ảnh</button><button class="btn btn-sec btn-sm" onclick="clearImg()">Xóa ảnh</button></div></div>`
+ :`<button class="imgempty" onclick="togglePicker()"><span style="font-size:26px">🖼</span>Chưa có ảnh — bấm để chọn ảnh<span style="font-size:12.5px">Khung hiển thị tỉ lệ 21:8 như trên trang chủ</span></button>`;
+ document.getElementById('libGrid').innerHTML=LIB.map(([n,u])=>`<img src="${u.replace('w=1200','w=400')}" title="${n}" class="${u===formImg?'sel':''}" onclick="pickLib('${u}')">`).join('');
+}
+function togglePicker(){document.getElementById('picker').classList.toggle('open')}
+function clearImg(){formImg='';formDirty=true;renderImgArea();updatePreview()}
+function pickLib(u){formImg=u;formDirty=true;document.getElementById('picker').classList.remove('open');renderImgArea();updatePreview();toast('Đã chọn ảnh từ thư viện — bấm “Lưu banner” để áp dụng.')}
+function switchTab(t){document.getElementById('tabUp').classList.toggle('on',t==='up');document.getElementById('tabLib').classList.toggle('on',t==='lib');document.getElementById('paneUp').style.display=t==='up'?'block':'none';document.getElementById('paneLib').style.display=t==='lib'?'block':'none'}
+const dz=document.getElementById('dropzone'),fi=document.getElementById('fileInput');
+dz.onclick=()=>fi.click();dz.ondragover=e=>{e.preventDefault();dz.style.borderColor='var(--brand-700)'};dz.ondragleave=()=>dz.style.borderColor='';dz.ondrop=e=>{e.preventDefault();dz.style.borderColor='';handleFile(e.dataTransfer.files[0])};
+fi.onchange=()=>handleFile(fi.files[0]);
+function handleFile(f){if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)){toast(`“${f.name}” không đúng định dạng — chỉ nhận JPG, PNG, WebP.`,true);return}if(f.size>5*1024*1024){toast(`“${f.name}” vượt quá 5MB — vui lòng chọn ảnh nhỏ hơn.`,true);return}formImg=URL.createObjectURL(f);formDirty=true;document.getElementById('picker').classList.remove('open');renderImgArea();updatePreview();toast('Đã tải ảnh lên — bấm “Lưu banner” để áp dụng.')}
+function quickLink(v,el,focusOnly){document.querySelectorAll('.qchip').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');document.getElementById('subCat').classList.remove('open');document.getElementById('subProd').classList.remove('open');if(!focusOnly)document.getElementById('inLink').value=v;document.getElementById('inLink').focus();onFormInput()}
+function toggleSub(which,el){document.querySelectorAll('.qchip').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');document.getElementById('subCat').classList.toggle('open',which==='cat');document.getElementById('subProd').classList.toggle('open',which==='prod');if(which==='prod')renderProdResults()}
+function pickCategory(){const v=document.getElementById('catSelect').value;if(v){document.getElementById('inLink').value=v;onFormInput()}}
+const PRODS=[['Sofa góc L Nordic','/san-pham/sofa-goc-l-nordic',IMGS.hero],['Giường ngủ gỗ óc chó 1m8','/san-pham/giuong-ngu-go-oc-cho-1m8',IMGS.walnut],['Sofa băng 2 chỗ','/san-pham/sofa-bang-2-cho',IMGS.sofa2],['Bàn trà gỗ sồi','/san-pham/ban-tra-go-soi',IMGS.interior],['Tủ quần áo 3 cánh','/san-pham/tu-quan-ao-3-canh',IMGS.bedroom]];
+function renderProdResults(){const q=(document.getElementById('prodSearch').value||'').toLowerCase();const list=PRODS.filter(p=>p[0].toLowerCase().includes(q));document.getElementById('prodRes').innerHTML=list.length?list.map(p=>`<button onclick="pickProduct('${p[1]}')"><img src="${p[2].replace('w=1200','w=200')}"><span><b>${p[0]}</b><br><span class="mono" style="font-size:12px;color:var(--brand-700)">${p[1]}</span></span></button>`).join(''):'<p class="hint" style="padding:10px">Không tìm thấy sản phẩm phù hợp.</p>'}
+function pickProduct(v){document.getElementById('inLink').value=v;onFormInput();toast('Đã điền link sản phẩm: '+v)}
+function onFormInput(silent){if(!silent)formDirty=true;
+ document.getElementById('cTitle').textContent=document.getElementById('inTitle').value.length+'/80';
+ document.getElementById('cSub').textContent=document.getElementById('inSubtitle').value.length+'/120';
+ document.getElementById('cCta').textContent=document.getElementById('inCta').value.length+'/20';
+ const l=document.getElementById('inLink').value.trim();document.getElementById('destPrev').textContent=l||'—';
+ updatePreview();}
+function setPv(m){pvMode=m;setPvBtns();updatePreview()}
+function setPvBtns(){document.getElementById('pvDesk').classList.toggle('on',pvMode==='desktop');document.getElementById('pvMob').classList.toggle('on',pvMode==='mobile')}
+function updatePreview(){
+ const t=document.getElementById('inTitle').value.trim(),s=document.getElementById('inSubtitle').value.trim(),c=document.getElementById('inCta').value.trim()||'Mua ngay';
+ const a=document.getElementById('pvArea');
+ if(!formImg){a.innerHTML=`<div class="pv-empty" style="aspect-ratio:${pvMode==='desktop'?'21/8':'16/10'};${pvMode==='mobile'?'max-width:330px;margin:0 auto':''}">Chọn ảnh để xem trước</div>`;return}
+ a.innerHTML=`<div class="pv-frame ${pvMode}"><img src="${formImg}"><div class="hero-ov"><h4 style="${t?'':'opacity:.65'}">${esc(t)||'Tiêu đề banner'}</h4>${s?`<p>${esc(s)}</p>`:''}<span>${esc(c)}</span></div></div>`;
+}
+function validLink(v){return v.startsWith('/')||v.startsWith('http://')||v.startsWith('https://')}
+function saveForm(){
+ let ok=true,first=null;
+ const chk=(fid,valid)=>{document.getElementById(fid).classList.toggle('invalid',!valid);if(!valid){ok=false;first=first||fid}};
+ chk('fImg',!!formImg);chk('fTitle',!!document.getElementById('inTitle').value.trim());
+ const lv=document.getElementById('inLink').value.trim();chk('fLink',!!lv&&validLink(lv));
+ if(!ok){document.querySelector('#'+first+' input')?.focus();toast('Vui lòng kiểm tra các trường được đánh dấu đỏ.',true);return}
+ const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='Đang lưu…';
+ setTimeout(()=>{btn.disabled=false;btn.textContent='Lưu banner';
+  const data={imageUrl:formImg,title:document.getElementById('inTitle').value.trim(),subtitle:document.getElementById('inSubtitle').value.trim(),ctaText:document.getElementById('inCta').value.trim(),linkUrl:lv,active:document.getElementById('inActive').checked};
+  const ord=Math.max(1,parseInt(document.getElementById('inOrder').value)||banners.length+1);
+  if(editingId){const i=banners.findIndex(x=>x.id===editingId);Object.assign(banners[i],data);const[m]=banners.splice(i,1);banners.splice(Math.min(ord-1,banners.length),0,m)}
+  else{data.id='bn'+Date.now();banners.splice(Math.min(ord-1,banners.length),0,data)}
+  if(mode!=='normal'){mode='normal';document.querySelectorAll('.demo-toggle button').forEach(b=>b.classList.toggle('on',b.dataset.mode==='normal'))}
+  formDirty=false;forceCloseForm();render();toast('Đã lưu banner.');
+ },650);
+}
+function tryCloseForm(){if(formDirty){document.getElementById('dirtyModal').classList.add('open')}else forceCloseForm()}
+function forceCloseForm(){document.getElementById('dirtyModal').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.getElementById('slideover').classList.remove('open');formDirty=false}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDel();if(document.getElementById('slideover').classList.contains('open'))tryCloseForm();closeSidebar()}});
+render();
+</script>
+</body></html>

@@ -1,0 +1,385 @@
+/* ============================================================
+   Màn Đăng nhập / Đăng ký / Xác thực SĐT — ui-specs/dang-nhap-otp.md
+   Chỉ dùng tokens có sẵn trong index.css (§0 design system).
+   ============================================================ */
+
+.auth-page { background: var(--bg); min-height: 100vh; }
+.auth-main { padding-top: 20px; padding-bottom: 64px; }
+
+.auth-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.auth-breadcrumb a:hover { color: var(--brand-700); text-decoration: underline; }
+
+/* ---------- Layout 2 cột: card form + panel thương hiệu ---------- */
+.auth-layout {
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  gap: 32px;
+  align-items: stretch;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.auth-layout--single { grid-template-columns: 440px; justify-content: center; }
+
+.auth-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 36px 36px 32px;
+}
+
+.auth-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.auth-close:hover { color: var(--text); background: var(--bg); }
+
+.auth-title { font-size: 24px; font-weight: 700; margin: 0 0 8px; }
+.auth-subtitle { font-size: 14px; color: var(--text-muted); margin: 0 0 20px; }
+.auth-subtitle strong { color: var(--text); }
+
+/* ---------- Panel thương hiệu (desktop) ---------- */
+.auth-brand {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-600) 60%, var(--accent) 130%);
+  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.auth-brand__content {
+  position: relative;
+  padding: 40px 36px;
+  color: #faf7f2;
+  width: 100%;
+}
+.auth-brand__slogan {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  line-height: 1.3;
+}
+.auth-brand__benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+/* ---------- Segmented control 3 tab (§2) ---------- */
+.segmented {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.segmented__btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 10px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+.segmented__btn--active {
+  background: var(--brand-700);
+  color: #fff;
+}
+
+/* ---------- Form fields ---------- */
+.auth-field { margin-bottom: 16px; }
+.auth-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.auth-required { color: var(--error); }
+.auth-inputwrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.auth-inputwrap:focus-within {
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 3px rgba(93, 58, 41, 0.12);
+}
+.auth-inputwrap--error { border-color: var(--error); }
+.auth-inputwrap--error:focus-within {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+}
+.auth-inputwrap input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  font-family: var(--font);
+  color: var(--text);
+  padding: 12px 14px;
+  min-width: 0;
+}
+.auth-inputwrap input::placeholder { color: var(--text-muted); }
+.auth-inputwrap input:disabled { opacity: 0.6; cursor: not-allowed; }
+.auth-prefix {
+  padding: 12px 0 12px 14px;
+  color: var(--text-muted);
+  font-size: 15px;
+  user-select: none;
+}
+.auth-eye {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.auth-eye:hover { background: var(--bg); }
+
+.auth-error {
+  font-size: 13px;
+  color: var(--error);
+  margin: 6px 0 0;
+}
+
+/* ---------- Banner ---------- */
+.auth-banner {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.auth-banner p { margin: 0; }
+.auth-banner p + p { margin-top: 4px; }
+.auth-banner--yellow { background: #fdf6e3; color: #8a6d1a; border: 1px solid #f0dfa8; }
+.auth-banner--red { background: #fdecea; color: var(--error); border: 1px solid #f5c6c0; }
+.auth-banner--green { background: #e8f5e9; color: var(--success); border: 1px solid #c3e2c6; }
+[data-theme='dark'] .auth-banner--yellow { background: #3a2f16; color: #e8c96a; border-color: #5c4a20; }
+[data-theme='dark'] .auth-banner--red { background: #3d1f1c; color: #ef9a94; border-color: #6b322c; }
+[data-theme='dark'] .auth-banner--green { background: #1d3320; color: #9fd3a4; border-color: #33552f; }
+.auth-banner__sub { font-size: 13px; opacity: 0.85; }
+
+/* ---------- Hàng phụ: ghi nhớ + quên mật khẩu ---------- */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 16px;
+}
+.auth-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text);
+}
+.auth-check input[type='checkbox'] {
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+  accent-color: var(--brand-700);
+  cursor: pointer;
+}
+.auth-check--terms { margin: 4px 0 16px; }
+
+.linklike {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--brand-700);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+}
+a.linklike { text-decoration: none; }
+.linklike:hover { text-decoration: underline; }
+.linklike--strong { font-weight: 700; }
+
+/* ---------- Submit / switch ---------- */
+.auth-submit { width: 100%; margin-top: 8px; }
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: auth-spin 700ms linear infinite;
+  display: inline-block;
+}
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 20px 0 0;
+}
+
+/* ---------- Divider + Google ---------- */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 24px 0 0;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.auth-google { margin-top: 16px; }
+.google-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285f4;
+  font-weight: 800;
+  font-size: 14px;
+  border: 1px solid var(--border);
+}
+
+/* ---------- Overlay đang kết nối Google ---------- */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+}
+.auth-overlay__box {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  font-size: 15px;
+}
+.auth-overlay__box .btn-spinner {
+  width: 28px;
+  height: 28px;
+  border-color: rgba(93, 58, 41, 0.25);
+  border-top-color: var(--brand-700);
+}
+
+/* ---------- OTP view (§4) ---------- */
+.auth-otp .auth-title { text-align: center; }
+.auth-otp .auth-subtitle { text-align: center; }
+.auth-demo-hint {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0 0 16px;
+}
+.otp-input {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 4px 0 16px;
+}
+.otp-box {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  caret-color: transparent;
+}
+.otp-box:focus {
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 3px rgba(93, 58, 41, 0.12);
+}
+.otp-box:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-resend { text-align: center; font-size: 14px; color: var(--text-muted); margin: 16px 0 0; }
+
+/* ---------- Màn thành công (quên mật khẩu) ---------- */
+.auth-success { text-align: center; }
+.auth-success__icon { font-size: 48px; margin-bottom: 8px; }
+.auth-success .auth-submit { margin-top: 20px; }
+
+/* ---------- Avatar tài khoản ở Header (spec §2.2.3) ---------- */
+.account-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--brand-700);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon-btn--labeled .account-avatar + .icon-btn__label {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 900px) {
+  .auth-layout { grid-template-columns: 1fr; }
+  .auth-brand { display: none; }
+  .auth-card { padding: 28px 20px 24px; }
+  .otp-box { width: 44px; height: 52px; }
+  .otp-input { gap: 8px; }
+}

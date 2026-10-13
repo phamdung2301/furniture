@@ -1,0 +1,243 @@
+/* ============================================================
+   Quản lý khách hàng (màn 20) — admin-khach-hang.md §2/§3/§4.
+   Chỉ dùng tokens §0 trong index.css; không định nghĩa token mới.
+   ============================================================ */
+
+.admin-customers .admin-page-head__title { font-size: 24px; }
+
+/* Slide-over chi tiết rộng 640px (§1) — mobile full-screen như §B.2 */
+.admin-slideover--customer { width: 640px; }
+@media (max-width: 767px) {
+  .admin-slideover--customer { width: 100%; }
+}
+
+/* ---------- Ô bảng (§2.2) ---------- */
+.customer-cell { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+.customer-cell--col { flex-direction: column; align-items: flex-start; gap: 4px; }
+.customer-cell__name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+.customer-cell__phone { white-space: nowrap; }
+.customer-cell__email {
+  display: inline-block;
+  max-width: 210px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.customer-cell__money { font-weight: 700; white-space: nowrap; }
+
+.customer-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand-700);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.customer-avatar--lg { width: 56px; height: 56px; font-size: 22px; }
+
+/* ---------- Badge (§2.2 + §B.4) ---------- */
+.customer-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.customer-badge.is-active,
+.customer-badge.is-verified { background: #e8f5e9; color: var(--success); }
+.customer-badge.is-unverified { background: #fdf3e0; color: var(--warning); }
+.customer-badge.is-locked { background: #fdecea; color: var(--error); }
+.customer-badge.is-default { background: var(--accent); color: #fff; }
+[data-theme='dark'] .customer-badge.is-active,
+[data-theme='dark'] .customer-badge.is-verified { background: #14301a; }
+[data-theme='dark'] .customer-badge.is-unverified { background: #3a2c10; }
+[data-theme='dark'] .customer-badge.is-locked { background: #3d1712; }
+
+.customer-status-cell { display: inline-flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+.customer-status-sub { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+/* ---------- Chi tiết: đầu slide-over (§3.1) ---------- */
+.customer-detail { display: flex; flex-direction: column; gap: 22px; }
+.customer-detail__skeleton { display: flex; flex-direction: column; gap: 12px; }
+.customer-detail__head { display: flex; gap: 14px; align-items: flex-start; }
+.customer-detail__head-meta { flex: 1; min-width: 0; }
+.customer-detail__name { font-size: 18px; font-weight: 700; margin: 2px 0 2px; }
+.customer-detail__phone { font-size: 13px; color: var(--text-muted); margin: 0 0 8px; }
+.customer-detail__badges { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
+.customer-detail__action { flex-shrink: 0; }
+.customer-detail__lock-btn {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 7px 12px;
+}
+.customer-detail__lock-btn:hover { background: #fdecea; }
+[data-theme='dark'] .customer-detail__lock-btn:hover { background: #3d1712; }
+
+/* ---------- Chi tiết: tổng quan mua hàng (§3.2) ---------- */
+.customer-detail__section { display: flex; flex-direction: column; gap: 12px; }
+.customer-detail__section-title { font-size: 15px; font-weight: 700; margin: 0; }
+.customer-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 560px) {
+  .customer-stats { grid-template-columns: 1fr; }
+}
+.customer-stats__box {
+  background: #f5efe6;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+[data-theme='dark'] .customer-stats__box { background: #2e231b; }
+.customer-stats__value { font-size: 20px; font-weight: 800; line-height: 1.2; }
+.customer-stats__label { font-size: 13px; color: var(--text-muted); }
+.customer-stats__sub { font-size: 12px; color: var(--text-muted); }
+.customer-stats__order {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-700);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  word-break: break-all;
+}
+.customer-stats__order:hover { text-decoration: underline; }
+.customer-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.customer-chip {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+/* ---------- Chi tiết: hồ sơ (§3.3) ---------- */
+.customer-profile { margin: 0; display: flex; flex-direction: column; }
+.customer-profile > div {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.customer-profile > div:last-child { border-bottom: none; }
+.customer-profile dt { font-size: 13px; color: var(--text-muted); margin: 0; }
+.customer-profile dd { font-size: 14px; margin: 0; min-width: 0; }
+@media (max-width: 560px) {
+  .customer-profile > div { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ---------- Chi tiết: địa chỉ (§3.4) ---------- */
+.customer-addresses { display: flex; flex-direction: column; gap: 10px; }
+.customer-address {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.customer-address__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+}
+.customer-address__label { font-weight: 600; font-size: 14px; }
+.customer-address__receiver { margin: 0 0 2px; font-size: 14px; }
+.customer-address__full { margin: 0; font-size: 13px; color: var(--text-muted); }
+.customer-detail__muted { color: var(--text-muted); font-size: 14px; margin: 0; }
+
+/* ---------- Chi tiết: đơn gần đây (§3.5) ---------- */
+.customer-orders__scroll { overflow-x: auto; }
+.customer-orders { width: 100%; border-collapse: collapse; min-width: 520px; }
+.customer-orders th {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.customer-orders th.is-right, .customer-orders td.is-right { text-align: right; }
+.customer-orders td {
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  vertical-align: middle;
+}
+.customer-orders tbody tr:last-child td { border-bottom: none; }
+.customer-orders tbody tr.is-clickable { cursor: pointer; }
+.customer-orders tbody tr:hover { background: #fbf8f3; }
+[data-theme='dark'] .customer-orders tbody tr:hover { background: #2a2019; }
+.customer-orders__code-wrap { display: inline-flex; align-items: center; gap: 4px; }
+.customer-orders__code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-700);
+  white-space: nowrap;
+}
+.customer-orders__total { font-weight: 700; white-space: nowrap; }
+.customer-detail__all-orders {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-700);
+  cursor: pointer;
+}
+.customer-detail__all-orders:hover { text-decoration: underline; }
+
+/* ---------- Dialog khóa (§4.2) ---------- */
+.customer-lock__effects { margin: 0 0 10px; padding-left: 20px; font-size: 14px; }
+.customer-lock__effects li { margin-bottom: 4px; }
+.customer-lock__warn {
+  background: #fdf3e0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+[data-theme='dark'] .customer-lock__warn { background: #3a2c10; }
+.customer-lock__field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; }
+.customer-lock__field textarea {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+.customer-lock__field textarea:focus { outline: 2px solid var(--brand-700); outline-offset: 0; }

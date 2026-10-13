@@ -1,0 +1,2 @@
+# Dang ky listener tu nap backend/.env khi environment vua chuan bi xong (xem DotenvEnvironmentListener).
+org.springframework.context.ApplicationListener=com.mocan.shop.config.DotenvEnvironmentListener

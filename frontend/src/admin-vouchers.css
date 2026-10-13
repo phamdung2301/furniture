@@ -1,0 +1,255 @@
+/* ============================================================
+   Quản lý voucher (màn 19) — admin-voucher.md §2/§3.
+   Chỉ dùng tokens §0 trong index.css; các mã màu badge lấy đúng
+   spec §2.3/#F5EFE6 của khối xem trước §3.6.
+   ============================================================ */
+
+.admin-vouchers .admin-page-head__title { font-size: 24px; }
+
+/* ---------- Cột bảng ---------- */
+.voucher-code { display: inline-flex; align-items: center; gap: 4px; }
+.voucher-code__text {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-700);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.voucher-code__text:hover { text-decoration: underline; }
+
+.voucher-cell { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.voucher-cell__main { font-weight: 600; }
+.voucher-cell__sub { font-size: 13px; color: var(--text-muted); }
+.voucher-cell__line { font-size: 13px; white-space: nowrap; }
+.voucher-cell__note { font-size: 12px; color: var(--text-muted); }
+.voucher-cell__note.is-warning { color: var(--warning); font-weight: 600; }
+
+/* Thanh tiến độ mini Đã dùng / Giới hạn (§2.2) */
+.voucher-progress {
+  display: block;
+  width: 110px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.voucher-progress__bar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--brand-700);
+  transition: width 200ms ease;
+}
+.voucher-progress__bar.is-warning { background: var(--warning); }
+.voucher-progress__bar.is-error { background: var(--error); }
+
+/* Badge trạng thái suy ra (§2.3 + §B.4) */
+.voucher-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.voucher-badge.is-running { background: #e8f5e9; color: var(--success); }
+.voucher-badge.is-upcoming { background: #fdf3e0; color: var(--warning); }
+.voucher-badge.is-exhausted { background: #fdecea; color: var(--error); }
+.voucher-badge.is-muted {
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+[data-theme='dark'] .voucher-badge.is-running { background: #14301a; }
+[data-theme='dark'] .voucher-badge.is-upcoming { background: #3a2c10; }
+[data-theme='dark'] .voucher-badge.is-exhausted { background: #3d1712; }
+
+/* ---------- Form slide-over ---------- */
+.voucher-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.voucher-banner.is-error { background: #fdecea; color: var(--error); }
+.voucher-banner.is-warning { background: #fdf3e0; color: var(--warning); }
+[data-theme='dark'] .voucher-banner.is-error { background: #3d1712; }
+[data-theme='dark'] .voucher-banner.is-warning { background: #3a2c10; }
+.voucher-banner__retry {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.voucher-code-row { display: flex; gap: 8px; align-items: center; }
+.voucher-code-input {
+  flex: 1;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  text-transform: uppercase;
+}
+.voucher-code-input:disabled { opacity: 0.6; }
+
+/* Segmented control Loại giảm (§3.3) */
+.voucher-segment {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.voucher-segment button {
+  border: none;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+.voucher-segment button.is-active { background: var(--brand-700); color: #fff; }
+
+.voucher-suffix { display: flex; align-items: center; gap: 8px; }
+.voucher-suffix .pf-input { flex: 1; }
+.voucher-suffix__unit { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+
+/* Phạm vi áp dụng (§3.4) */
+.voucher-scope { display: flex; flex-direction: column; gap: 8px; }
+.voucher-scope__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.voucher-cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+.voucher-cat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.voucher-cat-item.is-child { padding-left: 22px; color: var(--text-muted); }
+
+.voucher-product-picker { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.voucher-product-results {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.voucher-product-results button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.voucher-product-results button:hover { background: #fbf8f3; }
+[data-theme='dark'] .voucher-product-results button:hover { background: var(--bg); }
+.voucher-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.voucher-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 6px 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.voucher-chip button {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.voucher-chip button:hover { color: var(--error); }
+
+/* Giới hạn lượt (§3.5) */
+.voucher-unlimited {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.voucher-warn-text { font-size: 12px; color: var(--warning); font-weight: 600; margin: 0; }
+.voucher-quick-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.voucher-quick-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--brand-700);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.voucher-quick-btn:hover { border-color: var(--brand-700); }
+
+/* Khối xem trước (§3.6) */
+.voucher-preview {
+  background: #f5efe6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 4px;
+}
+[data-theme='dark'] .voucher-preview { background: #2c2119; }
+.voucher-preview__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+.voucher-preview__text { font-size: 14px; font-weight: 600; margin: 0; }

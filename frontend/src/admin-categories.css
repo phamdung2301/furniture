@@ -1,0 +1,149 @@
+/* ============================================================
+   Quản lý danh mục (màn 16) — admin-danh-muc.md.
+   Chỉ dùng tokens §0 trong index.css; không định nghĩa token mới.
+   ============================================================ */
+
+/* ---------- Chú thích dưới bảng (§1) ---------- */
+.admin-categories__note {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 12px 2px 0;
+}
+
+/* ---------- Ô danh mục trong bảng cây (§2.1) ---------- */
+.cat-cell { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.cat-cell--child { padding-left: 28px; }
+.cat-cell__branch {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: -16px;
+  flex-shrink: 0;
+}
+.cat-cell__name--child { font-weight: 500; }
+
+.cat-count-link { color: var(--brand-700); font-weight: 600; text-decoration: none; }
+.cat-count-link:hover { text-decoration: underline; }
+
+/* ---------- Cột thứ tự: số + nút ↑↓ (§4) ---------- */
+.cat-order { display: inline-flex; align-items: center; gap: 4px; }
+.cat-order__num { font-weight: 600; min-width: 22px; }
+.cat-order__btn {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--brand-700);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.cat-order__btn:hover:not(:disabled) { background: var(--bg); border-color: var(--brand-700); }
+.cat-order__btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ---------- Trạng thái + cảnh báo con bị ẩn (§2.3) ---------- */
+.cat-status { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cat-status__warn { font-size: 12px; color: var(--warning); font-weight: 600; white-space: nowrap; }
+
+/* ---------- Form danh mục (modal 520px, §3) ---------- */
+.cform { display: flex; flex-direction: column; gap: 16px; }
+
+/* Bộ chọn ảnh (§3.1) */
+.cat-img__preview {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.cat-img__preview img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+.cat-img__actions {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+}
+.cat-img__empty {
+  width: 100%;
+  height: 140px;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cat-img__empty:hover { border-color: var(--brand-700); color: var(--brand-700); }
+
+.cat-picker {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--surface);
+}
+.cat-picker__tabs {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+.cat-picker__tabs button {
+  border: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cat-picker__tabs button.is-active {
+  background: var(--surface);
+  color: var(--brand-700);
+  box-shadow: 0 1px 4px rgba(62, 42, 30, 0.12);
+}
+.cat-picker__drop {
+  border: 1.5px dashed var(--border);
+  border-radius: 10px;
+  padding: 20px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.cat-picker__drop.is-over { border-color: var(--brand-700); background: var(--bg); }
+.cat-picker__drop p { margin: 0; font-size: 14px; color: var(--text-muted); }
+.cat-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.cat-picker__cell {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg);
+  cursor: pointer;
+  aspect-ratio: 1;
+}
+.cat-picker__cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cat-picker__cell:hover { border-color: var(--accent); }
+.cat-picker__cell.is-selected { border-color: var(--brand-700); }

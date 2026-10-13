@@ -1,0 +1,378 @@
+/* ============================================================
+   Màn Theo dõi đơn (màn 11) — theo-doi-don.md.
+   Chỉ dùng tokens §0 (index.css); màu nền badge lấy đúng spec §4.
+   ============================================================ */
+
+.orders-main { padding-bottom: 64px; }
+
+.orders-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 16px 0 8px;
+  flex-wrap: wrap;
+}
+.orders-breadcrumb a { color: var(--text-muted); }
+.orders-breadcrumb a:hover { color: var(--brand-700); }
+
+.orders-title { font-size: 26px; margin: 4px 0 16px; }
+.orders-count { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-left: 8px; }
+
+/* ---------- Filter chips (§2.1) ---------- */
+.orders-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.orders-chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.orders-chip:hover { border-color: var(--brand-700); }
+.orders-chip--active {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-bg);
+}
+
+/* ---------- Badge trạng thái đơn (§4) ---------- */
+.badge-status-moi { background: #fdf3e0; color: var(--warning); }
+.badge-status-xac-nhan { background: #f5efe6; color: var(--brand-700); }
+.badge-status-dang-giao { background: #fbf3dc; color: #8a6d1a; }
+.badge-status-hoan-thanh { background: #e8f5e9; color: var(--success); }
+.badge-status-da-huy { background: #f5f2ee; color: var(--text-muted); }
+.badge-status-hoan-tra { background: #fce4ec; color: var(--error); }
+[data-theme='dark'] .badge-status-moi { background: #3d2f14; }
+[data-theme='dark'] .badge-status-xac-nhan { background: #2e231b; }
+[data-theme='dark'] .badge-status-dang-giao { background: #3a2f12; color: #d9b13b; }
+[data-theme='dark'] .badge-status-hoan-thanh { background: #16301a; }
+[data-theme='dark'] .badge-status-da-huy { background: #2a241e; }
+[data-theme='dark'] .badge-status-hoan-tra { background: #3a1620; }
+
+/* ---------- Card đơn (§2.2) ---------- */
+.orders-list { display: flex; flex-direction: column; gap: 14px; }
+.order-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.order-card:hover { box-shadow: var(--shadow-card); }
+.order-card--skeleton { cursor: default; }
+.order-card--skeleton:hover { box-shadow: none; }
+.order-card__row1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.order-card__no {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.order-card__no:hover { color: var(--brand-700); }
+.order-card__date { margin-left: auto; font-size: 13px; color: var(--text-muted); }
+.order-card__row2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.order-card__thumbs { display: flex; align-items: center; gap: 8px; }
+.order-card__thumbs img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.order-card__more { font-size: 13px; color: var(--text-muted); }
+.order-card__total { margin: 0; font-size: 15px; color: var(--text-muted); }
+.order-card__total strong { font-size: 18px; color: var(--brand-700); }
+.order-card__row3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+/* ---------- Trạng thái trang (empty / error) ---------- */
+.orders-state {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--text-muted);
+}
+.orders-state h2 { color: var(--text); font-size: 20px; margin: 0 0 8px; }
+.orders-state p { margin: 0 0 16px; }
+.orders-state__icon { font-size: 44px; margin-bottom: 12px; }
+
+/* ---------- Chi tiết đơn (§3) ---------- */
+.order-detail__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 8px 0 16px;
+  flex-wrap: wrap;
+}
+.order-detail__no {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.order-detail__no:hover { color: var(--brand-700); }
+.order-detail__placed { margin: 4px 0 0; font-size: 13px; color: var(--text-muted); }
+.order-detail__head .badge { font-size: 13px; padding: 6px 14px; }
+
+.order-banner {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.order-banner p { margin: 0; }
+.order-banner--warning {
+  background: #fdf3e0;
+  color: #7a5510;
+  border: 1px solid #ecd9a8;
+}
+[data-theme='dark'] .order-banner--warning { background: #3d2f14; color: #e8c877; border-color: #5a4718; }
+.order-banner--error {
+  background: #fdecea;
+  color: var(--error);
+  border: 1px solid #f3c1c1;
+}
+[data-theme='dark'] .order-banner--error { background: #3a1620; border-color: #5c2432; }
+.order-banner__poll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px !important;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.order-detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: 20px;
+  align-items: start;
+}
+.order-detail__left { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.order-detail__right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 16px;
+  min-width: 0;
+}
+
+.order-cardbox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.order-cardbox__title { font-size: 16px; margin: 0 0 14px; }
+
+/* ---------- Timeline (§3.2) ---------- */
+.order-timeline { list-style: none; margin: 0; padding: 0; }
+.order-timeline__item {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding-bottom: 22px;
+}
+.order-timeline__item:last-child { padding-bottom: 0; }
+.order-timeline__item::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.order-timeline__item:last-child::before { display: none; }
+.order-timeline__item--done::before { background: var(--success); }
+.order-timeline__dot {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-top: 3px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  z-index: 1;
+}
+.order-timeline__item--done .order-timeline__dot { background: var(--success); border-color: var(--success); }
+.order-timeline__item--current .order-timeline__dot {
+  background: var(--brand-700);
+  border-color: var(--brand-700);
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+}
+.order-timeline__item--cancelled .order-timeline__dot { background: var(--error); border-color: var(--error); }
+.order-timeline__body { min-width: 0; }
+.order-timeline__label { margin: 0; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.order-timeline__time { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+.order-timeline__item--upcoming .order-timeline__label { color: var(--text-muted); font-weight: 500; }
+.order-timeline__item--cancelled .order-timeline__label { color: var(--error); }
+.order-timeline__note { margin: 2px 0 0; font-size: 13px; color: var(--text-muted); }
+
+/* ---------- Danh sách món (§3.5) ---------- */
+.order-items { list-style: none; margin: 0; padding: 0; }
+.order-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.order-item:last-child { border-bottom: none; padding-bottom: 0; }
+.order-item:first-child { padding-top: 0; }
+.order-item img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  flex: none;
+}
+.order-item__info { flex: 1; min-width: 0; }
+.order-item__name { margin: 0; font-weight: 600; }
+.order-item__meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.order-item__right { text-align: right; flex: none; }
+.order-item__linetotal { margin: 0; font-weight: 700; color: var(--brand-700); }
+.order-item__review { font-size: 13px; padding: 4px 0 0; display: inline-block; }
+.order-item__reviewed { font-size: 13px; color: var(--text-muted); display: inline-block; padding-top: 4px; }
+
+/* ---------- Người nhận (§3.4) ---------- */
+.order-receiver__name { margin: 0; font-weight: 700; }
+.order-receiver__line { margin: 4px 0 0; }
+.order-receiver__note { margin: 6px 0 0; font-style: italic; color: var(--text-muted); font-size: 13px; }
+
+/* ---------- Tóm tắt tiền (§3.6) ---------- */
+.order-summary { margin: 0; }
+.order-summary > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 0;
+}
+.order-summary dt { color: var(--text-muted); margin: 0; }
+.order-summary dd { margin: 0; font-weight: 600; text-align: right; }
+.order-summary__discount { color: var(--success); }
+.order-summary__free { color: var(--success); font-weight: 700; }
+.order-summary__total {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  padding-top: 12px !important;
+}
+.order-summary__total dt { color: var(--text); font-weight: 700; }
+.order-summary__total dd { font-size: 20px; font-weight: 700; color: var(--brand-700); }
+
+/* ---------- Khối thanh toán (§3.7) ---------- */
+.order-payment__method { margin: 0 0 8px; font-weight: 600; }
+.pay-status {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 10px;
+  letter-spacing: 0.02em;
+}
+.pay-status--success { background: #e8f5e9; color: var(--success); }
+.pay-status--warning { background: #fdf3e0; color: var(--warning); }
+.pay-status--error { background: #fdecea; color: var(--error); }
+[data-theme='dark'] .pay-status--success { background: #16301a; }
+[data-theme='dark'] .pay-status--warning { background: #3d2f14; }
+[data-theme='dark'] .pay-status--error { background: #3a1620; }
+.order-payment__paid { margin: 8px 0 0; font-size: 13px; color: var(--success); }
+
+/* ---------- Hành động (§3.3 / §5) ---------- */
+.order-actions { display: flex; flex-direction: column; gap: 10px; }
+.order-actions__full { width: 100%; }
+.order-actions__danger {
+  background: none;
+  border: none;
+  color: var(--error);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 4px;
+  align-self: flex-start;
+}
+.order-actions__danger:hover { text-decoration: underline; }
+.order-actions__contact { align-self: flex-start; }
+.order-actions__back { font-size: 13px; color: var(--text-muted); }
+.order-actions__back:hover { color: var(--brand-700); }
+.order-cancel { display: flex; flex-direction: column; gap: 10px; }
+.order-cancel__label { font-size: 14px; font-weight: 600; }
+.order-cancel__input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: var(--font);
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+  resize: vertical;
+}
+.order-cancel__input:focus { outline: 2px solid var(--brand-700); outline-offset: 0; }
+.order-cancel__error { margin: 0; font-size: 13px; color: var(--error); }
+.order-cancel__buttons { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .order-detail__grid { grid-template-columns: 1fr; }
+  .order-detail__right { position: static; }
+  .order-actions {
+    position: sticky;
+    bottom: 12px;
+    box-shadow: var(--shadow-card);
+    z-index: 5;
+  }
+  .orders-title { font-size: 22px; }
+  .order-card__date { margin-left: 0; width: 100%; }
+}

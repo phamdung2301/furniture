@@ -1,0 +1,139 @@
+/* ============================================================
+   Flash sale — flash-sale.md. Chỉ dùng tokens §0 trang-chu
+   (--brand-*, --accent, --error, --text-muted, --border, --surface).
+   ============================================================ */
+
+/* ---------- SectionHeader: nhóm trái (tiêu đề + slot extra) ---------- */
+.section-head__left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+/* ---------- CountdownTimer (§3) ---------- */
+.cdt { display: inline-flex; align-items: flex-start; gap: 2px; }
+.cdt__cell-wrap { display: inline-flex; align-items: center; gap: 2px; }
+.cdt__sep { font-weight: 800; font-size: 18px; opacity: 0.85; padding-bottom: 14px; }
+.cdt--compact .cdt__sep { padding-bottom: 0; font-size: 14px; }
+.cdt__cell {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px; padding: 6px 9px; min-width: 46px;
+}
+.cdt__num { font-size: 24px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.cdt__label { font-size: 11px; opacity: 0.85; }
+.cdt__cell.is-urgent { background: var(--error); }
+.cdt__cell.is-pulse { animation: cdt-pulse 1s ease-in-out infinite; }
+@keyframes cdt-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) {
+  .cdt__cell.is-pulse { animation: none; }
+  .fs-badge--running { animation: none; }
+}
+/* Bản compact (trang chủ): ô nhỏ, nền chip đỏ nhạt */
+.cdt--compact { align-items: center; }
+.cdt--compact .cdt__cell { background: #fdecea; min-width: 34px; padding: 3px 6px; border-radius: 8px; }
+.cdt--compact .cdt__num { font-size: 15px; color: var(--error); }
+.cdt--compact .cdt__sep { color: var(--error); }
+.cdt--compact .cdt__cell.is-urgent { background: var(--error); }
+.cdt--compact .cdt__cell.is-urgent .cdt__num { color: #fff; }
+.cdt--text { font-weight: 700; color: var(--error); font-size: 14px; }
+/* Trong banner (nền tối): giữ nền trắng mờ */
+.fs-banner .cdt--compact .cdt__cell { background: rgba(255, 255, 255, 0.12); }
+.fs-banner .cdt--compact .cdt__num { color: #fff; }
+
+/* ---------- Banner chương trình (§2) ---------- */
+.fs-page { padding-bottom: 8px; }
+.fs-banner {
+  margin-top: 8px;
+  background: linear-gradient(120deg, var(--brand-900), var(--brand-700));
+  color: #fff; border-radius: 20px; padding: 28px;
+}
+.fs-banner__top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.fs-banner__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); font-size: 22px;
+}
+.fs-banner__title { font-size: 28px; font-weight: 800; margin: 0; }
+.fs-badge {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.4px;
+  padding: 5px 10px; border-radius: 999px;
+}
+.fs-badge--running { background: var(--error); color: #fff; animation: cdt-pulse 2s ease-in-out infinite; }
+.fs-badge--upcoming { background: var(--accent); color: var(--brand-900); }
+.fs-banner__mid {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 20px; margin-top: 18px; flex-wrap: wrap;
+}
+.fs-banner__range { margin: 0 0 6px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.fs-banner__sub { margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.fs-banner__count { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.fs-banner__countlabel { font-size: 13px; color: rgba(255, 255, 255, 0.85); }
+.fs-banner__progress { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+.fs-program-progress {
+  flex: 1; height: 10px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25); overflow: hidden;
+}
+.fs-program-progress__fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s ease; }
+.fs-program-progress__fill.is-low { background: var(--error); }
+.fs-banner__progresstext { font-size: 13px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 768px) {
+  .fs-banner { padding: 20px; }
+  .fs-banner__count { align-items: flex-start; }
+  .fs-banner__progress { flex-direction: column; align-items: stretch; gap: 8px; }
+  .fs-banner__progresstext { white-space: normal; }
+}
+
+/* ---------- Ghi chú dưới banner (§1) ---------- */
+.fs-note { text-align: center; font-size: 13px; color: var(--text-muted); margin: 16px 0 4px; }
+.fs-grid { margin-top: 20px; }
+
+/* ---------- FlashSaleCard (§4) ---------- */
+.flash-card__pricelabel { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.flash-card__price { font-size: 18px; font-weight: 700; color: var(--error); }
+.flash-card__original { font-size: 13px; color: var(--text-muted); }
+.flash-card__progress { margin-top: 10px; }
+.flash-progress { height: 8px; border-radius: 999px; background: #f3e3dc; overflow: hidden; }
+.flash-progress__fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--error), var(--accent));
+  transition: width 0.4s ease;
+}
+.flash-card__sold { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+.flash-card__sold.is-low { color: var(--error); font-weight: 600; }
+.flash-card__buy { width: 100%; margin-top: 12px; }
+
+/* ---------- Khối flash sale ở trang chủ (§6) ---------- */
+.fs-home .section-head h2 { color: var(--error); }
+.fs-home-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fdecea; border-radius: 999px; padding: 4px 10px;
+}
+.fs-home-chip__bolt { font-size: 14px; }
+@media (max-width: 640px) {
+  .fs-home-grid > *:nth-child(n + 3) { display: none; }
+}
+
+/* ---------- Empty state (§7.2) ---------- */
+.fs-empty { text-align: center; padding: 56px 16px 8px; }
+.fs-empty__icon { font-size: 56px; color: var(--border); line-height: 1; }
+.fs-empty h2 { font-size: 24px; font-weight: 800; margin: 14px 0 8px; }
+.fs-empty p { color: var(--text-muted); margin: 0 auto 20px; max-width: 460px; }
+
+/* ---------- Giá flash ở chi tiết / QuickView (§5.3) ---------- */
+.pd-info__price--flash { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--error); }
+.pd-info__price-old { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+.pd-info__flash {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--error);
+}
+.pd-info__flash-progress { display: inline-flex; align-items: center; gap: 8px; min-width: 180px; }
+.pd-info__flash-progress .flash-progress { flex: 1; }
+.pd-info__flash-progress-text { font-size: 12px; color: var(--text-muted); font-weight: 400; white-space: nowrap; }
+.pd-info__flash-note { margin-top: 10px; font-size: 14px; color: var(--error); font-weight: 600; }
+.qv-modal__price--flash { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--error); }
+.qv-modal__price-old { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+.qv-modal__flash-note { font-size: 13px; color: var(--error); font-weight: 600; margin: 4px 0 0; }
+
+/* ---------- Badge flash sale ở dòng giỏ (§5.2 ghi chú tích hợp) ---------- */
+.cart-line__flash {
+  display: inline-block; margin-left: 8px; padding: 2px 8px;
+  border-radius: 999px; background: var(--error); color: #fff;
+  font-size: 11px; font-weight: 700; vertical-align: middle;
+}

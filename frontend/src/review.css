@@ -1,0 +1,461 @@
+/* ============================================================
+   Viết / Sửa đánh giá (màn 9) — chỉ dùng tokens §0 (index.css).
+   ============================================================ */
+
+/* ---------- modal: overlay 40%, desktop 520px căn giữa, mobile bottom-sheet ---------- */
+.rf-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 33, 24, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: rf-fade 0.2s ease;
+}
+.rf-modal {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+}
+@keyframes rf-fade {
+  from { opacity: 0; }
+}
+.rf-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 0;
+}
+.rf-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+.rf-product {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rf-close {
+  border: none;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 2px;
+  flex: none;
+}
+.rf-close:hover {
+  color: var(--text);
+}
+.rf-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rf-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ---------- sao 1-5: 36px, --accent khi chọn, #DDD khi chưa ---------- */
+.rf-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.rf-star {
+  border: none;
+  background: none;
+  font-size: 36px;
+  line-height: 1;
+  color: #ddd;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.1s ease;
+}
+.rf-star.lit {
+  color: var(--accent);
+}
+.rf-star:hover {
+  transform: scale(1.12);
+}
+.rf-star:disabled {
+  cursor: default;
+  transform: none;
+}
+.rf-star__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-left: 8px;
+  min-width: 72px;
+}
+
+/* ---------- chips màu ---------- */
+.rf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rf-chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+.rf-chip.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.rf-chip.readonly {
+  cursor: default;
+  color: var(--text-muted);
+}
+
+/* ---------- textarea ---------- */
+.rf-textarea-wrap {
+  position: relative;
+}
+.rf-textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 12px;
+  padding-bottom: 28px;
+  resize: vertical;
+}
+.rf-textarea::placeholder {
+  color: var(--text-muted);
+}
+.rf-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.rf-textarea.invalid {
+  border-color: var(--error);
+}
+.rf-counter {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- upload ảnh ---------- */
+.rf-upload {
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+.rf-upload:hover,
+.rf-upload.dragover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+.rf-upload__icon {
+  font-size: 28px;
+}
+.rf-upload__text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.rf-upload__hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.rf-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rf-thumb {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  flex: none;
+}
+.rf-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rf-thumb__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rf-thumb__loading::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: rf-spin 0.8s linear infinite;
+}
+@keyframes rf-spin {
+  to { transform: rotate(360deg); }
+}
+.rf-thumb__remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(43, 33, 24, 0.65);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rf-thumb__remove:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---------- lỗi ---------- */
+.rf-error {
+  font-size: 13px;
+  color: var(--error);
+  margin: 0;
+}
+.rf-form-error {
+  background: var(--bg);
+  border: 1px solid var(--error);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* ---------- footer ---------- */
+.rf-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--border);
+}
+.rf-footer__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+.rf-delete-link {
+  border: none;
+  background: none;
+  color: var(--error);
+  font-family: var(--font);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+.rf-delete-link:hover {
+  text-decoration: underline;
+}
+.rf-confirm {
+  border: 1px solid var(--error);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--bg);
+}
+.rf-confirm p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+.rf-confirm__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.rf-confirm__delete {
+  border: none;
+  border-radius: 10px;
+  background: var(--error);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 22px;
+  cursor: pointer;
+}
+.rf-confirm__delete:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---------- tooltip lý do (ReviewSummary) ---------- */
+.pd-review-summary__action {
+  position: relative;
+}
+.rs-tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  min-width: 240px;
+  max-width: 320px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-card);
+}
+.rs-tip__text {
+  margin: 0;
+}
+.rs-tip__link {
+  display: block;
+  margin-top: 6px;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- ReviewCard: màu / nhãn Mới / Sửa-Xóa ---------- */
+.rc-color {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.rc-new {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--success);
+  background: var(--bg);
+  border: 1px solid var(--success);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.rc-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+.rc-action {
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+}
+.rc-action:hover {
+  text-decoration: underline;
+  color: var(--text);
+}
+.rc-action.danger {
+  color: var(--error);
+}
+.rc-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+/* ---------- mobile: bottom-sheet ---------- */
+@media (max-width: 640px) {
+  .rf-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .rf-modal {
+    max-width: none;
+    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
+  }
+  .rf-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  .rf-footer__actions {
+    margin-left: 0;
+  }
+  .rf-footer__actions .btn {
+    flex: 1;
+  }
+  .rf-delete-link {
+    text-align: left;
+    padding-bottom: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-overlay,
+  .rf-thumb__loading::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/furniture
+
+
+  servlet:
+    multipart:
+      # Khớp giới hạn validate ở service (ảnh review + ảnh sản phẩm): 5MB/file.
+      max-file-size: 5MB
+      max-request-size: 55MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:thay-doi-khi-deploy-toi-thieu-32-ky-tu-ngau-nhien}
+    expiration-ms: 86400000 # 24h
+  upload:
+    dir: ${APP_UPLOAD_DIR:uploads} # chế độ local: ảnh shop tại /uploads/<loại>/*.jpg
+  # Lưu trữ ảnh của SHOP (sản phẩm/danh mục/banner) — service/storage/.
+  # Ảnh review của khách KHÔNG qua đây: nén + lưu binary trong MongoDB, phát qua /media/{id}.
+  storage:
+    # local = ghi đĩa app.upload.dir (chỉ phù hợp dev / 1 server).
+    # s3 = cloud object storage tương thích S3 (AWS S3 / Cloudflare R2 / MinIO...) — vận hành thật.
+    type: ${STORAGE_TYPE:local}
+    s3:
+      endpoint: ${S3_ENDPOINT:} # để trống nếu dùng AWS S3 xịn; R2/MinIO thì điền endpoint của họ
+      region: ${S3_REGION:} # AWS: vd ap-southeast-1 · R2: auto · MinIO: us-east-1
+      bucket: ${S3_BUCKET:}
+      access-key: ${S3_ACCESS_KEY:}
+      secret-key: ${S3_SECRET_KEY:}
+      # Domain public/CDN trỏ vào bucket (vd https://cdn.mocan.vn) — có thì URL ảnh dùng domain này.
+      public-base-url: ${S3_PUBLIC_BASE_URL:}
+      path-style: ${S3_PATH_STYLE:false} # true cho MinIO (và R2 khi cần): endpoint/bucket/key
+  # Bootstrap ADMIN đầu tiên (AdminBootstrap) — chỉ qua ENV, không hardcode.
+  # Thiếu biến -> app vẫn chạy, chỉ log WARN và bỏ qua tạo admin.
+  admin:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+    phone: ${ADMIN_PHONE:}
+    full-name: ${ADMIN_FULL_NAME:Quản trị Mộc An}
+
+# MoMo — F-008. Secret CHỈ từ ENV, tuyệt đối không hardcode.
+# Lấy bộ test trên developers.momo.vn (sandbox) rồi điền vào .env / biến môi trường.
+momo:
+  partner-code: ${MOMO_PARTNER_CODE:}
+  access-key: ${MOMO_ACCESS_KEY:}
+  secret-key: ${MOMO_SECRET_KEY:}
+  endpoint: ${MOMO_ENDPOINT:https://test-payment.momo.vn/v2/gateway/api/create}
+  # URL public backend để MoMo gọi IPN (vd https://api.shop.com/payments/momo/ipn)
+  ipn-url: ${MOMO_IPN_URL:}
+  # URL FE trang kết quả sau khi thanh toán (MoMo redirect về sau khi user xác nhận)
+  redirect-url: ${MOMO_REDIRECT_URL:}
+
+logging:
+  level:
+    com.mocan.shop: INFO

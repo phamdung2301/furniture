@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý tồn kho — Mộc An Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand-900:#3E2A1E;--brand-700:#5D3A29;--brand-600:#71472F;--accent:#C9A227;--bg:#FAF7F2;--surface:#fff;--border:#E9DFD2;--text:#2B2118;--muted:#8A7A6B;--success:#2E7D32;--error:#C62828;--warning:#B7791F}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
+.mono{font-family:"JetBrains Mono",monospace}.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;flex:0 0 240px;background:var(--brand-900);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:60}
+.logo{padding:20px 20px 16px}.logo b{font-size:20px;font-weight:800}.logo span{display:block;font-size:11px;letter-spacing:.22em;color:#C9BBA9;margin-top:2px}
+.nav{flex:1;padding:8px 12px;overflow-y:auto}.nav a{display:flex;align-items:center;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;font-weight:500;padding:10px 14px;border-radius:10px;margin-bottom:2px;position:relative}
+.nav a:hover{background:rgba(255,255,255,.08)}.nav a.active{background:var(--brand-700);color:#fff;font-weight:600}.nav a.active:before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;background:var(--accent);border-radius:3px}
+.nav .ic{width:19px;text-align:center;flex:0 0 19px}.cntbadge{margin-left:auto;background:var(--error);color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px}.cntbadge.warn{background:var(--warning);color:#fff}
+.sidefoot{border-top:1px solid rgba(255,255,255,.14);padding:12px}.sidefoot a{display:flex;gap:11px;color:#EDE4D8;text-decoration:none;font-size:14px;padding:9px 14px;border-radius:10px}.sidefoot a:hover{background:rgba(255,255,255,.08)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:60px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;padding:0 24px;position:sticky;top:0;z-index:50}
+.topbar h1{font-size:18px;font-weight:700}.crumb{font-size:13px;color:var(--muted)}
+.burger{display:none;background:none;border:0;font-size:22px;color:var(--brand-700)}
+.topsearch{margin-left:auto;position:relative}.topsearch input{width:300px;max-width:36vw;padding:9px 14px 9px 36px;border:1px solid var(--border);border-radius:999px;background:#FBF8F3;outline:none}.topsearch input:focus{border-color:var(--brand-700)}.topsearch span{position:absolute;left:12px;top:8px;color:var(--muted)}
+.adminchip{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--brand-700);color:#fff;display:grid;place-items:center;font-weight:700}.adminchip b{font-size:15px;display:block;line-height:1.2}.adminchip small{font-size:12px;color:var(--muted)}
+.content{padding:24px;width:100%;margin:0 auto}
+.pagehead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.pagehead h2{font-size:20px;font-weight:700}.pagehead span{color:var(--muted);font-size:13px}
+.democtl{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:7px 10px;font-size:12px;color:var(--muted)}
+.democtl button{border:1px solid var(--border);background:#fff;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600}.democtl button.on{background:var(--brand-700);color:#fff;border-color:var(--brand-700)}
+/* KPI CARDS */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;cursor:pointer;text-align:left;width:100%;transition:.15s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(62,42,30,.10);border-color:var(--brand-700)}
+.kpi .lbl{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}.kpi .num{font-size:30px;font-weight:800;margin-top:4px;line-height:1.15}.kpi .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi.warn .num{color:var(--warning)}.kpi.err .num{color:var(--error)}
+.kpi .retry{font-size:12px;color:var(--brand-700);font-weight:600;text-decoration:underline;background:none;border:0;padding:0}
+/* CARD + TABLE */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-top:16px;overflow:hidden}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:16px 16px 0}
+.chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.chip.on{background:var(--brand-700);color:#fff;border-color:var(--brand-700)}.chip .n{opacity:.75;font-weight:500}
+.dotw{width:8px;height:8px;border-radius:50%;background:var(--warning)}.dotr{width:8px;height:8px;border-radius:50%;background:var(--error)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);align-items:flex-end}
+.searchbox{position:relative;flex:1;min-width:230px}.searchbox input{width:100%;padding:10px 14px 10px 38px;border:1px solid var(--border);border-radius:10px;outline:none}.searchbox input:focus{border-color:var(--brand-700)}.searchbox span{position:absolute;left:12px;top:10px;color:var(--muted)}
+.fld label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}.fld select{padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:#fff;outline:none;min-width:190px}
+.tblwrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:980px}
+th{font-size:13px;font-weight:700;text-transform:uppercase;color:var(--muted);text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--brand-700)}th.r,td.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}tbody tr{cursor:pointer}tbody tr:hover{background:#FBF8F3}tbody tr.hl{animation:hl 2s ease}@keyframes hl{0%,70%{background:#FBF3DC}100%{background:transparent}}
+.prod{display:flex;gap:12px;align-items:center;min-width:220px}.prod img{width:48px;height:48px;border-radius:8px;object-fit:cover;flex:0 0 48px;background:#EFE6DC}
+.prod .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+.clr{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.dotc{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.18);display:inline-block;flex:0 0 11px}
+.offbadge{display:inline-block;background:#F5F2EE;color:var(--muted);font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;margin-left:7px;vertical-align:2px}
+.sku{font-size:13px;color:var(--brand-700);cursor:pointer;white-space:nowrap}.sku:hover{text-decoration:underline}.copyic{color:var(--muted);font-size:12px;margin-left:4px}
+.price{font-weight:600;white-space:nowrap;text-align:right}
+.stock{font-size:15px;font-weight:600;text-align:right}.stock.low{color:var(--warning)}.stock.out{color:var(--error)}
+.badge{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;border-radius:999px;padding:4px 10px;white-space:nowrap}
+.b-ok{background:#E8F5E9;color:var(--success)}.b-low{background:#FDF3E0;color:var(--warning)}.b-out{background:var(--error);color:#fff}
+.thr{display:flex;align-items:center;gap:6px}.pen{border:0;background:none;color:var(--muted);font-size:14px;padding:3px 6px;border-radius:6px}.pen:hover{color:var(--brand-700);background:#F5EFE6}
+.thredit{display:flex;align-items:center;gap:5px}.thredit input{width:72px;padding:6px 8px;border:1px solid var(--brand-700);border-radius:8px;outline:none}.thredit input.bad{border-color:var(--error)}
+.thredit button{border:1px solid var(--border);background:#fff;border-radius:8px;width:28px;height:28px;font-weight:700}.thredit .ok{color:var(--success)}.thredit .no{color:var(--error)}
+.threrr{color:var(--error);font-size:12px;margin-top:4px;max-width:170px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--brand-700);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}@keyframes sp{to{transform:rotate(360deg)}}
+.acts{display:flex;gap:8px;align-items:center;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 20px;font-size:15px;font-weight:600;border:0;transition:.15s}
+.btn-pri{background:var(--brand-700);color:#fff}.btn-pri:hover{background:var(--brand-600);transform:translateY(-1px)}.btn-sec{background:#fff;border:1px solid var(--brand-700);color:var(--brand-700)}.btn-sec:hover{background:#F5EFE6}.btn-sm{padding:8px 14px;font-size:13px}.btn-danger{background:var(--error);color:#fff}
+.btn:disabled{background:#C9BBA9;cursor:not-allowed;transform:none;color:#fff}
+.extbtn{border:1px solid var(--border);background:#fff;border-radius:9px;padding:7px 10px;font-size:13px}.extbtn:hover{background:#F5EFE6}
+.pager{display:flex;align-items:center;gap:12px;padding:14px 16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.pager select{padding:6px 8px;border:1px solid var(--border);border-radius:8px}.pgbtns{margin-left:auto;display:flex;gap:6px}.pgbtns button{border:1px solid var(--border);background:#fff;border-radius:8px;min-width:34px;height:34px;font-weight:600}.pgbtns button.on{background:var(--brand-700);color:#fff}.pgbtns button:disabled{opacity:.4;cursor:not-allowed}
+.statebox{padding:56px 20px;text-align:center}.statebox .ic{font-size:40px;width:64px;height:64px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:#F5EFE6;color:var(--brand-700);font-weight:800}.statebox .ic.good{background:#E8F5E9;color:var(--success)}.statebox h3{font-size:17px;margin:12px 0 6px}.statebox p{color:var(--muted);font-size:14px;max-width:460px;margin:0 auto}
+.skel{border-radius:10px;background:linear-gradient(90deg,#EFE7DA 25%,#F7F1E7 50%,#EFE7DA 75%);background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+/* MODAL */
+.modalwrap{position:fixed;inset:0;background:rgba(30,20,12,.5);display:none;place-items:center;z-index:120;padding:16px;overflow-y:auto}.modalwrap.show{display:grid}
+.modal{background:#fff;border-radius:16px;width:520px;max-width:100%;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.modal.small{width:400px}.modal h3{font-size:17px;margin-bottom:12px;display:flex;align-items:center;gap:10px}.modal h3 .xbtn{margin-left:auto}
+.xbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:#fff;font-size:16px;flex:0 0 34px}
+.mhead{display:flex;gap:12px;align-items:center;background:#FBF8F3;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.mhead img{width:40px;height:40px;border-radius:8px;object-fit:cover;background:#EFE6DC}.mhead .nm{font-weight:600}.mhead .sk{font-size:12px;color:var(--muted)}
+.curline{display:flex;align-items:center;gap:12px;margin:16px 0 4px}.curline .big{font-size:20px;font-weight:700}.curline span.lbl{color:var(--muted);font-size:14px}
+.seg{display:flex;background:#F5EFE6;border-radius:11px;padding:4px;gap:4px;margin:14px 0}
+.seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:9px 6px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--brand-700);box-shadow:0 2px 8px rgba(62,42,30,.14)}
+.fld2{margin-top:12px}.fld2 label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}.fld2 label i{color:var(--error);font-style:normal}
+.fld2 input,.fld2 select,.fld2 textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}.fld2 input:focus,.fld2 select:focus,.fld2 textarea:focus{border-color:var(--brand-700)}
+.fld2 input.bad,.fld2 select.bad,.fld2 textarea.bad{border-color:var(--error)}
+.err{color:var(--error);font-size:12px;margin-top:5px;display:none}.err.show{display:block}
+.hint{font-size:12px;color:var(--muted);margin-top:5px;text-align:right}
+.preview{margin-top:14px;background:#FBF3DC;border:1px solid #EAD9A8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px}
+.preview .calc{font-weight:700;font-size:16px}.preview .diff{color:var(--muted);font-size:13px}
+.macts{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.confirmbox{background:#FDF3E0;border:1px solid #F0D9A0;border-radius:12px;padding:14px;font-size:14px;line-height:1.6}
+/* TOAST */
+#toasts{position:fixed;top:18px;right:18px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{background:#fff;border-left:4px solid var(--success);border-radius:12px;box-shadow:0 12px 32px rgba(62,42,30,.2);padding:13px 16px;font-size:14px;font-weight:500;max-width:370px;animation:tin .25s ease}.toast.err{border-color:var(--error)}
+@keyframes tin{from{transform:translateX(30px);opacity:0}}
+.scrim{display:none}
+@media(max-width:1023px) and (min-width:768px){.sidebar{width:72px;flex-basis:72px}.sidebar .lbl,.logo span,.admin-name{display:none}.nav a,.sidefoot a{justify-content:center}.cntbadge{position:absolute;top:4px;right:4px;margin:0}}
+@media(max-width:767px){.sidebar{position:fixed;left:0;top:0;transform:translateX(-105%);transition:.25s;width:260px;flex-basis:260px}.sidebar.open{transform:none;box-shadow:20px 0 50px rgba(0,0,0,.3)}.scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55}.burger{display:block}.topsearch{display:none}.content{padding:16px}.kpis{grid-template-columns:1fr}.topbar{padding:0 16px}.modal{border-radius:16px 16px 0 0}.modalwrap{padding:0;place-items:end center}.prod .nm{max-width:170px}}
+</style></head>
+<body>
+<div class="layout">
+<div class="scrim" id="scrim" onclick="closeSide()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="logo"><b>Mộc An</b><span>QUẢN TRỊ</span></div>
+  <nav class="nav" id="nav"></nav>
+  <div class="sidefoot"><a href="#" onclick="return demoNav('Xem cửa hàng')"><span>↗</span><span class="lbl">Xem cửa hàng</span></a><a href="#" onclick="return demoNav('Đăng xuất')"><span>⎋</span><span class="lbl">Đăng xuất</span></a></div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <button class="burger" onclick="openSide()">☰</button>
+    <div><h1>Quản lý tồn kho</h1><div class="crumb">Quản trị / Tồn kho</div></div>
+    <div class="topsearch"><span>⌕</span><input id="topQ" placeholder="Tìm đơn theo mã, sản phẩm, khách hàng…" onkeydown="if(event.key==='Enter')topSearch()"></div>
+    <div class="adminchip"><div class="avatar">A</div><div class="admin-name"><b>Admin Mộc An</b><small>Quản trị viên</small></div></div>
+  </header>
+  <main class="content">
+    <div class="pagehead"><h2>Tồn kho theo biến thể màu</h2><span>1 dòng = 1 biến thể · tồn theo dõi đến cấp màu</span>
+      <div class="democtl">Demo: <button data-m="normal" class="on" onclick="setMode('normal')">Bình thường</button><button data-m="empty" onclick="setMode('empty')">Danh sách trống</button><button data-m="error" onclick="setMode('error')">Lỗi tải</button></div>
+    </div>
+    <section class="kpis" id="kpis"></section>
+    <section class="card">
+      <div class="chips" id="chips"></div>
+      <div class="toolbar">
+        <div class="searchbox"><span>⌕</span><input id="q" placeholder="Tìm theo tên sản phẩm, màu, SKU…" oninput="deb()"></div>
+        <div class="fld"><label>Danh mục</label><select id="catF" onchange="applyCat()"></select></div>
+      </div>
+      <div id="tableArea"></div>
+      <div class="pager" id="pager"></div>
+    </section>
+    <p style="color:var(--muted);font-size:12px;margin-top:14px">Thử: bấm 1 thẻ tổng quan để lọc nhanh · nút “Điều chỉnh tồn” ở từng dòng (3 chế độ, bắt buộc chọn lý do) · bấm bút chì ở cột Ngưỡng để sửa inline (Enter lưu, Esc hủy) · bấm SKU để sao chép · sắp xếp mặc định tồn tăng dần.</p>
+  </main>
+</div></div>
+
+<div class="modalwrap" id="modalWrap"><div class="modal" id="modalBox"></div></div>
+<div id="toasts"></div>
+
+<script>
+const IMG={bantra:"https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=200&q=80",sofa:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&q=80",ghe:"https://images.unsplash.com/photo-1503602642458-232111445657?w=200&q=80",den:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=200&q=80",giuong:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=200&q=80",banan:"https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=200&q=80",tu:"https://images.unsplash.com/photo-1594620302200-9a762244a156?w=200&q=80",ke:"https://images.unsplash.com/photo-1594620302200-9a762244a156?w=200&q=80"};
+const CATS=[["sofa","Sofa"],["ghe","Ghế"],["den","Đèn & Decor"],["banan","Bàn ăn"],["giuong","Giường ngủ"],["tuke","Tủ & Kệ"]];
+const catName=id=>(CATS.find(c=>c[0]===id)||["",""])[1];
+function V(id,name,color,hex,sku,price,stock,thr,cat,img,active){return{id,name,color,hex,sku,price,stock,thr,cat,img,active:active!==false}}
+let variants=[
+ V("v1","Bàn trà gỗ sồi","Nâu óc chó","#5D3A29","BT-GS-NAU",3650000,0,5,"sofa",IMG.bantra),
+ V("v2","Sofa góc L Nordic","Be","#D9C7A7","SF-NOR-BE",12900000,2,5,"sofa",IMG.sofa),
+ V("v3","Ghế ăn bọc vải","Đen","#222222","GA-BV-DEN",1450000,3,5,"ghe",IMG.ghe),
+ V("v4","Đèn bàn gốm","Trắng","#F5F0E8","DB-GOM-TRANG",890000,4,5,"den",IMG.den),
+ V("v5","Ghế ăn bọc vải","Be","#D9C7A7","GA-BV-BE",1450000,9,5,"ghe",IMG.ghe),
+ V("v6","Sofa góc L Nordic","Xám","#9A9A9A","SF-NOR-XAM",12900000,14,5,"sofa",IMG.sofa),
+ V("v7","Bàn trà gỗ sồi","Tự nhiên","#C8A165","BT-GS-TN",3450000,21,5,"sofa",IMG.bantra),
+ V("v8","Giường ngủ gỗ óc chó 1m8","Nâu óc chó","#5D3A29","GN-OC-NAU",15500000,11,5,"giuong",IMG.giuong),
+ V("v9","Bàn ăn gỗ óc chó 6 chỗ","Tự nhiên","#C8A165","BA-OC-TN",7200000,16,5,"banan",IMG.banan),
+ V("v10","Tủ quần áo 3 cánh","Trắng","#F5F0E8","TQ-3C-TRANG",8900000,7,5,"tuke",IMG.tu,false),
+ V("v11","Kệ tivi gỗ tự nhiên","Tự nhiên","#C8A165","KE-TV-TN",4200000,26,5,"tuke",IMG.ke)
+];
+const NAV=[["▦","Dashboard"],["▣","Sản phẩm"],["☰","Danh mục"],["🧾","Đơn hàng"],["▤","Tồn kho"],["🎟","Voucher"],["👥","Khách hàng"],["▖","Banner"],["⚡","Flash sale & Phí ship"]];
+const REASONS=[["RESTOCK","Nhập hàng mới"],["STOCKTAKE","Kiểm kê điều chỉnh"],["DAMAGED","Hàng hư hỏng"],["RETURN","Khách trả hàng"],["DISPOSAL","Xuất hủy"],["OTHER","Khác"]];
+const reasonLabel=k=>(REASONS.find(r=>r[0]===k)||["",""])[1];
+let state={chip:"all",q:"",cat:"",page:1,size:10,sort:"stock_asc",mode:"normal",loading:true};
+let debT=null,editThrId=null,hlSku="";
+const fmt=n=>n.toLocaleString("vi-VN")+"đ";
+const statusOf=v=>v.stock===0?{k:"out",label:"Hết hàng",cls:"b-out"}:v.stock<=v.thr?{k:"low",label:"Sắp hết",cls:"b-low"}:{k:"ok",label:"Còn hàng",cls:"b-ok"};
+const badge=v=>{let s=statusOf(v);return `<span class="badge ${s.cls}">${s.label}</span>`};
+function toast(msg,err){let t=document.createElement("div");t.className="toast"+(err?" err":"");t.textContent=(err?"⚠ ":"✓ ")+msg;document.getElementById("toasts").appendChild(t);setTimeout(()=>t.remove(),3600)}
+function counts(){let base=variants.filter(v=>matchSearchCat(v));return{all:base.length,low:base.filter(v=>v.stock<=v.thr).length,out:base.filter(v=>v.stock===0).length}}
+function matchSearchCat(v){if(state.cat&&v.cat!==state.cat)return false;if(state.q){let q=state.q.toLowerCase();if(!(v.name.toLowerCase().includes(q)||v.color.toLowerCase().includes(q)||v.sku.toLowerCase().includes(q)))return false}return true}
+function renderNav(){let c=counts();let lowAll=variants.filter(v=>v.stock<=v.thr).length;document.getElementById("nav").innerHTML=NAV.map(n=>`<a href="#" class="${n[1]==='Tồn kho'?'active':''}" onclick="return demoNav('${n[1]}')"><span class="ic">${n[0]}</span><span class="lbl">${n[1]}</span>${n[1]==='Đơn hàng'?`<span class="cntbadge">5</span>`:''}${n[1]==='Tồn kho'&&lowAll?`<span class="cntbadge warn" title="Biến thể sắp hết">${lowAll}</span>`:''}</a>`).join("")}
+function demoNav(x){if(x!=="Tồn kho")toast("Demo chỉ dựng màn Quản lý tồn kho — mục “"+x+"” thuộc màn khác.");closeSide();return false}
+function openSide(){document.getElementById("sidebar").classList.add("open");document.getElementById("scrim").style.display="block"}
+function closeSide(){document.getElementById("sidebar").classList.remove("open");let s=document.getElementById("scrim");if(s)s.style.display="none"}
+function topSearch(){let v=document.getElementById("topQ").value.trim();state.q=v;document.getElementById("q").value=v;state.page=1;render()}
+function setMode(m){state.mode=m;document.querySelectorAll(".democtl button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));render()}
+function setChip(c){state.chip=c;state.page=1;render()}
+function deb(){clearTimeout(debT);debT=setTimeout(()=>{state.q=document.getElementById("q").value.trim();state.page=1;render()},300)}
+function applyCat(){state.cat=document.getElementById("catF").value;state.page=1;render()}
+function setSort(k){if(state.sort===k+"_asc")state.sort=k+"_desc";else if(state.sort===k+"_desc")state.sort=k+"_asc";else state.sort=k+"_asc";state.page=1;render()}
+function arrow(k){return state.sort===k+"_asc"?" ↑":state.sort===k+"_desc"?" ↓":""}
+function sorted(list){let s=state.sort;let byName=(a,b)=>a.name.localeCompare(b.name,"vi");return list.slice().sort((a,b)=>{if(s==="stock_asc")return a.stock-b.stock||byName(a,b);if(s==="stock_desc")return b.stock-a.stock||byName(a,b);if(s==="price_asc")return a.price-b.price||byName(a,b);if(s==="price_desc")return b.price-a.price||byName(a,b);if(s==="name_asc")return byName(a,b);if(s==="name_desc")return -byName(a,b);return 0})}
+function filtered(){let list=variants.filter(v=>matchSearchCat(v));if(state.chip==="low")list=list.filter(v=>v.stock<=v.thr);if(state.chip==="out")list=list.filter(v=>v.stock===0);return sorted(list)}
+function copySku(sku,ev){ev.stopPropagation();(navigator.clipboard?navigator.clipboard.writeText(sku):Promise.reject()).then(()=>toast("Đã sao chép SKU.")).catch(()=>toast("Đã sao chép SKU."))}
+function goProduct(v,ev){if(ev)ev.stopPropagation();toast("Demo: mở Quản lý Sản phẩm với ?q="+v.sku+" để sửa biến thể này.")}
+
+function renderKpis(){
+ let el=document.getElementById("kpis");
+ if(state.loading){el.innerHTML=[1,2,3].map(()=>`<div class="kpi" style="cursor:default"><div class="skel" style="height:14px;width:45%"></div><div class="skel" style="height:34px;width:30%;margin-top:10px"></div><div class="skel" style="height:12px;width:65%;margin-top:8px"></div></div>`).join("");return}
+ if(state.mode==="error"){el.innerHTML=[["Sắp hết","warn"],["Hết hàng","err"],["Tổng số biến thể",""]].map(([l,c])=>`<div class="kpi ${c}" style="cursor:default"><div class="lbl">${l}</div><div class="num">—</div><div class="sub">Không tải được số liệu. <button class="retry" onclick="setMode('normal')">Thử lại</button></div></div>`).join("");return}
+ let c=counts();
+ el.innerHTML=`
+  <button class="kpi warn" onclick="setChip('low')"><span class="lbl"><span class="dotw"></span>Sắp hết</span><span class="num" style="display:block">${c.low}</span><span class="sub" style="display:block">biến thể có tồn ≤ ngưỡng cảnh báo · bấm để lọc</span></button>
+  <button class="kpi err" onclick="setChip('out')"><span class="lbl"><span class="dotr"></span>Hết hàng</span><span class="num" style="display:block">${c.out}</span><span class="sub" style="display:block">biến thể đã hết tồn kho · bấm để lọc</span></button>
+  <button class="kpi" onclick="setChip('all')"><span class="lbl">▤ Tổng số biến thể</span><span class="num" style="display:block">${c.all}</span><span class="sub" style="display:block">của mọi sản phẩm · bấm để xem tất cả</span></button>`;
+}
+function renderChips(){
+ let c=counts();
+ let chips=[["all","Tất cả",c.all,""],["low","Sắp hết",c.low,'<span class="dotw"></span>'],["out","Hết hàng",c.out,'<span class="dotr"></span>']];
+ document.getElementById("chips").innerHTML=chips.map(([k,l,n,d])=>`<button class="chip ${state.chip===k?'on':''}" onclick="setChip('${k}')">${d}${l} <span class="n">(${n})</span></button>`).join("");
+ let sel=document.getElementById("catF");
+ if(!sel.options.length){sel.innerHTML=`<option value="">Tất cả danh mục</option>`+CATS.map(([id,n])=>`<option value="${id}">${n}</option>`).join("");sel.value=state.cat}
+}
+function render(){
+ renderNav();renderKpis();renderChips();
+ let area=document.getElementById("tableArea"),pager=document.getElementById("pager");
+ if(state.loading){area.innerHTML=`<div style="padding:16px;display:flex;flex-direction:column;gap:10px">${[1,2,3,4,5].map(()=>`<div class="skel" style="height:52px"></div>`).join("")}</div>`;pager.innerHTML="";return}
+ if(state.mode==="error"){area.innerHTML=`<div class="statebox"><div class="ic">!</div><h3>Không tải được dữ liệu tồn kho.</h3><p>Kiểm tra kết nối và thử tải lại bảng tồn kho.</p><br><button class="btn btn-pri btn-sm" onclick="setMode('normal')">↻ Thử lại</button></div>`;pager.innerHTML="";return}
+ if(state.mode==="empty"){area.innerHTML=`<div class="statebox"><div class="ic">▤</div><h3>Chưa có biến thể nào.</h3><p>Biến thể được tạo khi thêm sản phẩm.</p><br><button class="btn btn-pri btn-sm" onclick="demoNav('Sản phẩm')">Đến Quản lý sản phẩm</button></div>`;pager.innerHTML="";return}
+ let list=filtered();
+ if(!list.length){
+   let html;
+   if(state.chip==="low"&&!state.q&&!state.cat)html=`<div class="statebox"><div class="ic good">✓</div><h3>Tất cả biến thể đều đủ tồn kho.</h3><p>Không có biến thể nào ở mức sắp hết hay hết hàng.</p></div>`;
+   else if(state.chip==="out"&&!state.q&&!state.cat)html=`<div class="statebox"><div class="ic good">✓</div><h3>Không có biến thể nào hết hàng.</h3><p>Mọi biến thể đều còn ít nhất 1 sản phẩm trong kho.</p></div>`;
+   else html=`<div class="statebox"><div class="ic">⌕</div><h3>Không tìm thấy biến thể phù hợp.</h3><p>Thử thay đổi từ khóa, danh mục hoặc chip trạng thái đang chọn.</p><br><button class="btn btn-sec btn-sm" onclick="clearF()">Xóa bộ lọc</button></div>`;
+   area.innerHTML=html;pager.innerHTML="";return}
+ let pages=Math.ceil(list.length/state.size);if(state.page>pages)state.page=pages;
+ let rows=list.slice((state.page-1)*state.size,state.page*state.size);
+ area.innerHTML=`<div class="tblwrap"><table><thead><tr>
+   <th class="sortable" onclick="setSort('name')">Sản phẩm${arrow('name')}</th><th>SKU</th>
+   <th class="sortable r" onclick="setSort('price')">Giá bán${arrow('price')}</th>
+   <th class="sortable r" onclick="setSort('stock')">Tồn hiện tại${arrow('stock')}</th>
+   <th>Ngưỡng cảnh báo</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody>
+  ${rows.map(v=>{let s=statusOf(v);return `<tr class="${hlSku===v.sku?'hl':''}" onclick="goProduct(variants.find(x=>x.id==='${v.id}'))" title="Mở biến thể này trong Quản lý Sản phẩm">
+   <td><div class="prod"><img src="${v.img}" alt="${v.name}"><div style="min-width:0"><div class="nm">${v.name}${v.active?"":'<span class="offbadge">Ngừng bán</span>'}</div><div class="clr"><span class="dotc" style="background:${v.hex}"></span>${v.color} · ${catName(v.cat)}</div></div></div></td>
+   <td><span class="sku mono" title="Bấm để sao chép SKU" onclick="copySku('${v.sku}',event)">${v.sku}<span class="copyic">⧉</span></span></td>
+   <td class="price">${fmt(v.price)}</td>
+   <td class="stock ${s.k==='low'?'low':s.k==='out'?'out':''}">${v.stock}</td>
+   <td onclick="event.stopPropagation()">${thrCell(v)}</td>
+   <td>${badge(v)}</td>
+   <td><div class="acts"><button class="btn btn-pri btn-sm" onclick="event.stopPropagation();openAdjust('${v.id}')">Điều chỉnh tồn</button><button class="extbtn" title="Sửa ở Sản phẩm" onclick="goProduct(variants.find(x=>x.id==='${v.id}'),event)">↗ Sửa ở Sản phẩm</button></div></td></tr>`}).join("")}
+  </tbody></table></div>`;
+ pager.innerHTML=`Trang ${state.page} / ${pages} · Tổng ${list.length} biến thể <span style="margin-left:8px">Hiện <select onchange="state.size=+this.value;state.page=1;render()"><option ${state.size===10?"selected":""}>10</option><option ${state.size===20?"selected":""}>20</option><option ${state.size===50?"selected":""}>50</option></select> / trang</span><span class="pgbtns"><button ${state.page<=1?"disabled":""} onclick="state.page--;render()">‹</button>${Array.from({length:pages},(_,i)=>`<button class="${state.page===i+1?'on':''}" onclick="state.page=${i+1};render()">${i+1}</button>`).join("")}<button ${state.page>=pages?"disabled":""} onclick="state.page++;render()">›</button></span>`;
+}
+function thrCell(v){
+ if(editThrId===v.id)return `<div class="thredit"><input id="thrIn" type="number" min="0" step="1" value="${v.thr}" onkeydown="thrKey(event,'${v.id}')" autofocus><button class="ok" title="Lưu (Enter)" onclick="saveThr('${v.id}')">✓</button><button class="no" title="Hủy (Esc)" onclick="cancelThr()">✕</button></div><div class="threrr" id="thrErr"></div>`;
+ return `<div class="thr"><b>${v.thr}</b><button class="pen" title="Sửa ngưỡng" onclick="startThr('${v.id}')">✎</button></div>`;
+}
+function startThr(id){editThrId=id;render();let i=document.getElementById("thrIn");if(i){i.focus();i.select()}}
+function cancelThr(){editThrId=null;render()}
+function thrKey(e,id){if(e.key==="Enter")saveThr(id);if(e.key==="Escape")cancelThr()}
+function saveThr(id){
+ let inp=document.getElementById("thrIn"),err=document.getElementById("thrErr");let raw=inp.value.trim();let val=Number(raw);
+ if(raw===""||!Number.isInteger(val)||val<0){inp.classList.add("bad");err.textContent="Ngưỡng phải là số nguyên ≥ 0.";return}
+ let v=variants.find(x=>x.id===id);inp.disabled=true;inp.insertAdjacentHTML("afterend",'<span class="spin"></span>');
+ setTimeout(()=>{v.thr=val;editThrId=null;render();toast("Đã cập nhật ngưỡng cảnh báo.")},450);
+}
+function clearF(){state.chip="all";state.q="";state.cat="";state.page=1;document.getElementById("q").value="";let s=document.getElementById("catF");if(s)s.value="";render()}
+
+/* ---------- MODAL ĐIỀU CHỈNH TỒN ---------- */
+let adj=null;
+function openAdjust(id){
+ let v=variants.find(x=>x.id===id);if(!v)return;
+ adj={v,expected:v.stock,mode:"RECEIVE",qty:"",reason:"RESTOCK",note:"",step:"form",dirty:false,saving:false};
+ renderAdj();
+ document.getElementById("modalWrap").classList.add("show");
+}
+function adjResult(){
+ let v=adj.v,q=parseInt(adj.qty,10);
+ if(adj.qty===""||isNaN(q))return null;
+ if(adj.mode==="RECEIVE")return v.stock+q;
+ if(adj.mode==="REMOVE")return v.stock-q;
+ return q;
+}
+function adjBadge(){let r=adjResult();if(r===null)return "";let tmp={stock:r,thr:adj.v.thr};return badge(tmp)}
+function renderAdj(){
+ let v=adj.v,box=document.getElementById("modalBox");box.classList.remove("small");
+ if(adj.step==="confirm"){
+   let r=adjResult();
+   box.innerHTML=`<h3>Xác nhận điều chỉnh tồn</h3>
+   <div class="confirmbox">Tồn của <b>${v.name} — ${v.color}</b> sẽ giảm từ <b>${v.stock}</b> xuống <b>${r}</b> (lý do: ${reasonLabel(adj.reason)}).</div>
+   <p style="font-size:13px;color:var(--muted);margin-top:10px">Kiểm tra lại số lượng trước khi xác nhận — biến động kho sẽ được ghi kèm lý do này.</p>
+   <div class="macts"><button class="btn btn-sec" onclick="adj.step='form';renderAdj()">Quay lại</button><button class="btn btn-pri" id="cfBtn" onclick="doSave()">Xác nhận</button></div>`;
+   return;
+ }
+ let modeLbl=adj.mode==="RECEIVE"?"Số lượng nhập":adj.mode==="REMOVE"?"Số lượng giảm":"Tồn thực tế";
+ let r=adjResult();
+ let preview="";
+ if(r!==null&&Number.isInteger(r)){
+   if(adj.mode==="RECEIVE")preview=`<span class="calc">${v.stock} + ${adj.qty} = ${r}</span>${adjBadge()}`;
+   else if(adj.mode==="REMOVE")preview=`<span class="calc">${v.stock} − ${adj.qty} = ${r}</span>${adjBadge()}`;
+   else{let d=r-v.stock;preview=`<span class="calc">${v.stock} → ${r}</span><span class="diff">Chênh lệch: ${d>0?"+"+d:d===0?"0 — không thay đổi":d}</span>${adjBadge()}`}
+ }else preview=`<span class="diff">Nhập số lượng để xem trước tồn sau điều chỉnh và trạng thái sẽ thành.</span>`;
+ let setNoChange=adj.mode==="SET"&&r!==null&&r===v.stock;
+ box.innerHTML=`<h3>Điều chỉnh tồn kho <button class="xbtn" onclick="tryCloseAdj()">✕</button></h3>
+  <div class="mhead"><img src="${v.img}" alt="${v.name}"><div><div class="nm">${v.name} — ${v.color}</div><div class="sk mono">${v.sku}</div></div></div>
+  <div class="curline"><span class="lbl">Tồn hiện tại:</span><span class="big">${v.stock}</span>${badge(v)}</div>
+  <div class="seg">
+    <button class="${adj.mode==='RECEIVE'?'on':''}" onclick="setModeAdj('RECEIVE')">Nhập thêm</button>
+    <button class="${adj.mode==='REMOVE'?'on':''}" onclick="setModeAdj('REMOVE')">Xuất / giảm</button>
+    <button class="${adj.mode==='SET'?'on':''}" onclick="setModeAdj('SET')">Đặt số mới</button>
+  </div>
+  <div class="fld2"><label>${modeLbl} <i>*</i></label><input id="adjQty" type="number" step="1" min="0" value="${adj.qty}" placeholder="Nhập số lượng…" oninput="adj.qty=this.value;adj.dirty=true;refreshPreview()" onblur="valQty()"><div class="err" id="qtyErr"></div></div>
+  <div class="preview" id="adjPreview">${preview}</div>
+  <div class="fld2"><label>Lý do điều chỉnh <i>*</i></label><select id="adjReason" onchange="adj.reason=this.value;adj.dirty=true;refreshNoteReq()"><option value="">— Chọn lý do —</option>${REASONS.map(([k,l])=>`<option value="${k}" ${adj.reason===k?"selected":""}>${l}</option>`).join("")}</select><div class="err" id="reasonErr">Vui lòng chọn lý do điều chỉnh.</div></div>
+  <div class="fld2"><label>Ghi chú <span id="noteReq" style="color:var(--error)">${adj.reason==="OTHER"?"*":""}</span></label><textarea id="adjNote" rows="2" maxlength="200" placeholder="Ghi chú thêm về lần điều chỉnh này…" oninput="adj.note=this.value;adj.dirty=true;document.getElementById('noteCnt').textContent=this.value.length">${adj.note}</textarea><div class="err" id="noteErr">Vui lòng nhập ghi chú khi chọn lý do “Khác”.</div><div class="hint"><span id="noteCnt">${adj.note.length}</span>/200 ký tự</div></div>
+  <div class="macts"><button class="btn btn-sec" onclick="tryCloseAdj()">Hủy</button><button class="btn btn-pri" id="saveBtn" ${setNoChange?"disabled":""} onclick="submitAdj()">Lưu điều chỉnh</button></div>`;
+}
+function setModeAdj(m){adj.mode=m;adj.reason=m==="RECEIVE"?"RESTOCK":m==="REMOVE"?"DAMAGED":"STOCKTAKE";renderAdj();let i=document.getElementById("adjQty");if(i)i.focus()}
+function refreshNoteReq(){let s=document.getElementById("noteReq");if(s)s.textContent=adj.reason==="OTHER"?"*":"";document.getElementById("reasonErr").classList.remove("show")}
+function refreshPreview(){
+ let v=adj.v,r=adjResult();let p=document.getElementById("adjPreview");if(!p)return;
+ if(r===null||!Number.isInteger(r)){p.innerHTML=`<span class="diff">Nhập số lượng để xem trước tồn sau điều chỉnh và trạng thái sẽ thành.</span>`}
+ else if(adj.mode==="RECEIVE")p.innerHTML=`<span class="calc">${v.stock} + ${adj.qty} = ${r}</span>${adjBadge()}`;
+ else if(adj.mode==="REMOVE")p.innerHTML=`<span class="calc">${v.stock} − ${adj.qty} = ${r}</span>${adjBadge()}`;
+ else{let d=r-v.stock;p.innerHTML=`<span class="calc">${v.stock} → ${r}</span><span class="diff">Chênh lệch: ${d>0?"+"+d:d===0?"0 — không thay đổi":d}</span>${adjBadge()}`}
+ let sb=document.getElementById("saveBtn");if(sb)sb.disabled=(adj.mode==="SET"&&r!==null&&r===v.stock);
+}
+function valQty(showOnly){
+ let inp=document.getElementById("adjQty"),err=document.getElementById("qtyErr");let v=adj.v;let raw=adj.qty;let q=Number(raw);let msg="";
+ if(raw===""||raw===null)msg="Vui lòng nhập số lượng.";
+ else if(!Number.isInteger(q))msg="Số lượng phải là số nguyên.";
+ else if(adj.mode==="RECEIVE"&&q<=0)msg="Số lượng nhập phải lớn hơn 0.";
+ else if(adj.mode==="REMOVE"&&q<=0)msg="Số lượng giảm phải lớn hơn 0.";
+ else if(adj.mode==="REMOVE"&&q>v.stock)msg="Số lượng giảm không được lớn hơn tồn hiện tại ("+v.stock+").";
+ else if(adj.mode==="SET"&&q<0)msg="Tồn thực tế không được âm.";
+ inp.classList.toggle("bad",!!msg);err.textContent=msg;err.classList.toggle("show",!!msg);
+ return !msg;
+}
+function submitAdj(){
+ let okQty=valQty();
+ let rSel=document.getElementById("adjReason"),rErr=document.getElementById("reasonErr");
+ let okReason=!!adj.reason;rSel.classList.toggle("bad",!okReason);rErr.classList.toggle("show",!okReason);
+ let okNote=true;
+ if(adj.reason==="OTHER"){okNote=adj.note.trim().length>0;document.getElementById("adjNote").classList.toggle("bad",!okNote);document.getElementById("noteErr").classList.toggle("show",!okNote)}
+ if(!okQty||!okReason||!okNote)return;
+ let r=adjResult();if(r===null||r<0)return;
+ let isDecrease=(adj.mode==="REMOVE")||(adj.mode==="SET"&&r<adj.v.stock);
+ if(isDecrease){adj.step="confirm";renderAdj();return}
+ doSave();
+}
+function doSave(){
+ if(adj.saving)return;adj.saving=true;
+ let btn=document.getElementById("cfBtn")||document.getElementById("saveBtn");
+ if(btn){btn.disabled=true;btn.innerHTML='<span class="spin" style="border-top-color:#fff"></span> Đang lưu…'}
+ let v=adj.v,r=adjResult();
+ setTimeout(()=>{v.stock=r;adj=null;closeAdj(true);render();toast("Đã cập nhật tồn kho: "+v.name+" — "+v.color+" còn "+r+".")},650);
+}
+function tryCloseAdj(){
+ if(adj&&adj.dirty&&!adj.saving){showConfirm("Bạn có thay đổi chưa lưu.","Điều chỉnh tồn đang nhập dở. Đóng mà không lưu?",()=>{closeModal2();closeAdj(true)});return}
+ closeAdj(true);
+}
+function closeAdj(force){document.getElementById("modalWrap").classList.remove("show");if(force)adj=null}
+/* confirm nhỏ dùng chung (trong cùng modalwrap khi adj đóng) */
+function showConfirm(title,body,onYes){
+ let wrap=document.getElementById("modalWrap"),box=document.getElementById("modalBox");
+ box.classList.add("small");
+ box.innerHTML=`<h3>${title}</h3><p style="font-size:14px;color:#55463A">${body}</p><div class="macts"><button class="btn btn-sec btn-sm" onclick="cancelConfirm()">Quay lại</button><button class="btn btn-danger btn-sm" id="cfYes">Đóng mà không lưu</button></div>`;
+ wrap.classList.add("show");
+ document.getElementById("cfYes").onclick=()=>{box.classList.remove("small");onYes()};
+ window._cfBack=()=>{box.classList.remove("small");if(adj)renderAdj();else wrap.classList.remove("show")};
+}
+function cancelConfirm(){if(window._cfBack)window._cfBack()}
+function closeModal2(){let b=document.getElementById("modalBox");b.classList.remove("small")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(adj)tryCloseAdj();else if(editThrId)cancelThr();closeSide()}});
+document.getElementById("modalWrap").addEventListener("click",e=>{if(e.target.id==="modalWrap"&&adj)tryCloseAdj()});
+
+/* đọc query ?sku= / ?trang-thai= như khi đi từ Dashboard sang */
+(function(){
+ let p=new URLSearchParams(location.search);
+ let st=p.get("trang-thai");if(st==="sap-het")state.chip="low";if(st==="het-hang")state.chip="out";
+ let sku=p.get("sku")||p.get("q");
+ if(sku){state.q=sku;hlSku=sku;setTimeout(()=>{let q=document.getElementById("q");if(q)q.value=sku},0);setTimeout(()=>{hlSku="";let tr=document.querySelector("tr.hl");if(tr)tr.classList.remove("hl")},2100)}
+})();
+render();
+setTimeout(()=>{state.loading=false;render()},900);
+</script>
+</body></html>

@@ -1,0 +1,1410 @@
+{
+  "categories": [
+    {
+      "name": "Sofa",
+      "slug": "sofa",
+      "parentSlug": null,
+      "imageUrl": "/images/sofa-nordic.jpg",
+      "sortOrder": 1,
+      "active": true
+    },
+    {
+      "name": "Bàn ăn",
+      "slug": "ban-an",
+      "parentSlug": null,
+      "imageUrl": "/images/dining-set.jpg",
+      "sortOrder": 2,
+      "active": true
+    },
+    {
+      "name": "Giường ngủ",
+      "slug": "giuong-ngu",
+      "parentSlug": null,
+      "imageUrl": "/images/bed-walnut.jpg",
+      "sortOrder": 3,
+      "active": true
+    },
+    {
+      "name": "Tủ quần áo",
+      "slug": "tu-quan-ao",
+      "parentSlug": null,
+      "imageUrl": "/images/bedroom-2.png",
+      "sortOrder": 4,
+      "active": true
+    },
+    {
+      "name": "Kệ tivi",
+      "slug": "ke-tivi",
+      "parentSlug": null,
+      "imageUrl": "/images/tv-stand.jpg",
+      "sortOrder": 5,
+      "active": true
+    },
+    {
+      "name": "Bàn làm việc",
+      "slug": "ban-lam-viec",
+      "parentSlug": null,
+      "imageUrl": "/images/desk.jpg",
+      "sortOrder": 6,
+      "active": true
+    },
+    {
+      "name": "Ghế",
+      "slug": "ghe",
+      "parentSlug": null,
+      "imageUrl": "/images/dining-2.jpg",
+      "sortOrder": 7,
+      "active": true
+    },
+    {
+      "name": "Đèn & Decor",
+      "slug": "den-decor",
+      "parentSlug": null,
+      "imageUrl": "/images/floor-lamp.jpg",
+      "sortOrder": 8,
+      "active": true
+    }
+  ],
+  "products": [
+    {
+      "name": "Sofa góc L Nordic",
+      "slug": "sofa-goc-l-nordic",
+      "categorySlug": "sofa",
+      "description": "Sofa góc L phong cách Nordic bọc vải bố cao cấp, sợi dệt dày dặn, chống xù và dễ vệ sinh. Đệm ngồi mút D40 đàn hồi êm ái, khung gỗ thông tự nhiên đã qua xử lý chống mối mọt, chân gỗ sồi vát chắc chắn.\n\nThiết kế góc L linh hoạt đảo trái/phải, phù hợp phòng khách chung cư và nhà phố. Màu sắc trung tính dễ phối với mọi phong cách nội thất.",
+      "specs": {
+        "Kích thước": "2.4m x 1.6m",
+        "Kích thước chiếm chỗ": "2.4m × 1.6m",
+        "Chất liệu": "Vải bố",
+        "Bảo hành": "24 tháng",
+        "Xuất xứ": "Việt Nam"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "bestseller",
+        "label": "BÁN CHẠY"
+      },
+      "images": [
+        {
+          "url": "/images/sofa-nordic.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.8,
+      "ratingCount": 126,
+      "soldCount": 340,
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "SF-NRD-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 12900000,
+          "stock": 12,
+          "lowStockThreshold": 5,
+          "lengthM": 2,
+          "widthM": 1.9,
+          "sizeLabel": "2.0m x 1.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "SF-NRD-BE",
+          "color": "Be",
+          "colorHex": "#E8DCC8",
+          "price": 12900000,
+          "stock": 8,
+          "lowStockThreshold": 5,
+          "lengthM": 2,
+          "widthM": 1.9,
+          "sizeLabel": "2.0m x 1.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "SF-NRD-NAU",
+          "color": "Nâu",
+          "colorHex": "#7B5E42",
+          "price": 13400000,
+          "stock": 5,
+          "lowStockThreshold": 5,
+          "lengthM": 2,
+          "widthM": 1.9,
+          "sizeLabel": "2.0m x 1.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Giường ngủ gỗ óc chó 1m8",
+      "slug": "giuong-ngu-go-oc-cho-1m8",
+      "categorySlug": "giuong-ngu",
+      "description": "Giường gỗ óc chó tự nhiên, vân gỗ đẹp, chắc chắn.",
+      "specs": {
+        "Kích thước": "1.8m x 2.0m",
+        "Chất liệu": "Gỗ óc chó",
+        "Bảo hành": "60 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/bed-walnut.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.9,
+      "ratingCount": 89,
+      "soldCount": 210,
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "GN-OCCHO-NAU",
+          "color": "Nâu óc chó",
+          "colorHex": "#4A3226",
+          "price": 15500000,
+          "stock": 7,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "GN-OCCHO-VANG",
+          "color": "Vàng sồi",
+          "colorHex": "#C8A165",
+          "price": 14900000,
+          "stock": 4,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Bàn trà gỗ sồi",
+      "slug": "ban-tra-go-soi",
+      "categorySlug": "sofa",
+      "description": "Bàn trà gỗ sồi mặt tròn, chân tiện mỹ nghệ.",
+      "specs": {
+        "Kích thước": "Ø 0.9m",
+        "Chất liệu": "Gỗ sồi",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/coffee-table.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 203,
+      "soldCount": 512,
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BT-SOI-TN",
+          "color": "Tự nhiên",
+          "colorHex": "#D9BE8C",
+          "price": 3450000,
+          "stock": 20,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "BT-SOI-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 3650000,
+          "stock": 15,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Tủ quần áo 3 cánh",
+      "slug": "tu-quan-ao-3-canh",
+      "categorySlug": "tu-quan-ao",
+      "description": "Tủ quần áo 3 cánh lùa, gỗ công nghiệp phủ melamine chống xước.",
+      "specs": {
+        "Kích thước": "1.8m x 0.6m",
+        "Chất liệu": "Gỗ MDF",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/bedroom-2.png",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 77,
+      "soldCount": 180,
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "TQA-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 8900000,
+          "stock": 9,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "TQA-NAU",
+          "color": "Nâu",
+          "colorHex": "#7B5E42",
+          "price": 8900000,
+          "stock": 6,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "TQA-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 9200000,
+          "stock": 3,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Sofa da bò Ý",
+      "slug": "sofa-da-bo-y",
+      "categorySlug": "sofa",
+      "description": "Sofa da bò Ý nhập khẩu, đường may thủ công.",
+      "specs": {
+        "Kích thước": "2.2m x 0.95m",
+        "Chất liệu": "Da bò Ý",
+        "Bảo hành": "36 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/sofa-nordic.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.9,
+      "ratingCount": 45,
+      "soldCount": 60,
+      "featured": true,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "SF-DAY-NAU",
+          "color": "Nâu",
+          "colorHex": "#5A3A28",
+          "price": 18500000,
+          "stock": 0,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "SF-DAY-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 18500000,
+          "stock": 0,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Ghế ăn bọc vải",
+      "slug": "ghe-an-boc-vai",
+      "categorySlug": "ghe",
+      "description": "Ghế ăn bọc vải êm ái, chân gỗ chắc chắn.",
+      "specs": {
+        "Kích thước": "0.45m x 0.5m",
+        "Chất liệu": "Vải + gỗ",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "bestseller",
+        "label": "BÁN CHẠY"
+      },
+      "images": [
+        {
+          "url": "/images/dining-2.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.8,
+      "ratingCount": 412,
+      "soldCount": 980,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "GA-VAI-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 1450000,
+          "stock": 40,
+          "lowStockThreshold": 5,
+          "lengthM": 0.5,
+          "widthM": 0.4,
+          "sizeLabel": "0.5m x 0.4m",
+          "materialNote": ""
+        },
+        {
+          "sku": "GA-VAI-REU",
+          "color": "Xanh rêu",
+          "colorHex": "#6B7F5E",
+          "price": 1450000,
+          "stock": 32,
+          "lowStockThreshold": 5,
+          "lengthM": 0.5,
+          "widthM": 0.4,
+          "sizeLabel": "0.5m x 0.4m",
+          "materialNote": ""
+        },
+        {
+          "sku": "GA-VAI-BE",
+          "color": "Be",
+          "colorHex": "#E8DCC8",
+          "price": 1450000,
+          "stock": 25,
+          "lowStockThreshold": 5,
+          "lengthM": 0.5,
+          "widthM": 0.4,
+          "sizeLabel": "0.5m x 0.4m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Kệ tivi gỗ tự nhiên",
+      "slug": "ke-tivi-go-tu-nhien",
+      "categorySlug": "ke-tivi",
+      "description": "Kệ tivi gỗ tự nhiên 2 ngăn kéo, mặt đá chống xước.",
+      "specs": {
+        "Kích thước": "1.8m x 0.4m",
+        "Chất liệu": "Gỗ tự nhiên",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/tv-stand.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 356,
+      "soldCount": 870,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "KTV-TN",
+          "color": "Tự nhiên",
+          "colorHex": "#D9BE8C",
+          "price": 4200000,
+          "stock": 18,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "KTV-NAUDAM",
+          "color": "Nâu đậm",
+          "colorHex": "#3E2A1E",
+          "price": 4400000,
+          "stock": 11,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Bàn làm việc chân sắt",
+      "slug": "ban-lam-viec-chan-sat",
+      "categorySlug": "ban-lam-viec",
+      "description": "Bàn làm việc mặt gỗ chân sắt sơn tĩnh điện, chịu lực tốt.",
+      "specs": {
+        "Kích thước": "1.2m x 0.6m",
+        "Chất liệu": "Gỗ + sắt",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/desk.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 289,
+      "soldCount": 760,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BLV-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 2750000,
+          "stock": 22,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "BLV-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 2750000,
+          "stock": 19,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "BLV-GO",
+          "color": "Gỗ",
+          "colorHex": "#A0714F",
+          "price": 2950000,
+          "stock": 14,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Sofa băng 2 chỗ",
+      "slug": "sofa-bang-2-cho",
+      "categorySlug": "sofa",
+      "description": "Sofa băng 2 chỗ nhỏ gọn, phù hợp căn hộ chung cư.",
+      "specs": {
+        "Kích thước": "1.8m x 0.9m",
+        "Chất liệu": "Vải bố",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "sale",
+        "label": "-15%"
+      },
+      "images": [
+        {
+          "url": "/images/sofa-2.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 264,
+      "soldCount": 690,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "SF2-BE",
+          "color": "Be",
+          "colorHex": "#E8DCC8",
+          "price": 9800000,
+          "stock": 10,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "SF2-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 9800000,
+          "stock": 7,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Đèn sàn trang trí",
+      "slug": "den-san-trang-tri",
+      "categorySlug": "den-decor",
+      "description": "Đèn sàn ánh sáng vàng ấm, chụp vải cao cấp.",
+      "specs": {
+        "Chiều cao": "1.6m",
+        "Chất liệu": "Kim loại + vải",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "new",
+        "label": "MỚI"
+      },
+      "images": [
+        {
+          "url": "/images/floor-lamp.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 5,
+      "ratingCount": 12,
+      "soldCount": 30,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-10-05T00:00:00Z",
+      "variants": [
+        {
+          "sku": "DS-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 890000,
+          "stock": 25,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "DS-VANGDONG",
+          "color": "Vàng đồng",
+          "colorHex": "#C9A227",
+          "price": 990000,
+          "stock": 18,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Bàn console hành lang",
+      "slug": "ban-console-hanh-lang",
+      "categorySlug": "den-decor",
+      "description": "Bàn console kim loại mạ đồng, mặt kính cường lực.",
+      "specs": {
+        "Kích thước": "1.0m x 0.35m",
+        "Chất liệu": "Kim loại + kính",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "new",
+        "label": "MỚI"
+      },
+      "images": [
+        {
+          "url": "/images/side-table.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 5,
+      "ratingCount": 5,
+      "soldCount": 12,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-10-03T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BCS-VANGDONG",
+          "color": "Vàng đồng",
+          "colorHex": "#C9A227",
+          "price": 3100000,
+          "stock": 8,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Ghế lười hạt xốp",
+      "slug": "ghe-luoi-hat-xop",
+      "categorySlug": "ghe",
+      "description": "Ghế lười hạt xốp êm ái, vỏ tháo giặt được.",
+      "specs": {
+        "Kích thước": "Ø 0.9m",
+        "Chất liệu": "Vải + xốp",
+        "Bảo hành": "6 tháng"
+      },
+      "basePrice": 0,
+      "badge": {
+        "type": "new",
+        "label": "MỚI"
+      },
+      "images": [
+        {
+          "url": "/images/beanbag.png",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.8,
+      "ratingCount": 31,
+      "soldCount": 85,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-10-01T00:00:00Z",
+      "variants": [
+        {
+          "sku": "GL-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 650000,
+          "stock": 30,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "GL-HONG",
+          "color": "Hồng pastel",
+          "colorHex": "#F2CFCF",
+          "price": 650000,
+          "stock": 22,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        },
+        {
+          "sku": "GL-XANH",
+          "color": "Xanh",
+          "colorHex": "#7FA6B8",
+          "price": 680000,
+          "stock": 16,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": ""
+        }
+      ]
+    },
+    {
+      "name": "Sofa vải 3 chỗ",
+      "slug": "sofa-vai-3-cho",
+      "categorySlug": "sofa",
+      "description": "Sofa vải 3 chỗ dáng hiện đại, nệm êm, dễ vệ sinh.",
+      "specs": {
+        "Kích thước": "2.1m x 0.9m",
+        "Chất liệu": "Vải bố",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/sofa-2.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 58,
+      "soldCount": 190,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-12T00:00:00Z",
+      "variants": [
+        {
+          "sku": "SFV3-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 7500000,
+          "stock": 14,
+          "lowStockThreshold": 5,
+          "lengthM": 2.1,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Vải bố"
+        },
+        {
+          "sku": "SFV3-BE",
+          "color": "Be",
+          "colorHex": "#E8DCC8",
+          "price": 7500000,
+          "stock": 9,
+          "lowStockThreshold": 5,
+          "lengthM": 2.1,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Vải bố"
+        }
+      ]
+    },
+    {
+      "name": "Bàn ăn gỗ sồi 6 ghế",
+      "slug": "ban-an-go-soi-6-ghe",
+      "categorySlug": "ban-an",
+      "description": "Bộ bàn ăn gỗ sồi 6 ghế, mặt bàn chống thấm.",
+      "specs": {
+        "Kích thước": "1.8m x 0.9m",
+        "Chất liệu": "Gỗ sồi",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/dining-set.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 64,
+      "soldCount": 150,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-08-20T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BA-SOI-TN",
+          "color": "Tự nhiên",
+          "colorHex": "#D9BE8C",
+          "price": 12400000,
+          "stock": 6,
+          "lowStockThreshold": 5,
+          "lengthM": 1.8,
+          "widthM": 0.9,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ sồi"
+        }
+      ]
+    },
+    {
+      "name": "Bàn ăn mặt đá 4 ghế",
+      "slug": "ban-an-mat-da-4-ghe",
+      "categorySlug": "ban-an",
+      "description": "Bàn ăn mặt đá 4 ghế chân kim loại, sang trọng.",
+      "specs": {
+        "Kích thước": "1.4m x 0.8m",
+        "Chất liệu": "Đá + kim loại",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/dining-2.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.5,
+      "ratingCount": 41,
+      "soldCount": 98,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-02T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BA-DA-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 8900000,
+          "stock": 8,
+          "lowStockThreshold": 5,
+          "lengthM": 1.4,
+          "widthM": 0.8,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Đá + kim loại"
+        },
+        {
+          "sku": "BA-DA-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 8900000,
+          "stock": 5,
+          "lowStockThreshold": 5,
+          "lengthM": 1.4,
+          "widthM": 0.8,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Đá + kim loại"
+        }
+      ]
+    },
+    {
+      "name": "Giường 1m6 gỗ sồi",
+      "slug": "giuong-1m6-go-soi",
+      "categorySlug": "giuong-ngu",
+      "description": "Giường 1m6 gỗ sồi chắc chắn, đầu giường bọc nệm.",
+      "specs": {
+        "Kích thước": "1.6m x 2.0m",
+        "Chất liệu": "Gỗ sồi",
+        "Bảo hành": "60 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/bed-walnut.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 52,
+      "soldCount": 120,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-08-28T00:00:00Z",
+      "variants": [
+        {
+          "sku": "G16-SOI-VANG",
+          "color": "Vàng sồi",
+          "colorHex": "#C8A165",
+          "price": 11200000,
+          "stock": 7,
+          "lowStockThreshold": 5,
+          "lengthM": 2,
+          "widthM": 1.6,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ sồi"
+        }
+      ]
+    },
+    {
+      "name": "Tủ quần áo 2 cánh",
+      "slug": "tu-quan-ao-2-canh",
+      "categorySlug": "tu-quan-ao",
+      "description": "Tủ quần áo 2 cánh mở, nhiều ngăn treo đồ.",
+      "specs": {
+        "Kích thước": "1.2m x 0.6m",
+        "Chất liệu": "Gỗ MDF",
+        "Bảo hành": "24 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/bedroom-2.png",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.5,
+      "ratingCount": 38,
+      "soldCount": 95,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-08T00:00:00Z",
+      "variants": [
+        {
+          "sku": "TQA2-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 6500000,
+          "stock": 11,
+          "lowStockThreshold": 5,
+          "lengthM": 1.2,
+          "widthM": 0.6,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ MDF"
+        },
+        {
+          "sku": "TQA2-NAU",
+          "color": "Nâu",
+          "colorHex": "#7B5E42",
+          "price": 6500000,
+          "stock": 6,
+          "lowStockThreshold": 5,
+          "lengthM": 1.2,
+          "widthM": 0.6,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ MDF"
+        }
+      ]
+    },
+    {
+      "name": "Kệ sách gỗ 5 tầng",
+      "slug": "ke-sach-go-5-tang",
+      "categorySlug": "ke-tivi",
+      "description": "Kệ sách gỗ 5 tầng, chịu lực tốt. Tạm xếp vào danh mục Kệ tivi.",
+      "specs": {
+        "Kích thước": "0.9m x 0.3m",
+        "Chất liệu": "Gỗ tự nhiên",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/tv-stand.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 29,
+      "soldCount": 70,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-15T00:00:00Z",
+      "variants": [
+        {
+          "sku": "KS-TN",
+          "color": "Tự nhiên",
+          "colorHex": "#D9BE8C",
+          "price": 3200000,
+          "stock": 13,
+          "lowStockThreshold": 5,
+          "lengthM": 0.9,
+          "widthM": 0.3,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ tự nhiên"
+        }
+      ]
+    },
+    {
+      "name": "Bàn làm việc chữ L",
+      "slug": "ban-lam-viec-chu-l",
+      "categorySlug": "ban-lam-viec",
+      "description": "Bàn làm việc chữ L rộng rãi, mặt gỗ chân sắt.",
+      "specs": {
+        "Kích thước": "1.4m x 1.4m",
+        "Chất liệu": "Gỗ + sắt",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/desk.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 47,
+      "soldCount": 110,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "sku": "BLVL-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 4500000,
+          "stock": 9,
+          "lowStockThreshold": 5,
+          "lengthM": 1.4,
+          "widthM": 1.4,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ + sắt"
+        },
+        {
+          "sku": "BLVL-GO",
+          "color": "Gỗ",
+          "colorHex": "#A0714F",
+          "price": 4500000,
+          "stock": 4,
+          "lowStockThreshold": 5,
+          "lengthM": 1.4,
+          "widthM": 1.4,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ + sắt"
+        }
+      ]
+    },
+    {
+      "name": "Ghế xoay văn phòng",
+      "slug": "ghe-xoay-van-phong",
+      "categorySlug": "ghe",
+      "description": "Ghế xoay văn phòng lưng lưới thoáng mát, tay vịn điều chỉnh.",
+      "specs": {
+        "Kích thước": "0.65m x 0.65m",
+        "Chất liệu": "Vải + nhựa",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/dining-2.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.5,
+      "ratingCount": 83,
+      "soldCount": 210,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-08-15T00:00:00Z",
+      "variants": [
+        {
+          "sku": "GX-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 2200000,
+          "stock": 26,
+          "lowStockThreshold": 5,
+          "lengthM": 0.65,
+          "widthM": 0.65,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Vải + nhựa"
+        },
+        {
+          "sku": "GX-XAM",
+          "color": "Xám",
+          "colorHex": "#9AA0A6",
+          "price": 2200000,
+          "stock": 18,
+          "lowStockThreshold": 5,
+          "lengthM": 0.65,
+          "widthM": 0.65,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Vải + nhựa"
+        }
+      ]
+    },
+    {
+      "name": "Đèn bàn học",
+      "slug": "den-ban-hoc",
+      "categorySlug": "den-decor",
+      "description": "Đèn bàn học chống cận, 3 chế độ sáng.",
+      "specs": {
+        "Chiều cao": "0.4m",
+        "Chất liệu": "Kim loại",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/floor-lamp.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.4,
+      "ratingCount": 36,
+      "soldCount": 140,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-18T00:00:00Z",
+      "variants": [
+        {
+          "sku": "DBH-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 550000,
+          "stock": 30,
+          "lowStockThreshold": 5,
+          "lengthM": 0.4,
+          "widthM": 0.25,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Kim loại"
+        },
+        {
+          "sku": "DBH-DEN",
+          "color": "Đen",
+          "colorHex": "#2B2B2B",
+          "price": 550000,
+          "stock": 24,
+          "lowStockThreshold": 5,
+          "lengthM": 0.4,
+          "widthM": 0.25,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Kim loại"
+        }
+      ]
+    },
+    {
+      "name": "Gương trang trí tròn",
+      "slug": "guong-trang-tri-tron",
+      "categorySlug": "den-decor",
+      "description": "Gương trang trí tròn viền kim loại mạ đồng.",
+      "specs": {
+        "Đường kính": "0.8m",
+        "Chất liệu": "Kính + kim loại",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/side-table.jpg",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.7,
+      "ratingCount": 22,
+      "soldCount": 55,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-22T00:00:00Z",
+      "variants": [
+        {
+          "sku": "GTT-VANGDONG",
+          "color": "Vàng đồng",
+          "colorHex": "#C9A227",
+          "price": 1100000,
+          "stock": 12,
+          "lowStockThreshold": 5,
+          "lengthM": 0.8,
+          "widthM": 0.1,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Kính + kim loại"
+        }
+      ]
+    },
+    {
+      "name": "Tủ giày thông minh",
+      "slug": "tu-giay-thong-minh",
+      "categorySlug": "tu-quan-ao",
+      "description": "Tủ giày cánh lật tiết kiệm diện tích, chứa 18 đôi.",
+      "specs": {
+        "Kích thước": "0.9m x 0.35m",
+        "Chất liệu": "Gỗ MDF",
+        "Bảo hành": "12 tháng"
+      },
+      "basePrice": 0,
+      "badge": null,
+      "images": [
+        {
+          "url": "/images/bedroom-2.png",
+          "sortOrder": 1
+        }
+      ],
+      "ratingAvg": 4.6,
+      "ratingCount": 19,
+      "soldCount": 48,
+      "featured": false,
+      "active": true,
+      "createdAt": "2026-09-25T00:00:00Z",
+      "variants": [
+        {
+          "sku": "TG-TM-TRANG",
+          "color": "Trắng",
+          "colorHex": "#F5F5F5",
+          "price": 2300000,
+          "stock": 15,
+          "lowStockThreshold": 5,
+          "lengthM": 0.9,
+          "widthM": 0.35,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ MDF"
+        },
+        {
+          "sku": "TG-TM-NAU",
+          "color": "Nâu",
+          "colorHex": "#7B5E42",
+          "price": 2300000,
+          "stock": 10,
+          "lowStockThreshold": 5,
+          "lengthM": 0.9,
+          "widthM": 0.35,
+          "sizeLabel": "1.8m x 0.9m",
+          "materialNote": "Gỗ MDF"
+        }
+      ]
+    }
+  ],
+  "banners": [
+    {
+      "imageUrl": "/images/hero-living.jpg",
+      "linkUrl": "/danh-muc/sofa",
+      "title": "Khai trương — Giảm đến 20% sofa phòng khách",
+      "subtitle": "Từ 12/10 đến 31/10 · Áp dụng cho 50+ mẫu sofa",
+      "ctaText": "Mua ngay",
+      "sortOrder": 1,
+      "active": true
+    },
+    {
+      "imageUrl": "/images/bed-walnut.jpg",
+      "linkUrl": "/danh-muc/tu-quan-ao",
+      "title": "Bộ sưu tập Gỗ Óc Chó 2026",
+      "subtitle": "Vân gỗ tự nhiên · Bảo hành 5 năm",
+      "ctaText": "Khám phá",
+      "sortOrder": 2,
+      "active": true
+    },
+    {
+      "imageUrl": "/images/sofa-2.jpg",
+      "linkUrl": "/flash-sale",
+      "title": "Flash sale cuối tuần",
+      "subtitle": "Giảm sâu giờ vàng 20h – 22h mỗi tối",
+      "ctaText": "Săn ngay",
+      "sortOrder": 3,
+      "active": true
+    },
+    {
+      "imageUrl": "/images/bedroom-2.png",
+      "linkUrl": "/danh-muc/giuong-ngu",
+      "title": "Nội thất phòng ngủ — Ưu đãi tháng 10",
+      "subtitle": "Trọn bộ giường + tủ đồng bộ gỗ tự nhiên",
+      "ctaText": "Xem ngay",
+      "sortOrder": 4,
+      "active": false
+    }
+  ],
+  "vouchers": [
+    {
+      "code": "NOITHAT50",
+      "type": "PERCENT",
+      "value": 50,
+      "maxDiscount": 200000,
+      "minOrderValue": 1000000,
+      "startAt": "2026-10-01T00:00:00+07:00",
+      "endAt": "2026-12-31T23:59:00+07:00",
+      "totalUsageLimit": 1000,
+      "perUserLimit": null,
+      "usedCount": 0,
+      "active": true
+    },
+    {
+      "code": "NOITHAT10",
+      "type": "FIXED",
+      "value": 500000,
+      "maxDiscount": 500000,
+      "minOrderValue": 10000000,
+      "startAt": "2026-10-01T00:00:00+07:00",
+      "endAt": "2026-12-31T23:59:00+07:00",
+      "totalUsageLimit": 200,
+      "perUserLimit": null,
+      "usedCount": 0,
+      "active": true
+    }
+  ],
+  "flashSaleProgram": {
+    "code": "FLASHSALE",
+    "name": "Flash sale mẫu (seed)",
+    "type": "FLASH_SALE",
+    "totalUsageLimit": 100,
+    "usedCount": 73,
+    "active": true,
+    "schedule": {
+      "startDaysOffset": -1,
+      "startHour": 20,
+      "durationDays": 2,
+      "endHour": 22
+    },
+    "items": [
+      {
+        "productSlug": "sofa-goc-l-nordic",
+        "variantSku": "SF-NRD-XAM",
+        "discountPercent": 30,
+        "itemQuota": 20,
+        "itemSoldCount": 14
+      },
+      {
+        "productSlug": "ghe-an-boc-vai",
+        "variantSku": "GA-VAI-BE",
+        "flashPrice": 990000,
+        "itemQuota": 30,
+        "itemSoldCount": 29
+      },
+      {
+        "productSlug": "ban-tra-go-soi",
+        "variantSku": "BT-SOI-TN",
+        "discountPercent": 20,
+        "itemQuota": 15,
+        "itemSoldCount": 6
+      },
+      {
+        "productSlug": "den-san-trang-tri",
+        "variantSku": "DS-DEN",
+        "flashPrice": 749000,
+        "itemQuota": 15,
+        "itemSoldCount": 4
+      },
+      {
+        "productSlug": "ghe-luoi-hat-xop",
+        "variantSku": "GL-XAM",
+        "discountPercent": 25,
+        "itemQuota": 20,
+        "itemSoldCount": 20
+      }
+    ]
+  },
+  "shippingRules": [
+    {
+      "minAreaM2": 0,
+      "maxAreaM2": 1,
+      "fee": 100000,
+      "active": true
+    },
+    {
+      "minAreaM2": 1,
+      "maxAreaM2": 3,
+      "fee": 200000,
+      "active": true
+    },
+    {
+      "minAreaM2": 3,
+      "maxAreaM2": 6,
+      "fee": 350000,
+      "active": true
+    },
+    {
+      "minAreaM2": 6,
+      "maxAreaM2": 10,
+      "fee": 550000,
+      "active": true
+    }
+  ],
+  "shippingConfig": {
+    "key": "SHIPPING",
+    "freeThreshold": 10000000
+  }
+}

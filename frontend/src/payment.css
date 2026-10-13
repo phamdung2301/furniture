@@ -1,0 +1,416 @@
+/* Màn Thanh toán (màn 8) — FR-010 · F-008 · US-012.
+ * Chỉ dùng tokens có sẵn (§0 trang-chu.md): --brand-700, --border,
+ * --surface, --text, --text-muted, --error, --warning, --success.
+ */
+
+.payment-main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+.payment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.payment-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.payment-orderno {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-700);
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.payment-orderno:hover {
+  background: #f5efe6;
+}
+
+.payment-orderno__copy {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------- Countdown ---------- */
+.payment-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: #f5efe6;
+  border-radius: 999px;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+}
+
+.payment-countdown strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.payment-countdown__info {
+  cursor: help;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.payment-countdown--urgent {
+  color: var(--error);
+  background: #fdeceb;
+  animation: payment-pulse 1s ease-in-out infinite;
+}
+
+.payment-countdown--urgent .payment-countdown__info {
+  color: var(--error);
+}
+
+@keyframes payment-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.88;
+  }
+}
+
+/* ---------- Số tiền read-only ---------- */
+.payment-amount {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  margin-bottom: 20px;
+}
+
+.payment-amount__label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+
+.payment-amount__value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--brand-700);
+  margin: 0 0 4px;
+}
+
+.payment-amount__sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- QR ---------- */
+.payment-qr {
+  margin-bottom: 16px;
+}
+
+.payment-qr img {
+  width: 240px;
+  height: 240px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  background: #fff;
+  display: block;
+  margin: 0 auto;
+}
+
+.payment-qr__caption {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 12px 0 0;
+}
+
+/* ---------- Deeplink + các bước ---------- */
+.payment-deeplink {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.payment-deeplink__hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 8px 0 0;
+}
+
+.payment-steps {
+  list-style: none;
+  margin: 20px 0;
+  padding: 16px;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.payment-steps__num {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--brand-700);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-verify {
+  width: 100%;
+  min-height: 48px;
+}
+
+.payment-note {
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+.payment-note--warning {
+  color: var(--warning);
+  background: #fdf6e8;
+  border: 1px solid #f0e2c4;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* ---------- Poll status ---------- */
+.payment-poll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 16px 0 0;
+}
+
+.payment-poll__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--brand-700);
+  border-radius: 50%;
+  animation: payment-spin 0.9s linear infinite;
+}
+
+@keyframes payment-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Hủy thanh toán ---------- */
+.payment-cancel {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.payment-cancel__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--error);
+  opacity: 0.85;
+  padding: 8px 12px;
+}
+
+.payment-cancel__link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.payment-cancel__confirm p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.payment-cancel__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.payment-cancel__actions .btn {
+  flex: 1;
+  min-height: 44px;
+}
+
+.payment-backlink {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-700);
+  text-decoration: none;
+}
+
+.payment-backlink:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Alert cards (thất bại / hết hạn) ---------- */
+.payment-card--alert {
+  border-color: #f0d9d7;
+}
+
+.payment-alert__icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.payment-alert__text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.payment-full {
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Skeleton loading ---------- */
+.payment-skeleton-qr {
+  width: 240px;
+  height: 240px;
+  border-radius: 16px;
+  margin: 0 auto 20px;
+}
+
+.payment-skeleton-line {
+  height: 18px;
+  width: 70%;
+  margin: 12px auto;
+}
+
+.payment-skeleton-line--short {
+  width: 45%;
+}
+
+.payment-loading-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 20px 0 0;
+}
+
+/* ---------- Khối thanh toán MoMo trên trang thành công (§4 spec) ---------- */
+.co-momo {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  background: #eef6ee;
+  border: 1px solid #cde6cd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.co-momo__icon {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.co-momo h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--success);
+  margin: 0 0 4px;
+}
+
+.co-momo p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+  .payment-main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .payment-card {
+    padding: 20px 16px;
+  }
+
+  .payment-qr img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .payment-deeplink {
+    position: sticky;
+    bottom: 12px;
+    z-index: 5;
+  }
+
+  .payment-countdown {
+    position: sticky;
+    top: 8px;
+    z-index: 5;
+  }
+
+  .payment-cancel__actions {
+    flex-direction: column;
+  }
+}

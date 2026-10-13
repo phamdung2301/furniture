@@ -1,0 +1,263 @@
+/* ============================================================
+   Flash sale & Phí vận chuyển (màn 22) — admin-flash-sale-shipping.md.
+   Chỉ dùng tokens §0 trong index.css + tái dùng class dùng chung
+   (voucher-badge/progress/banner, pf-*, data-table) của các màn admin trước.
+   ============================================================ */
+
+.admin-promo .admin-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.admin-promo .admin-page-head__title { font-size: 24px; }
+
+/* ---------- Thanh tab (§1.1) ---------- */
+.promo-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+  margin: 4px 0 20px;
+}
+.promo-tab {
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 10px 2px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.promo-tab:hover { color: var(--text); }
+.promo-tab.is-active {
+  color: var(--brand-700);
+  border-bottom-color: var(--brand-700);
+}
+
+/* ---------- Chips lọc trạng thái (§2.1) ---------- */
+.promo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 16px 0;
+}
+.promo-chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 5px 14px;
+  cursor: pointer;
+}
+.promo-chip:hover { border-color: var(--brand-700); }
+.promo-chip.is-active {
+  background: var(--brand-700);
+  border-color: var(--brand-700);
+  color: #fff;
+}
+
+.promo-mono {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ---------- Banner trong form (§3.5, §3.6) ---------- */
+.promo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.promo-banner.is-error { background: #fdecea; color: var(--error); }
+.promo-banner.is-warning { background: #fdf3e0; color: var(--warning); }
+.promo-banner.is-info { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+[data-theme='dark'] .promo-banner.is-error { background: #3d1712; }
+[data-theme='dark'] .promo-banner.is-warning { background: #3a2c10; }
+
+/* ---------- Form chương trình (§3) ---------- */
+.promo-form__subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+.promo-form__group-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 18px 0 12px;
+}
+.promo-form__group-title:first-of-type { margin-top: 0; }
+.promo-form__group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.promo-form__grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .promo-form__grid2 { grid-template-columns: 1fr; }
+}
+.promo-add-btn {
+  border: none;
+  background: none;
+  color: var(--brand-700);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.promo-add-btn:hover { text-decoration: underline; }
+.promo-code-note { padding: 9px 0; }
+.promo-readonly-row { margin: 12px 0; }
+.promo-readonly-row__text { font-size: 14px; margin: 4px 0; }
+
+/* Thẻ món trong chương trình (§3.4) */
+.promo-items { display: flex; flex-direction: column; gap: 12px; }
+.promo-items-empty {
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 18px 16px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.promo-item-card {
+  background: #fbf8f3;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+[data-theme='dark'] .promo-item-card { background: var(--bg); }
+.promo-item-card.has-error { border-color: var(--error); }
+.promo-item-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.promo-item-card__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--border);
+  flex: none;
+}
+.promo-item-card__name { font-weight: 600; flex: 1; min-width: 0; }
+.promo-item-card__row { display: flex; flex-direction: column; gap: 6px; }
+.promo-item-card__preview { font-size: 13px; margin: 0; }
+.promo-variant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.promo-variant-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 3px 2px;
+}
+.promo-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex: none;
+}
+.promo-percent-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 640px) {
+  .promo-percent-row { grid-template-columns: 1fr; }
+}
+.promo-quota-warn { margin-top: 10px; }
+
+/* ---------- Tab Phí vận chuyển (§5) ---------- */
+.promo-ship { display: flex; flex-direction: column; gap: 20px; }
+.promo-explain {
+  background: #f5efe6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+[data-theme='dark'] .promo-explain { background: #2c2119; }
+.promo-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 6px;
+}
+.promo-gap-strip {
+  background: #fdf3e0;
+  border: 1px solid var(--warning);
+  border-radius: 10px;
+  color: var(--warning);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  margin: 8px 16px 4px;
+}
+.promo-gap-strip.is-danger {
+  background: #fdecea;
+  border-color: var(--error);
+  color: var(--error);
+}
+[data-theme='dark'] .promo-gap-strip { background: #3a2c10; }
+[data-theme='dark'] .promo-gap-strip.is-danger { background: #3d1712; }
+.promo-free-text { color: var(--success); font-weight: 600; }
+
+.promo-ship-grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .promo-ship-grid { grid-template-columns: 1fr; }
+}
+.promo-card-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+.promo-ship-grid .admin-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.promo-ship-grid .admin-card .btn { align-self: flex-start; }
+.promo-preview-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .promo-preview-form { grid-template-columns: 1fr; }
+}
+.promo-preview__text { font-size: 14px; font-weight: 600; margin: 6px 0 0; }
+.promo-preview__text.is-warning { color: var(--warning); }
+.promo-preview__sub { font-size: 13px; color: var(--text-muted); margin: 4px 0 0; }
