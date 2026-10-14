@@ -15,7 +15,8 @@ function ShippingValue({ quote }) {
   const tipLines = [
     `Phí ship tính theo tổng diện tích chiếm chỗ của đơn hàng: ${formatAreaM2(quote.totalAreaM2)} m² → nấc ${quote.tier.min}–${quote.tier.max} m².`,
     ...(quote.breakdown || []).map(
-      (b) => `${b.name} ${formatAreaM2(b.areaM2)} m² × ${b.qty}`
+      // Real API trả {productName, color} (không có `name` như mock) — đọc cả hai.
+      (b) => `${b.name || b.productName || 'Sản phẩm'}${b.color ? ` (${b.color})` : ''} ${formatAreaM2(b.areaM2)} m² × ${b.qty}`
     ),
     quote.freeShipping ? 'Đơn từ 10.000.000đ được miễn phí vận chuyển.' : '',
   ].filter(Boolean);
