@@ -46,7 +46,6 @@ export default function ProductDetailPage({ darkMode, onToggleDark, onToast }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const cartCount = useCartCount();
-  const { wished, toggle: toggleWish } = useWishlist(product?.id, product, onToast);
 
   const [state, setState] = useState('loading'); // loading | ready | notfound | error
   const [product, setProduct] = useState(null);
@@ -54,6 +53,9 @@ export default function ProductDetailPage({ darkMode, onToggleDark, onToast }) {
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState('desc');
   const [reviews, setReviews] = useState({ content: [], totalPages: 1, page: 1 });
+  // useWishlist PHẢI đứng sau useState của product: dùng biến const trước khi
+  // khai báo gây ReferenceError (temporal dead zone) -> trắng toàn bộ trang.
+  const { wished, toggle: toggleWish } = useWishlist(product?.id, product, onToast);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [quickView, setQuickView] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
