@@ -29,6 +29,10 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
+            // Preflight CORS (OPTIONS không mang credentials) phải qua trước mọi rule:
+            // nếu không, browser nhận 403 ở preflight và mọi API cần đăng nhập đều lỗi.
+            .requestMatchers(HttpMethod.OPTIONS, "/**")
+            .permitAll()
             .requestMatchers(HttpMethod.GET,
                 "/banners/**", "/categories/**", "/products/**", "/reviews/**", "/uploads/**",
                 "/flash-sale/**")
