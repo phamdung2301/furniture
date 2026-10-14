@@ -114,7 +114,9 @@ export async function verifyOtp(phone, code, purpose = 'login') {
   }
   try {
     const { data } = await axiosClient.post('/auth/otp/verify', { phone, code, purpose });
-    return data;
+    // Backend thật trả {accessToken, user, message}; chuẩn hóa về {token, ...}
+    // cho khớp mock và mọi caller (LoginPage destructure {token, user}).
+    return { token: data.accessToken ?? data.token, user: data.user, message: data.message };
   } catch (e) {
     throw normalizeRealError(e);
   }
@@ -167,7 +169,10 @@ export async function loginPassword(identifier, password) {
   }
   try {
     const { data } = await axiosClient.post('/auth/login', { identifier, password });
-    return data;
+    // Backend thật trả {accessToken, user}; chuẩn hóa về {token, user} cho khớp
+    // mock và caller (LoginPage destructure {token, user}). Không chuẩn hóa thì
+    // token = undefined -> localStorage lưu chuỗi "undefined" -> mọi API sau 401.
+    return { token: data.accessToken ?? data.token, user: data.user };
   } catch (e) {
     throw normalizeRealError(e);
   }
